@@ -2,12 +2,14 @@ import 'package:csr_module/sign_in_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'CSR Module',
-    theme: ThemeData(primaryColor: const Color.fromARGB(255, 42, 67, 101)),
-    home: const SignInPage(),
-  ));
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'CSR Module',
+      theme: ThemeData(primaryColor: const Color.fromARGB(255, 42, 67, 101)),
+      home: const SignInPage(),
+    ),
+  );
 }
 // import 'package:flutter/material.dart';
 //

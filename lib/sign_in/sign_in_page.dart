@@ -1,6 +1,7 @@
+import 'package:csr_module/homepage/homepage_profile.dart';
+import 'package:csr_module/sign_in/forgot_password.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import 'homepage/homepage_profile.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -10,6 +11,13 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  var hover = false;
+  late final _recognizer = TapGestureRecognizer()..onTap = _onTap;
+  void _onTap() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ForgotPass()));
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
@@ -98,9 +106,24 @@ class _SignInPageState extends State<SignInPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 25, vertical: 15),
-                            child: const Flexible(
-                                child: Text(
-                              "Forgot password?",
+                            child: Flexible(
+                                child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: hover
+                                        ? TextDecoration.underline
+                                        : null),
+                                mouseCursor: SystemMouseCursors.click,
+                                text: "Forgot password?",
+                                recognizer: _recognizer,
+                                onEnter: (event) => setState(() {
+                                  hover = true;
+                                }),
+                                onExit: (event) => setState(() {
+                                  hover = false;
+                                }),
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.clip,
                               softWrap: false,

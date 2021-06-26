@@ -1,6 +1,7 @@
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
-//import 'homepagedocuments.dart';
+import 'homepage_documents.dart';
+import 'package:csr_module/homepage/homepage_training.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class _MyHomeState extends State<MyHome> {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -36,100 +38,192 @@ class _MyHomeState extends State<MyHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "MY Home",
-              style: TextStyle(fontSize: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("PROFILE",
+                  style: TextStyle(fontSize: 30,
+                      fontWeight:FontWeight.bold),
+                ),
+                Divider(
+                  color: Colors.black,
+                  height: 15,
+                  thickness: 8,
+                  indent: 5,
+                  endIndent: 5,
+                ),
+              ],
             ),
-            Divider(
-              color: Colors.black,
-              height: 15,
-              thickness: 1,
-              indent: 5,
-              endIndent: 5,
-            ),
-            SizedBox(height: 30),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'Profile',
+
+
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+
+                    children: [
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+
+                        children: [
+                          SizedBox(height: 30),
+                          FlatButton(
+                            minWidth: 100,
+                            color: Colors.grey,
+                            child: Text(
+                              'Profile',
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MyHome()),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          FlatButton(
+                            minWidth: 100,
+                            color: Colors.grey,
+                            child: Text(
+                              'Details',
+                            ),
+                            onPressed: () {
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          FlatButton(
+                            minWidth: 100,
+                            color: Colors.grey,
+                            child: Text(
+                              'Documents',
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => documents()),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          FlatButton(
+                            minWidth: 100,
+                            color: Colors.grey,
+                            child: Text(
+                              'Payroll',
+                            ),
+                            onPressed: () {
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          FlatButton(
+                            minWidth: 100,
+                            color: Colors.grey,
+                            child: Text(
+                              'Trainings',
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => training()),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 5),
+                          FlatButton(
+                            minWidth: 100,
+                            color: Colors.grey,
+                            child: Text(
+                              'History',
+                            ),
+                            onPressed: () {
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+
+                      Column(
+
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                           Container(
+                             width:300,
+                             child: Table(
+                              border: TableBorder.all(color: Colors.black),
+                              children: [
+                                TableRow(children: [
+                                  Text('Cell 1'),
+                                  Text('Cell 2'),
+                                  Text('Cell 3'),
+                                  Text('Cell 4'),
+                                ]),
+                                TableRow(children: [
+                                  Text('Cell 4'),
+                                  Text('Cell 5'),
+                                  Text('Cell 6'),
+                                  Text('Cell 4'),
+                                ]),
+                                TableRow(children: [
+                                  Text('Cell 4'),
+                                  Text('Cell 5'),
+                                  Text('Cell 6'),
+                                  Text('Cell 4'),
+                                ]),
+                                TableRow(children: [
+                                  Text('Cell 4'),
+                                  Text('Cell 5'),
+                                  Text('Cell 6'),
+                                  Text('Cell 4'),
+                                ]),
+                                TableRow(children: [
+                                  Text('Cell 4'),
+                                  Text('Cell 5'),
+                                  Text('Cell 6'),
+                                  Text('Cell 4'),
+                                ]),
+
+
+                              ],
+                          ),
+                           ),
+
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 70,
+                            backgroundImage: NetworkImage(
+                              'https://source.unsplash.com/50x50/?portrait',
+                            ),
+                          ),
+                          Text("Name"),
+                          Text("Department"),
+
+                        ],
+                      ),
+
+
+                    ],
+                  ),
+                ),
               ),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            SizedBox(height: 5),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'Details',
-              ),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            SizedBox(height: 5),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'Documents',
-              ),
-              onPressed: () {
-                //  Navigator.push(
-                //  context,
-                // MaterialPageRoute(builder: (context) => homepagedocuments()),
-                //);
-              },
-            ),
-            SizedBox(height: 5),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'Bank',
-              ),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            SizedBox(height: 5),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'Payroll',
-              ),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            SizedBox(height: 5),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'Trainings',
-              ),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            SizedBox(height: 5),
-            FlatButton(
-              minWidth: 100,
-              color: Colors.grey,
-              child: Text(
-                'History',
-              ),
-              onPressed: () {
-                setState(() {});
-              },
             ),
           ],
         ),
-      ),
+
     );
   }
 }
+
+

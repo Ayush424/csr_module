@@ -1,3 +1,4 @@
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 //import 'homepagedocuments.dart';
 
@@ -9,10 +10,18 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              icon: Icon(Icons.logout_outlined))
+        ],
         title: Text('CSR MANAGEMENT'),
         backgroundColor: Colors.blue[900],
         leading: new Padding(

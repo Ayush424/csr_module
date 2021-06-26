@@ -21,26 +21,26 @@ class _MyHomeState extends State<MyHome> {
                 onPressed: () async {
                   await _auth.signOut();
                 },
-                icon: Icon(Icons.logout_outlined))
+                icon: const Icon(Icons.logout_outlined))
           ],
-          title: Text('CSR MANAGEMENT'),
+          title: const Text('CSR MANAGEMENT'),
           backgroundColor: Colors.blue[900],
-          leading: new Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Material(
-              shape: new CircleBorder(),
+          leading: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Material(
+              shape: CircleBorder(),
             ),
           ),
         ),
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "PROFILE",
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),

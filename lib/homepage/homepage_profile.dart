@@ -14,62 +14,54 @@ class _MyHomeState extends State<MyHome> {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await _auth.signOut();
-              },
-              icon: Icon(Icons.logout_outlined))
-        ],
-        title: Text('CSR MANAGEMENT'),
-        backgroundColor: Colors.blue[900],
-        leading: new Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new Material(
-            shape: new CircleBorder(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await _auth.signOut();
+                },
+                icon: Icon(Icons.logout_outlined))
+          ],
+          title: Text('CSR MANAGEMENT'),
+          backgroundColor: Colors.blue[900],
+          leading: new Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Material(
+              shape: new CircleBorder(),
+            ),
           ),
         ),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("PROFILE",
-                  style: TextStyle(fontSize: 30,
-                      fontWeight:FontWeight.bold),
-                ),
-                Divider(
-                  color: Colors.black,
-                  height: 15,
-                  thickness: 8,
-                  indent: 5,
-                  endIndent: 5,
-                ),
-              ],
-            ),
-
-
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Expanded(
+        body: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "PROFILE",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    height: 15,
+                    thickness: 8,
+                    indent: 5,
+                    endIndent: 5,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Align(
+                  alignment: Alignment.topLeft,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-
                     children: [
-
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-
                         children: [
                           SizedBox(height: 30),
                           FlatButton(
@@ -81,7 +73,8 @@ class _MyHomeState extends State<MyHome> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => MyHome()),
+                                MaterialPageRoute(
+                                    builder: (context) => MyHome()),
                               );
                             },
                           ),
@@ -106,7 +99,8 @@ class _MyHomeState extends State<MyHome> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => documents()),
+                                MaterialPageRoute(
+                                    builder: (context) => documents()),
                               );
                             },
                           ),
@@ -131,7 +125,8 @@ class _MyHomeState extends State<MyHome> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => training()),
+                                MaterialPageRoute(
+                                    builder: (context) => training()),
                               );
                             },
                           ),
@@ -148,15 +143,12 @@ class _MyHomeState extends State<MyHome> {
                           ),
                         ],
                       ),
-
                       Column(
-
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                           Container(
-                             width:300,
-                             child: Table(
+                          Container(
+                            width: 300,
+                            child: Table(
                               border: TableBorder.all(color: Colors.black),
                               children: [
                                 TableRow(children: [
@@ -189,16 +181,13 @@ class _MyHomeState extends State<MyHome> {
                                   Text('Cell 6'),
                                   Text('Cell 4'),
                                 ]),
-
-
                               ],
+                            ),
                           ),
-                           ),
-
                         ],
                       ),
                       Column(
-                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CircleAvatar(
@@ -209,21 +198,14 @@ class _MyHomeState extends State<MyHome> {
                           ),
                           Text("Name"),
                           Text("Department"),
-
                         ],
                       ),
-
-
                     ],
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-
-    );
+            ],
+          ),
+        ));
   }
 }
-
-

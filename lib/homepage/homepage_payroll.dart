@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'homepage_profile.dart';
 import 'homepage_training.dart';
-import 'homepage_payroll.dart';
+import 'homepage_documents.dart';
 
 import 'dart:html';
 
-class documents extends StatefulWidget {
-  const documents({Key? key}) : super(key: key);
+class payroll extends StatefulWidget {
+  const payroll({Key? key}) : super(key: key);
 
   @override
-  _documentsState createState() => _documentsState();
+  _payrollState createState() => _payrollState();
 }
 
-class _documentsState extends State<documents> {
-
+class _payrollState extends State<payroll> {
   @override
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       body:Column(
@@ -28,28 +25,34 @@ class _documentsState extends State<documents> {
                 style: TextStyle(
                     fontSize: 25,
                     color: Color.fromARGB(255, 42, 67, 101),
-                    fontWeight: FontWeight.bold),),
+                    fontWeight: FontWeight.bold),
+
+              ),
+
             ],
           ),
-
           Divider(
             color: Colors.black,
-            height: 1,
-            thickness: 1,
-            indent: 1,
-            endIndent: 1,
+            height: 15,
+            thickness: 8,
+            indent: 5,
+            endIndent: 5,
           ),
-
 
 
           Padding(
             padding: const EdgeInsets.all(20),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Wrap(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+
+
                 children: [
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
+
                     children: [
                       SizedBox(height: 30),
                       FlatButton(
@@ -136,85 +139,123 @@ class _documentsState extends State<documents> {
                     padding: EdgeInsets.all(40),
                     child: Column(
 
+
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          children: [
-                            FlatButton(
-                                                    onPressed: () => {},
-                                                    color: const Color.fromRGBO(45, 55, 72, 1),
-                                                    padding: EdgeInsets.all(10.0),
-                                                    child: Column( // Replace with a Row for horizontal icon + text
-                                                      children: <Widget>[
-
-                                                        Icon(Icons.upload_sharp,
-                                                          color: Colors.white,
-                                                        ),
-                                                        Text("Upload",
-                                                            style: TextStyle(color: Colors.white),
-
-                                                        )
-
-                                                      ],
-                                                    ),
-                                                   ),
-                            Text("Drag and drop here"),
-                          ],
-
-                        ),
 
 
                         Padding(
                           padding: EdgeInsets.all((30)),
                           child: Container(
-                            width:600,
-                            child:  DataTable( columns: [
-                              DataColumn(label: Text('DOCUMENT')),
-                              DataColumn(label: Text('TYPE')),
-                              DataColumn(label: Text('ACTION')),
+                            width:300,
+                            child: DataTable( columns: [
+                              DataColumn(label: Text('NAME')),
+                              DataColumn(label: Text('AMOUNT')),
+                              DataColumn(label: Text('DURATION')),
                             ],
                               rows: [
                                 DataRow(cells: [
-                                  DataCell(Text('1')),
-                                  DataCell(Text('doc')),
-                                  DataCell(Icon(Icons.delete)),
+                                  DataCell(Text('NGO 1')),
+                                  DataCell(Text('500INR')),
+                                  DataCell(Text("6 months ago")),
 
                                 ]),
+
                                 DataRow(cells: [
-                                  DataCell(Text('2')),
-                                  DataCell(Text("pdf")),
-                                  DataCell(Icon(Icons.delete)),
+                                  DataCell(Text('NGO 1')),
+                                  DataCell(Text('500INR')),
+                                  DataCell(Text("6 months ago")),
 
                                 ]),
+
                                 DataRow(cells: [
-                                  DataCell(Text('2')),
-                                  DataCell(Text('pdf')),
-                                  DataCell(Icon(Icons.delete)),
+                                  DataCell(Text('NGO 1')),
+                                  DataCell(Text('500INR')),
+                                  DataCell(Text("6 months ago")),
 
                                 ]),
+
                                 DataRow(cells: [
-                                  DataCell(Text('3')),
-                                  DataCell(Text('img')),
-                                  DataCell(Icon(Icons.delete)),
+                                  DataCell(Text('NGO 1')),
+                                  DataCell(Text('500INR')),
+                                  DataCell(Text("6 months ago")),
 
                                 ]),
+
                                 DataRow(cells: [
-                                  DataCell(Text('4')),
-                                  DataCell(Text("img")),
-                                  DataCell(Icon(Icons.delete)),
+                                  DataCell(Text('NGO 1')),
+                                  DataCell(Text('500INR')),
+                                  DataCell(Text("6 months ago")),
 
                                 ]),
+
                                 DataRow(cells: [
-                                  DataCell(Text('5')),
-                                  DataCell(Text('pdf')),
-                                  DataCell(Icon(Icons.delete)),
+                                  DataCell(Text('NGO 1')),
+                                  DataCell(Text('500INR')),
+                                  DataCell(Text("6 months ago")),
 
                                 ]),
+
 
                               ],
 
                             ),
                           ),
+                        ),
+
+                        Row(
+                          children: [
+
+                            FlatButton(
+                              onPressed: () => {},
+                              color: const Color.fromRGBO(45, 55, 72, 1),
+                              padding: EdgeInsets.all(10.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.red)
+                              ),
+                              child: Row( // Replace with a Row for horizontal icon + text
+                                children: <Widget>[
+
+
+                                  Icon(Icons.edit_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  Text("Request Edit",
+                                    style: TextStyle(color: Colors.white),
+
+                                  )
+
+                                ],
+                              ),
+                            ),
+
+                            SizedBox(width:30),
+
+
+                            FlatButton(
+                              onPressed: () => {},
+                              color: const Color.fromRGBO(45, 55, 72, 1),
+                              padding: EdgeInsets.all(10.0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.red)
+                              ),
+                              child: Row( // Replace with a Row for horizontal icon + text
+                                children: <Widget>[
+
+                                  Icon(Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                  Text("Add",
+                                    style: TextStyle(color: Colors.white),
+
+                                  )
+
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
 
                       ],
@@ -231,11 +272,5 @@ class _documentsState extends State<documents> {
       ),
 
     );
-
   }
 }
-
-
-
-
-

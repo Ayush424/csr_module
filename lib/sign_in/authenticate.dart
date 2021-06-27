@@ -13,7 +13,7 @@ class Authenticate extends StatelessWidget {
     if (user == null) {
       return SignInPage();
     } else {
-      return MyHome();
+      return profile();
     }
   }
 }

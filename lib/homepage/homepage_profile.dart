@@ -1,4 +1,5 @@
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
+import 'package:csr_module/homepage/homepage_assistance_give.dart';
 import 'package:flutter/material.dart';
 import 'homepage_documents.dart';
 import 'package:csr_module/homepage/homepage_training.dart';
@@ -34,8 +35,8 @@ class _MyHomeState extends State<MyHome> {
         ),
         body: Container(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Wrap(
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,10 +136,14 @@ class _MyHomeState extends State<MyHome> {
                             minWidth: 100,
                             color: Colors.grey,
                             child: Text(
-                              'History',
+                              'Assistance',
                             ),
                             onPressed: () {
-                              setState(() {});
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AssistanceCanGive()),
+                              );
                             },
                           ),
                         ],

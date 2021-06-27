@@ -29,6 +29,16 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
+  Future resetPassword(email) async {
+    try {
+      return await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'invalid-email') {
+        return null;
+      }
+    }
+  }
+
   //sign out
   Future signOut() async {
     try {

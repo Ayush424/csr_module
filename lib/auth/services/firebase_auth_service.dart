@@ -34,7 +34,7 @@ class AuthService {
       return await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
-        return null;
+        return 'null';
       }
     }
   }

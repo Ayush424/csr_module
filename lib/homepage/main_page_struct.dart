@@ -1,11 +1,21 @@
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:csr_module/homepage/homepage_assistance_give.dart';
+import 'package:csr_module/homepage/homepage_assistance_need.dart';
 import 'package:csr_module/homepage/homepage_profile.dart';
+import 'package:csr_module/organization/organization.dart';
 import 'package:flutter/material.dart';
 
+import 'homepage_structure.dart';
+
 // ignore: use_key_in_widget_constructors
-class HomePageStruct extends StatelessWidget {
-  final String _homepage = "cangive";
+class MainPageStruct extends StatefulWidget {
+  @override
+  State<MainPageStruct> createState() => _HomePageStructState();
+}
+
+class _HomePageStructState extends State<MainPageStruct> {
+  String _mainpage = "myhome";
+
   final AuthService _auth = AuthService();
 
   @override
@@ -61,29 +71,56 @@ class HomePageStruct extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: const MyIcon(icon: Icons.assessment_outlined),
-                    title: const MyText(text: "Dashboard"),
+                    title: MyText(
+                      text: "Dashboard",
+                      bold: (_mainpage == 'dashboard'),
+                    ),
                     onTap: () {},
                   ),
                   ListTile(
                     leading: const MyIcon(icon: Icons.home_outlined),
-                    title: const MyText(text: "My Home"),
-                    onTap: () {},
+                    title: MyText(
+                      text: "My Home",
+                      bold: (_mainpage == 'myhome'),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'myhome';
+                      });
+                    },
                   ),
                   ExpansionTile(
                     childrenPadding: const EdgeInsets.only(
                       left: 70,
                     ),
                     leading: const MyIcon(icon: Icons.help_outline),
-                    title: const MyText(text: "Assistance"),
+                    title: MyText(
+                      text: "Assistance",
+                      bold: (_mainpage == 'assistance'),
+                    ),
                     trailing: const MyIcon(icon: Icons.arrow_right),
                     children: [
                       ListTile(
-                        title: const MyText(text: "I can"),
-                        onTap: () {},
+                        title: MyText(
+                          text: "I can",
+                          bold: (_mainpage == 'cangive'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'cangive';
+                          });
+                        },
                       ),
                       ListTile(
-                        title: const MyText(text: "I need"),
-                        onTap: () {},
+                        title: MyText(
+                          text: "I need",
+                          bold: (_mainpage == 'ineed'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = "ineed";
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -91,23 +128,42 @@ class HomePageStruct extends StatelessWidget {
                     childrenPadding: const EdgeInsets.only(left: 45),
                     leading: const MyIcon(icon: Icons.people_outline_outlined),
                     trailing: const MyIcon(icon: Icons.arrow_right),
-                    title: const MyText(text: "CSR Cell"),
+                    title: MyText(
+                      text: "CSR Cell",
+                      bold: (_mainpage == 'csrcell'),
+                    ),
                     children: [
                       ListTile(
-                        title: const MyText(text: "Core Team"),
-                        onTap: () {},
+                        title: MyText(
+                          text: "Core Team",
+                          bold: (_mainpage == 'coreteam'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'coreteam';
+                          });
+                        },
                       ),
                       ExpansionTile(
                         childrenPadding: EdgeInsets.only(left: 30),
                         trailing: const MyIcon(icon: Icons.arrow_right),
-                        title: const MyText(text: "Registration Form"),
+                        title: MyText(
+                          text: "Registration Form",
+                          bold: (_mainpage == 'registrationform'),
+                        ),
                         children: [
                           ListTile(
-                            title: const MyText(text: "Core team"),
+                            title: MyText(
+                              text: "Core team",
+                              bold: (_mainpage == '   '),
+                            ),
                             onTap: () {},
                           ),
                           ListTile(
-                            title: const MyText(text: "Recurring events"),
+                            title: MyText(
+                              text: "Recurring events",
+                              bold: (_mainpage == 'recurringevents'),
+                            ),
                             onTap: () {},
                           ),
                         ],
@@ -116,7 +172,10 @@ class HomePageStruct extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const MyIcon(icon: Icons.extension),
-                    title: const MyText(text: "Activity"),
+                    title: MyText(
+                      text: "Activity",
+                      bold: (_mainpage == 'activity'),
+                    ),
                     onTap: () {},
                   )
                 ],
@@ -126,10 +185,16 @@ class HomePageStruct extends StatelessWidget {
           Flexible(
             flex: 4,
             child: Builder(builder: (context) {
-              if (_homepage == 'cangive') {
+              if (_mainpage == 'cangive') {
                 return AssistanceCanGive();
+              } else if (_mainpage == 'ineed') {
+                return AssistanceNeed();
+              } else if (_mainpage == 'coreteam') {
+                return Organization();
+              } else if (_mainpage == 'myhome') {
+                return HomePageStruct();
               } else {
-                return const profile();
+                return Container();
               }
             }),
           ),
@@ -140,8 +205,10 @@ class HomePageStruct extends StatelessWidget {
 }
 
 class MyText extends StatefulWidget {
+  final bool bold;
   final String text;
-  const MyText({Key? key, required this.text}) : super(key: key);
+  const MyText({Key? key, required this.text, required this.bold})
+      : super(key: key);
 
   @override
   State<MyText> createState() => _MyTextState();
@@ -159,6 +226,7 @@ class _MyTextState extends State<MyText> {
         style: TextStyle(
           fontSize: 16,
           color: const Color.fromARGB(255, 44, 82, 130),
+          fontWeight: widget.bold ? FontWeight.w800 : null,
           decoration: hover ? TextDecoration.underline : null,
         ),
         text: widget.text,

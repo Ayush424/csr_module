@@ -1,4 +1,5 @@
 import 'package:csr_module/auth/models/user.dart';
+import 'package:csr_module/homepage/main_page_struct.dart';
 import 'package:csr_module/homepage/homepage_profile.dart';
 import 'package:csr_module/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class Authenticate extends StatelessWidget {
     if (user == null) {
       return SignInPage();
     } else {
-      return profile();
+      return MainPageStruct();
     }
   }
 }

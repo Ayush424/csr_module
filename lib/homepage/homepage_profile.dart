@@ -19,28 +19,9 @@ class _MyHomeState extends State<profile> {
 
 
   Widget build(BuildContext context) {
-    return Scaffold(
-
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-                icon: const Icon(Icons.logout_outlined))
-          ],
-          title: const Text('CSR MANAGEMENT'),
-          backgroundColor: Colors.blue[900],
-          leading: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Material(
-              shape: CircleBorder(),
-            ),
-          ),
-        ),
-        body: Container(
+    return Container(
           padding: const EdgeInsets.all(20),
-          child: Wrap(
+          child:ListView(
 
             children: [
               Row(
@@ -51,7 +32,8 @@ class _MyHomeState extends State<profile> {
                     style:TextStyle(
                         fontSize: 25,
                         color: Color.fromARGB(255, 42, 67, 101),
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none),
                   ),
 
                 ],
@@ -68,8 +50,8 @@ class _MyHomeState extends State<profile> {
                 padding: const EdgeInsets.all(20),
                 child: Align(
                   alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Wrap(
+
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,6 +139,8 @@ class _MyHomeState extends State<profile> {
                           ),
                         ],
                       ),
+
+
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -228,6 +212,30 @@ class _MyHomeState extends State<profile> {
                                   DataCell(Icon(Icons.edit)),
 
                                 ]),
+                                DataRow(cells: [
+                                  DataCell(Text('Current Address')),
+                                  DataCell(Text('Gwalior')),
+                                  DataCell(Icon(Icons.edit)),
+
+                                ]),
+                                DataRow(cells: [
+                                  DataCell(Text('Current Address')),
+                                  DataCell(Text('Gwalior')),
+                                  DataCell(Icon(Icons.edit)),
+
+                                ]),
+                                DataRow(cells: [
+                                  DataCell(Text('Current Address')),
+                                  DataCell(Text('Gwalior')),
+                                  DataCell(Icon(Icons.edit)),
+
+                                ]),
+                                DataRow(cells: [
+                                  DataCell(Text('Current Address')),
+                                  DataCell(Text('Gwalior')),
+                                  DataCell(Icon(Icons.edit)),
+
+                                ]),
 
                               ],
 
@@ -235,19 +243,25 @@ class _MyHomeState extends State<profile> {
                           ),
                         ],
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 70,
-                            backgroundImage: NetworkImage(
-                              'https://source.unsplash.com/50x50/?portrait',
-                            ),
-                          ),
-                          Text("Name"),
-                          Text("Department"),
-                        ],
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            
+                              CircleAvatar(
+                                radius: 70,
+                                backgroundImage: NetworkImage(
+                                  'https://source.unsplash.com/50x50/?portrait',
+                                ),
+                              ),
+                            Text("Name",
+                              style: TextStyle(decoration: TextDecoration.none), ),
+                            Text("Department",
+                              style: TextStyle(decoration: TextDecoration.none), ),
+
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -255,7 +269,7 @@ class _MyHomeState extends State<profile> {
               ),
             ],
           ),
-        ));
+        );
   }
 }
 

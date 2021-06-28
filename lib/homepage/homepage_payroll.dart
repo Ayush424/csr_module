@@ -15,8 +15,8 @@ class payroll extends StatefulWidget {
 class _payrollState extends State<payroll> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:Column(
+    return Container(
+      child:ListView(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,10 +33,10 @@ class _payrollState extends State<payroll> {
           ),
           Divider(
             color: Colors.black,
-            height: 15,
-            thickness: 8,
-            indent: 5,
-            endIndent: 5,
+            height: 1,
+            thickness: 1,
+            indent: 1,
+            endIndent: 1,
           ),
 
 
@@ -44,8 +44,8 @@ class _payrollState extends State<payroll> {
             padding: const EdgeInsets.all(20),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Wrap(
+
 
 
                 children: [

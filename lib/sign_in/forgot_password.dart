@@ -9,6 +9,7 @@ class ForgotPass extends StatefulWidget {
 }
 
 class _ForgotPassState extends State<ForgotPass> {
+  Color color = Colors.white;
   String error = '';
   final _formKey = GlobalKey<FormState>();
   String email = '';
@@ -115,9 +116,15 @@ class _ForgotPassState extends State<ForgotPass> {
                                 if (_formKey.currentState!.validate()) {
                                   dynamic result =
                                       await _auth.resetPassword(email);
-                                  if (result == null) {
+                                  if (result == "null") {
                                     setState(() {
+                                      color = Colors.red;
                                       error = 'Please enter valid email';
+                                    });
+                                  } else {
+                                    setState(() {
+                                      color = Colors.green;
+                                      error = 'Email succesfully sent';
                                     });
                                   }
                                 }
@@ -140,7 +147,7 @@ class _ForgotPassState extends State<ForgotPass> {
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                             softWrap: false,
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: color),
                           ),
                         ),
                       ],

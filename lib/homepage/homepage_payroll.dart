@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'homepage_profile.dart';
 import 'homepage_training.dart';
-import 'homepage_payroll.dart';
 import 'homepage_documents.dart';
+
 import 'dart:html';
-class training extends StatefulWidget {
-  const training({Key? key}) : super(key: key);
+
+class payroll extends StatefulWidget {
+  const payroll({Key? key}) : super(key: key);
 
   @override
-  _trainingState createState() => _trainingState();
+  _payrollState createState() => _payrollState();
 }
 
-class _trainingState extends State<training> {
+class _payrollState extends State<payroll> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -271,11 +272,5 @@ class _trainingState extends State<training> {
       ),
 
     );
-
   }
 }
-
-
-
-
-

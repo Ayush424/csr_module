@@ -129,7 +129,7 @@ class HomePageStruct extends StatelessWidget {
               if (_homepage == 'cangive') {
                 return AssistanceCanGive();
               } else {
-                return const MyHome();
+                return const profile();
               }
             }),
           ),

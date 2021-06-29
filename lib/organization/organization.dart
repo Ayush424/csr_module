@@ -8,12 +8,13 @@ class Organization extends StatefulWidget {
 }
 
 class _OrganizationState extends State<Organization> {
-  static const int numItems = 3;
+  static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+     constraints: BoxConstraints.expand(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         child: SingleChildScrollView(
@@ -46,44 +47,49 @@ class _OrganizationState extends State<Organization> {
             const SizedBox(
               height: 10,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DataTable(
-                  columns: const <DataColumn>[
-                    DataColumn(
-                      label:
-                          Text('Name', style: TextStyle(color: Colors.black)),
-                    ),
-                    DataColumn(
-                      label: Text('Department',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 44, 82, 130),
-                          )),
+            Container(
+              height: 200,
+              child: SingleChildScrollView(
+                              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DataTable(
+                      columns: const <DataColumn>[
+                        DataColumn(
+                          label:
+                              Text('Name', style: TextStyle(color: Colors.black)),
+                        ),
+                        DataColumn(
+                          label: Text('Department',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 44, 82, 130),
+                              )),
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                        numItems,
+                        (int index) => DataRow(
+                          color: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return Color.fromARGB(255, 237, 242, 247)
+                                  .withOpacity(0.08);
+                            }
+                            if (index.isEven) {
+                              return Color.fromARGB(255, 237, 242, 247);
+                            }
+                            return null;
+                          }),
+                          cells: <DataCell>[
+                            DataCell(Text('abc')),
+                            DataCell(Text('xyz')),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
-                  rows: List<DataRow>.generate(
-                    numItems,
-                    (int index) => DataRow(
-                      color: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.selected)) {
-                          return Color.fromARGB(255, 237, 242, 247)
-                              .withOpacity(0.08);
-                        }
-                        if (index.isEven) {
-                          return Color.fromARGB(255, 237, 242, 247);
-                        }
-                        return null;
-                      }),
-                      cells: <DataCell>[
-                        DataCell(Text('abc')),
-                        DataCell(Text('xyz')),
-                      ],
-                    ),
-                  ),
                 ),
-              ],
+              ),
             ),
             const SizedBox(
               height: 30,
@@ -99,44 +105,49 @@ class _OrganizationState extends State<Organization> {
             const SizedBox(
               height: 10,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DataTable(
-                  columns: const <DataColumn>[
-                    DataColumn(
-                      label:
-                          Text('Name ', style: TextStyle(color: Colors.black)),
-                    ),
-                    DataColumn(
-                      label: Text('Department',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 44, 82, 130),
-                          )),
+            Container(
+              height: 200,
+              child: SingleChildScrollView(
+                              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DataTable(
+                      columns: const <DataColumn>[
+                        DataColumn(
+                          label:
+                              Text('Name ', style: TextStyle(color: Colors.black)),
+                        ),
+                        DataColumn(
+                          label: Text('Department',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 44, 82, 130),
+                              )),
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                        numItems,
+                        (int index) => DataRow(
+                          color: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return Color.fromARGB(255, 237, 242, 247)
+                                  .withOpacity(0.08);
+                            }
+                            if (index.isEven) {
+                              return Color.fromARGB(255, 237, 242, 247);
+                            }
+                            return null;
+                          }),
+                          cells: <DataCell>[
+                            DataCell(Text('abc')),
+                            DataCell(Text('xyz')),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
-                  rows: List<DataRow>.generate(
-                    numItems,
-                    (int index) => DataRow(
-                      color: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.selected)) {
-                          return Color.fromARGB(255, 237, 242, 247)
-                              .withOpacity(0.08);
-                        }
-                        if (index.isEven) {
-                          return Color.fromARGB(255, 237, 242, 247);
-                        }
-                        return null;
-                      }),
-                      cells: <DataCell>[
-                        DataCell(Text('abc')),
-                        DataCell(Text('xyz')),
-                      ],
-                    ),
-                  ),
                 ),
-              ],
+              ),
             ),
           ]),
         ),

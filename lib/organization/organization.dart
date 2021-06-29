@@ -14,6 +14,7 @@ class _OrganizationState extends State<Organization> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+     constraints: BoxConstraints.expand(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         child: SingleChildScrollView(

@@ -13,6 +13,7 @@ class _OrganizationState extends State<Organization> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints.expand(),
       color: Colors.white,
      constraints: BoxConstraints.expand(),
       child: Padding(

@@ -5,7 +5,7 @@ import 'package:csr_module/homepage/homepage_profile.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:flutter/material.dart';
 
-import 'homepage_structure.dart';
+import 'homepage/homepage_structure.dart';
 
 // ignore: use_key_in_widget_constructors
 class MainPageStruct extends StatefulWidget {
@@ -102,7 +102,7 @@ class _HomePageStructState extends State<MainPageStruct> {
                     children: [
                       ListTile(
                         title: MyText(
-                          text: "I can",
+                          text: "I Can",
                           bold: (_mainpage == 'cangive'),
                         ),
                         onTap: () {
@@ -113,7 +113,7 @@ class _HomePageStructState extends State<MainPageStruct> {
                       ),
                       ListTile(
                         title: MyText(
-                          text: "I need",
+                          text: "I Need",
                           bold: (_mainpage == 'ineed'),
                         ),
                         onTap: () {

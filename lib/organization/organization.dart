@@ -15,7 +15,6 @@ class _OrganizationState extends State<Organization> {
     return Container(
       constraints: BoxConstraints.expand(),
       color: Colors.white,
-     constraints: BoxConstraints.expand(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         child: SingleChildScrollView(
@@ -51,14 +50,14 @@ class _OrganizationState extends State<Organization> {
             Container(
               height: 200,
               child: SingleChildScrollView(
-                              child: Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     DataTable(
                       columns: const <DataColumn>[
                         DataColumn(
-                          label:
-                              Text('Name', style: TextStyle(color: Colors.black)),
+                          label: Text('Name',
+                              style: TextStyle(color: Colors.black)),
                         ),
                         DataColumn(
                           label: Text('Department',
@@ -109,14 +108,14 @@ class _OrganizationState extends State<Organization> {
             Container(
               height: 200,
               child: SingleChildScrollView(
-                              child: Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     DataTable(
                       columns: const <DataColumn>[
                         DataColumn(
-                          label:
-                              Text('Name ', style: TextStyle(color: Colors.black)),
+                          label: Text('Name ',
+                              style: TextStyle(color: Colors.black)),
                         ),
                         DataColumn(
                           label: Text('Department',

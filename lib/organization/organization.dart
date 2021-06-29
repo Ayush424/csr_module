@@ -8,7 +8,7 @@ class Organization extends StatefulWidget {
 }
 
 class _OrganizationState extends State<Organization> {
-  static const int numItems = 10;
+  static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
   Widget build(BuildContext context) {
@@ -49,6 +49,12 @@ class _OrganizationState extends State<Organization> {
             ),
             Container(
               height: 200,
+              decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color.fromARGB(255,204,204,204),
+                          width: 1,
+                        )
+                      ),
               child: SingleChildScrollView(
                               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -107,6 +113,12 @@ class _OrganizationState extends State<Organization> {
             ),
             Container(
               height: 200,
+              decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color.fromARGB(255,204,204,204),
+                          width: 1,
+                        )
+                      ),
               child: SingleChildScrollView(
                               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

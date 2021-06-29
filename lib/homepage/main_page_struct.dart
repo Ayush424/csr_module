@@ -1,3 +1,4 @@
+import 'package:csr_module/activity/activity.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:csr_module/homepage/homepage_assistance_give.dart';
 import 'package:csr_module/homepage/homepage_assistance_need.dart';
@@ -176,7 +177,11 @@ class _HomePageStructState extends State<MainPageStruct> {
                       text: "Activity",
                       bold: (_mainpage == 'activity'),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'activity';
+                      });
+                    },
                   )
                 ],
               ),
@@ -193,7 +198,9 @@ class _HomePageStructState extends State<MainPageStruct> {
                 return Organization();
               } else if (_mainpage == 'myhome') {
                 return HomePageStruct();
-              } else {
+              } else if(_mainpage == 'activity'){
+                return Activity();
+              }else {
                 return Container();
               }
             }),

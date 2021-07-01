@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/Colors.dart';
+import 'package:csr_module/auth/models/assistance_entry.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,9 @@ class AssistanceNeed extends StatefulWidget {
 }
 
 class _AssistanceNeedState extends State<AssistanceNeed> {
+  AuthService _authService = AuthService();
+  TextEditingController textController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
   String dropdownvalue = "Select Category";
   @override
   Widget build(BuildContext context) {
@@ -44,24 +49,32 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  DropdownButton(
-                      focusColor: darkblue,
-                      value: dropdownvalue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownvalue = newValue!;
-                        });
-                      },
-                      items: <String>["Select Category", "1", "2", "3"]
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Text(value),
-                          ),
-                        );
-                      }).toList()),
+                  SizedBox(
+                    child: TextField(
+                      controller: categoryController,
+                      minLines: 1,
+                      maxLines: 2,
+                    ),
+                    height: 100,
+                  ),
+                  // DropdownButton(
+                  //     focusColor: darkblue,
+                  //     value: dropdownvalue,
+                  //     onChanged: (String? newValue) {
+                  //       setState(() {
+                  //         dropdownvalue = newValue!;
+                  //       });
+                  //     },
+                  //     items: <String>["Select Category", "1", "2", "3"]
+                  //         .map<DropdownMenuItem<String>>((String value) {
+                  //       return DropdownMenuItem<String>(
+                  //         value: value,
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.all(5),
+                  //           child: Text(value),
+                  //         ),
+                  //       );
+                  //     }).toList()),
                   Padding(
                     padding: EdgeInsets.only(top: 25),
                     child: Text(
@@ -74,6 +87,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                   ),
                   SizedBox(
                     child: TextField(
+                      controller: textController,
                       minLines: 5,
                       maxLines: 10,
                     ),
@@ -81,19 +95,72 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                   ),
                   Center(
                     child: GestureDetector(
-                      child: Chip(
-                        backgroundColor: darkblue,
-                        label: Text(
-                          "Post",
-                          style: TextStyle(color: Colors.white),
+                        child: Chip(
+                          backgroundColor: darkblue,
+                          label: Text(
+                            "Post",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          avatar: Icon(
+                            Icons.post_add,
+                            color: Colors.white,
+                          ),
                         ),
-                        avatar: Icon(
-                          Icons.post_add,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
+                        onTap: () {
+                          final entry = AssistanceEntry(
+                                  categoryController.text,
+                                  textController.text,
+                                  Timestamp.now(),
+                                  _authService.returnCurrentUserid())
+                              .toMap();
+                          if (categoryController.text.isNotEmpty &&
+                              textController.text.isNotEmpty) {
+                            FirebaseFirestore.instance
+                                .collection('assistance')
+                                .add(entry)
+                                .then(
+                                  (result) => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      content: SizedBox(
+                                        height: 150,
+                                        child: Center(
+                                          child: Text(
+                                            'Posted Successfully',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      content: Text(
+                                        'Please fill all the fields',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.red),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ));
+                          }
+                        }),
                   )
                 ],
               ),

@@ -12,7 +12,7 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
   TextEditingController textController = TextEditingController();
   String interest = "Select a Category";
   String interest2 = "Select a Category";

@@ -26,7 +26,9 @@ class _HomePageStructState extends State<MainPageStruct> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _auth.loadMyData();
+            },
             icon: const Icon(Icons.notifications_active,
                 color: Colors.white, size: 25),
           ),

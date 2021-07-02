@@ -111,7 +111,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                   categoryController.text,
                                   textController.text,
                                   Timestamp.now(),
-                                  _authService.returnCurrentUserid())
+                                  _authService.returnCurrentUserEmail())
                               .toMap();
                           if (categoryController.text.isNotEmpty &&
                               textController.text.isNotEmpty) {

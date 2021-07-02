@@ -24,6 +24,10 @@ class AuthService {
     }
   }
 
+  String? returnCurrentUserid() {
+    return _userFromFirebaseUser(_auth.currentUser)!.email;
+  }
+
   //stream
   Stream<MyUser?> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);

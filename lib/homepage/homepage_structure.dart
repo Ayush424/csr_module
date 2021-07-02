@@ -18,136 +18,155 @@ class _MyHomeState extends State<HomePageStruct> {
 
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints.expand(),
       color: Colors.white,
-      padding: const EdgeInsets.all(40),
-      child: ListView(
-        children: [
-          const Text(
-            "My Home",
-            style: TextStyle(
-              fontSize: 36,
-              color: Color.fromARGB(255, 42, 67, 101),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+        child: ListView(
+          controller: ScrollController(),
+          children: [
+            const Text(
+              "My Home",
+              style: TextStyle(
+                fontSize: 36,
+                color: Color.fromARGB(255, 42, 67, 101),
+              ),
             ),
-          ),
-          const Divider(
-            thickness: 3,
-            color: Color.fromARGB(255, 237, 242, 247),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Align(
+            const Divider(
+              thickness: 3,
+              color: Color.fromARGB(255, 237, 242, 247),
+            ),
+            Align(
               alignment: Alignment.topLeft,
               child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 5,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 30),
-                      FlatButton(
-                        minWidth: 100,
-                        color: Color.fromRGBO(229, 229, 229, 1),
-                        child: Text("Profile"),
-                        onPressed: () {
-                          {
+                  Align(
+                    alignment: Alignment.center,
+                    child: Wrap(
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromRGBO(229, 229, 229, 1)),
+                          ),
+                          onPressed: () {
+                            {
+                              setState(() {
+                                _homepage = 'profile';
+                              });
+                            }
+                          },
+                          child: const Text(
+                            'Profile',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ), //profile
+
+                        SizedBox(height: 5),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(110, 40)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromRGBO(229, 229, 229, 1)),
+                          ),
+                          onPressed: () {
                             setState(() {
-                              _homepage = 'profile';
+                              _homepage = 'documents';
                             });
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      FlatButton(
-                        minWidth: 100,
-                        color: Color.fromRGBO(229, 229, 229, 1),
-                        child: Text(
-                          'Details',
+                          },
+                          child: const Text(
+                            'Documents',
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ), //Documents
+
+                        SizedBox(height: 5),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromRGBO(229, 229, 229, 1)),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _homepage = 'payroll';
+                            });
+                          },
+                          child: const Text(
+                            'Payroll',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ), //Payroll
+
+                        SizedBox(height: 5),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromRGBO(229, 229, 229, 1)),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _homepage = 'trainings';
+                            });
+                          },
+                          child: const Text(
+                            'Trainings',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ), //Training
+                        SizedBox(height: 5),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            backgroundColor: MaterialStateProperty.all(
+                                Color.fromRGBO(229, 229, 229, 1)),
+                          ), //history
+                          onPressed: () {
+                            setState(() {
+                              _homepage = 'history';
+                            });
+                          },
+
+                          child: const Text(
+                            'Set Your Goals',
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            //  _homepage = 'details';
-                          });
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      FlatButton(
-                        minWidth: 100,
-                        color: Color.fromRGBO(229, 229, 229, 1),
-                        child: Text(
-                          'Documents',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _homepage = 'documents';
-                          });
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      FlatButton(
-                        minWidth: 100,
-                        color: Color.fromRGBO(229, 229, 229, 1),
-                        child: Text(
-                          'Payroll',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _homepage = 'payroll';
-                          });
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      FlatButton(
-                        minWidth: 100,
-                        color: Color.fromRGBO(229, 229, 229, 1),
-                        child: Text(
-                          'Trainings',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _homepage = 'trainings';
-                          });
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      FlatButton(
-                        minWidth: 100,
-                        color: Color.fromRGBO(229, 229, 229, 1),
-                        child: Text(
-                          'History',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            //  _homepage = 'history';
-                          });
-                        },
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          Builder(builder: (context) {
-            if (_homepage == 'profile') {
-              return HomeProfile();
-            }
-            //  else if (_homepage == 'details') {
-            //   return;
-            // }
-            else if (_homepage == 'documents') {
-              return HomeDocuments();
-            } else if (_homepage == 'payroll') {
-              return HomePayroll();
-            } else if (_homepage == 'trainings') {
-              return HomeTrainings();
-            }
-            // else if (_homepage == 'history') {
-            //   return ;
-            // }
-            else {
-              return HomeProfile();
-            }
-          })
-        ],
+            Builder(builder: (context) {
+              if (_homepage == 'profile') {
+                return HomeProfile();
+              }
+              //  else if (_homepage == 'details') {
+              //   return;
+              // }
+              else if (_homepage == 'documents') {
+                return HomeDocuments();
+              } else if (_homepage == 'payroll') {
+                return HomePayroll();
+              } else if (_homepage == 'trainings') {
+                return HomeTrainings();
+              }
+              // else if (_homepage == 'history') {
+              //   return ;
+              // }
+              else {
+                return HomeProfile();
+              }
+            })
+          ],
+        ),
       ),
     );
   }

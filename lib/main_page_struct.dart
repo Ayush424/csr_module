@@ -2,6 +2,7 @@ import 'package:csr_module/activity/activity.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:csr_module/homepage/homepage_assistance_give.dart';
 import 'package:csr_module/homepage/homepage_assistance_need.dart';
+import 'package:csr_module/homepage/homepage_dashboard.dart';
 import 'package:csr_module/homepage/homepage_profile.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
@@ -77,7 +78,11 @@ class _HomePageStructState extends State<MainPageStruct> {
                       text: "Dashboard",
                       bold: (_mainpage == 'dashboard'),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'dashboard';
+                      });
+                    },
                   ),
                   ListTile(
                     leading: const MyIcon(icon: Icons.home_outlined),
@@ -207,6 +212,8 @@ class _HomePageStructState extends State<MainPageStruct> {
                 return Activity();
               } else if (_mainpage == 'registrationform') {
                 return RegistrationForm();
+              } else if (_mainpage == 'dashboard') {
+                return HomeDashboard();
               } else {
                 return Container();
               }

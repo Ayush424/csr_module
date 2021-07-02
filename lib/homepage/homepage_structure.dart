@@ -45,12 +45,15 @@ class _MyHomeState extends State<HomePageStruct> {
                   Align(
                     alignment: Alignment.center,
                     child: Wrap(
+                      spacing: 10,
                       children: [
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(100, 40)),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromRGBO(229, 229, 229, 1)),
+                            backgroundColor: _homepage == 'profile'
+                                ? MaterialStateProperty.all(Colors.white)
+                                : MaterialStateProperty.all(
+                                    Color.fromRGBO(229, 229, 229, 1)),
                           ),
                           onPressed: () {
                             {
@@ -69,8 +72,10 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(110, 40)),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromRGBO(229, 229, 229, 1)),
+                            backgroundColor: _homepage == 'documents'
+                                ? MaterialStateProperty.all(Colors.white)
+                                : MaterialStateProperty.all(
+                                    Color.fromRGBO(229, 229, 229, 1)),
                           ),
                           onPressed: () {
                             setState(() {
@@ -89,8 +94,10 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(100, 40)),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromRGBO(229, 229, 229, 1)),
+                            backgroundColor: _homepage == 'payroll'
+                                ? MaterialStateProperty.all(Colors.white)
+                                : MaterialStateProperty.all(
+                                    Color.fromRGBO(229, 229, 229, 1)),
                           ),
                           onPressed: () {
                             setState(() {
@@ -107,8 +114,10 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(100, 40)),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromRGBO(229, 229, 229, 1)),
+                            backgroundColor: _homepage == 'trainings'
+                                ? MaterialStateProperty.all(Colors.white)
+                                : MaterialStateProperty.all(
+                                    Color.fromRGBO(229, 229, 229, 1)),
                           ),
                           onPressed: () {
                             setState(() {
@@ -124,12 +133,14 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(100, 40)),
-                            backgroundColor: MaterialStateProperty.all(
-                                Color.fromRGBO(229, 229, 229, 1)),
+                            backgroundColor: _homepage == 'setgoals'
+                                ? MaterialStateProperty.all(Colors.white)
+                                : MaterialStateProperty.all(
+                                    Color.fromRGBO(229, 229, 229, 1)),
                           ), //history
                           onPressed: () {
                             setState(() {
-                              _homepage = 'history';
+                              _homepage = 'setgoals';
                             });
                           },
 

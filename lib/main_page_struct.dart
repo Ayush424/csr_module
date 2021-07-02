@@ -4,6 +4,7 @@ import 'package:csr_module/homepage/homepage_assistance_give.dart';
 import 'package:csr_module/homepage/homepage_assistance_need.dart';
 import 'package:csr_module/homepage/homepage_profile.dart';
 import 'package:csr_module/organization/organization.dart';
+import 'package:csr_module/organization/registration.dart';
 import 'package:flutter/material.dart';
 
 import 'homepage/homepage_structure.dart';
@@ -156,9 +157,13 @@ class _HomePageStructState extends State<MainPageStruct> {
                           ListTile(
                             title: MyText(
                               text: "Core team",
-                              bold: (_mainpage == '   '),
+                              bold: (_mainpage == 'registrationform'),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              setState(() {
+                                _mainpage = 'registrationform';
+                              });
+                            },
                           ),
                           ListTile(
                             title: MyText(
@@ -200,6 +205,8 @@ class _HomePageStructState extends State<MainPageStruct> {
                 return HomePageStruct();
               } else if (_mainpage == 'activity') {
                 return Activity();
+              } else if (_mainpage == 'registrationform') {
+                return RegistrationForm();
               } else {
                 return Container();
               }

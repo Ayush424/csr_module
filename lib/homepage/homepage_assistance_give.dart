@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/Theme/Colors.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:csr_module/auth/models/assistance_entry.dart';
-import 'package:csr_module/auth/services/firebase_auth_service.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -86,12 +86,19 @@ class _MyListViewState extends State<MyListView> {
                     color: darkblue, fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Text(
-                "posted on " +
-                    items[index].date.toDate().day.toString() +
-                    "-" +
-                    items[index].date.toDate().month.toString() +
-                    '-' +
-                    items[index].date.toDate().year.toString(),
+                "posted " +
+                    items[index]
+                        .date
+                        .toDate()
+                        .difference(DateTime.now())
+                        .inDays
+                        .toString() +
+                    " days ago"
+                //+
+                // items[index].date.toDate().month.toString() +
+                //  '-' +
+                // items[index].date.toDate().year.toString()
+                ,
                 style: TextStyle(color: lightblue, fontSize: 15),
               ),
             ],

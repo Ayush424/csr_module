@@ -10,25 +10,22 @@ class HomeDocuments extends StatefulWidget {
 class _HomeDocumentsState extends State<HomeDocuments> {
   @override
   Widget build(BuildContext context) {
-    return
-      Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Container(
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Container(
           child: Wrap(
             children: [
-
               Column(
                 children: [
                   Container(
-                    width:780,
+                    width: 780,
                     height: 180,
                     decoration: new BoxDecoration(
-                        color: Colors.blueGrey[200],
+                      color: Color.fromARGB(255, 237, 242, 247),
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
-
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,41 +37,39 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                             icon: Icon(Icons.upload_sharp),
                             style: ButtonStyle(
                               fixedSize:
-                              MaterialStateProperty.all(Size(150, 40)),
+                                  MaterialStateProperty.all(Size(150, 40)),
                             ),
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text("Drag and Drop here",
+                        Text(
+                          "Drag and Drop here",
                           style: TextStyle(
                             decoration: TextDecoration.none,
                             fontSize: 30,
                             color: Colors.black,
                           ),
-                          textAlign: TextAlign.center,),
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
                   SizedBox(height: 30),
-
-                  Text("Uploaded Documents",
+                  Text(
+                    "Uploaded Documents",
                     style: TextStyle(
                       fontSize: 25,
                       color: Color.fromARGB(255, 42, 67, 101),
                       fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.none,),
+                      decoration: TextDecoration.none,
+                    ),
                   ),
-
-
                   Padding(
-
                     padding: EdgeInsets.all((10)),
                     child: Container(
-                      width:780,
-
-
+                      width: 780,
                       decoration: new BoxDecoration(
-                        color: Colors.blueGrey[200],
+                        color: Color.fromARGB(255, 237, 242, 247),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child: DataTable(
@@ -122,8 +117,8 @@ class _HomeDocumentsState extends State<HomeDocuments> {
               ),
             ],
           ),
-    ),
         ),
-      );
+      ),
+    );
   }
 }

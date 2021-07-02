@@ -10,7 +10,7 @@ class HomeProfile extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
         child: Wrap(
-          spacing: 350,
+          spacing: 400,
           runSpacing: 100,
           children: [
             Padding(
@@ -108,18 +108,28 @@ class HomeProfile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 50,
+                    radius: 70,
                     backgroundImage: NetworkImage(
-                      'https://source.unsplash.com/50x50/?portrait',
+                      'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/104113705/original/6076831db34315e45bd2a31a9d79bb7b91d48e04/design-flat-style-minimalist-avatar-of-you.jpg',
                     ),
                   ),
-                  Text(
-                    "Name",
-                    style: TextStyle(decoration: TextDecoration.none),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      "Name",
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  Text(
-                    "Department",
-                    style: TextStyle(decoration: TextDecoration.none),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      "Department",
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

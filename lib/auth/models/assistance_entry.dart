@@ -11,8 +11,9 @@ class AssistanceEntry {
   String convertpostedyBy(postedBy) {
     if (postedBy == null) {
       return "";
-    } else
+    } else {
       return postedBy;
+    }
   }
 
   Map<String, dynamic> toMap() {

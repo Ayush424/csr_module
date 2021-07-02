@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/Theme/Colors.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:csr_module/auth/models/assistance_entry.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';

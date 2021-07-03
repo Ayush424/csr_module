@@ -1,6 +1,4 @@
 import 'dart:ui';
-
-import 'package:csr_module/homepage_dashboard_recent_activity.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -96,25 +94,182 @@ class _HomeDashboardState extends State<HomeDashboard> {
             thickness: 3,
             color: Color.fromARGB(255, 237, 242, 247),
           ),
-          RecentActivity(),
-          SizedBox(
-            height: 5.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text('xyz',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              Text('updated 3 weeks ago',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.pink,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Ongoing',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  )),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Team Members',
+                    style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
+                  )),
+              Text('5 hours',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ],
           ),
-          RecentActivity(),
           SizedBox(
-            height: 5.0,
+            height: 10,
           ),
-          RecentActivity(),
-          SizedBox(
-            height: 5.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text('xyz',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              Text('updated 3 weeks ago',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.green[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  )),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Team Members',
+                    style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
+                  )),
+              Text('5 hours',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ],
           ),
-          RecentActivity(),
           SizedBox(
-            height: 5.0,
+            height: 10,
           ),
-          RecentActivity(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text('xyz',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              Text('updated 3 weeks ago',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.green[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  )),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Team Members',
+                    style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
+                  )),
+              Text('5 hours',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ],
+          ),
           SizedBox(
-            height: 5.0,
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text('xyz',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              Text('updated 3 weeks ago',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.green[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  )),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Team Members',
+                    style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
+                  )),
+              Text('5 hours',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text('xyz',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              Text('updated 3 weeks ago',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.green[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  )),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Team Members',
+                    style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
+                  )),
+              Text('5 hours',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ],
           ),
         ],
       ),

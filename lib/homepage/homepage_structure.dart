@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'homepage_documents.dart';
+import 'homepage_setgoals.dart';
 import 'homepage_training.dart';
 import 'homepage_payroll.dart';
 import 'homepage_profile.dart';
@@ -45,6 +46,7 @@ class _MyHomeState extends State<HomePageStruct> {
                   Align(
                     alignment: Alignment.center,
                     child: Wrap(
+                      runSpacing: 10,
                       spacing: 10,
                       children: [
                         ElevatedButton(
@@ -53,7 +55,7 @@ class _MyHomeState extends State<HomePageStruct> {
                             backgroundColor: _homepage == 'profile'
                                 ? MaterialStateProperty.all(Colors.white)
                                 : MaterialStateProperty.all(
-                                    Color.fromRGBO(229, 229, 229, 1)),
+                                    Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             {
@@ -64,18 +66,18 @@ class _MyHomeState extends State<HomePageStruct> {
                           },
                           child: const Text(
                             'Profile',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ), //profile
 
                         SizedBox(height: 5),
                         ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(110, 40)),
+                            fixedSize: MaterialStateProperty.all(Size(140, 40)),
                             backgroundColor: _homepage == 'documents'
                                 ? MaterialStateProperty.all(Colors.white)
                                 : MaterialStateProperty.all(
-                                    Color.fromRGBO(229, 229, 229, 1)),
+                                    Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             setState(() {
@@ -86,7 +88,7 @@ class _MyHomeState extends State<HomePageStruct> {
                             'Documents',
                             maxLines: 1,
                             overflow: TextOverflow.clip,
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ), //Documents
 
@@ -97,7 +99,7 @@ class _MyHomeState extends State<HomePageStruct> {
                             backgroundColor: _homepage == 'payroll'
                                 ? MaterialStateProperty.all(Colors.white)
                                 : MaterialStateProperty.all(
-                                    Color.fromRGBO(229, 229, 229, 1)),
+                                    Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             setState(() {
@@ -106,18 +108,18 @@ class _MyHomeState extends State<HomePageStruct> {
                           },
                           child: const Text(
                             'Payroll',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ), //Payroll
 
                         SizedBox(height: 5),
                         ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            fixedSize: MaterialStateProperty.all(Size(140, 40)),
                             backgroundColor: _homepage == 'trainings'
                                 ? MaterialStateProperty.all(Colors.white)
                                 : MaterialStateProperty.all(
-                                    Color.fromRGBO(229, 229, 229, 1)),
+                                    Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             setState(() {
@@ -126,17 +128,17 @@ class _MyHomeState extends State<HomePageStruct> {
                           },
                           child: const Text(
                             'Trainings',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ), //Training
                         SizedBox(height: 5),
                         ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            fixedSize: MaterialStateProperty.all(Size(170, 40)),
                             backgroundColor: _homepage == 'setgoals'
                                 ? MaterialStateProperty.all(Colors.white)
                                 : MaterialStateProperty.all(
-                                    Color.fromRGBO(229, 229, 229, 1)),
+                                    Color.fromRGBO(247, 250, 252, 1)),
                           ), //history
                           onPressed: () {
                             setState(() {
@@ -146,7 +148,7 @@ class _MyHomeState extends State<HomePageStruct> {
 
                           child: const Text(
                             'Set Your Goals',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ),
                       ],
@@ -168,11 +170,9 @@ class _MyHomeState extends State<HomePageStruct> {
                 return HomePayroll();
               } else if (_homepage == 'trainings') {
                 return HomeTrainings();
-              }
-              // else if (_homepage == 'history') {
-              //   return ;
-              // }
-              else {
+              } else if (_homepage == 'setgoals') {
+                return SetGoals();
+              } else {
                 return HomeProfile();
               }
             })

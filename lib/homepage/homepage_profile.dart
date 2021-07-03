@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeProfile extends StatelessWidget {
-  const HomeProfile({Key? key}) : super(key: key);
-
+  final AuthService _authService = AuthService();
+  final collection = FirebaseFirestore.instance.collection("Users");
   @override
   Widget build(BuildContext context) {
     return Align(

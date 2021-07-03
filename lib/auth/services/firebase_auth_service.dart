@@ -1,14 +1,61 @@
 import 'package:csr_module/auth/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'firestore_service.dart';
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   //user to firebase user
   MyUser? _userFromFirebaseUser(User? user) {
-    return user != null
-        ? MyUser(
-            uid: user.uid, displayName: user.displayName, email: user.email)
-        : null;
+    // return user != null
+    //     ? MyUser(
+    //         uid: user.uid, displayName: user.displayName, email: user.email)
+    //     : null;
+    return user != null ? MyUser(user.uid, user.email) : null;
+  }
+
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? user = result.user;
+      // create a new document for the user with the uid
+      await FirestoreService(user!.uid).updateUserData(
+          "displayName",
+          email,
+          "phoneNo",
+          "empcode",
+          "dateOfJoining",
+          "skypeId",
+          "department",
+          "gender",
+          "homeAddress",
+          "maritalStatus");
+      return _userFromFirebaseUser(user);
+    } catch (error) {
+      //print(error.toString());
+      return null;
+    }
+  }
+
+  //temporary loading data function
+  Future<void> loadMyData() async {
+    User? user = _auth.currentUser;
+    await FirestoreService(user!.uid).updateUserData(
+        "displayName",
+        user.email,
+        "phoneNo",
+        "empcode",
+        user.metadata.creationTime!.day.toString() +
+            '/' +
+            user.metadata.creationTime!.month.toString() +
+            '/' +
+            user.metadata.creationTime!.year.toString(),
+        "skypeId",
+        "department",
+        "gender",
+        "homeAddress",
+        "maritalStatus");
   }
 
   //signin anonm
@@ -24,8 +71,12 @@ class AuthService {
     }
   }
 
-  String? returnCurrentUserid() {
+  String? returnCurrentUserEmail() {
     return _userFromFirebaseUser(_auth.currentUser)!.email;
+  }
+
+  String? returnCurrentUserid() {
+    return _userFromFirebaseUser(_auth.currentUser)!.uid;
   }
 
   //stream

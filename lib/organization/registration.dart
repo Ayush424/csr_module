@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/colors.dart';
+import 'package:csr_module/auth/models/csr_registration_entry.dart';
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
 
 import 'package:flutter/material.dart';
 
@@ -9,7 +12,7 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  // AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
   TextEditingController textController = TextEditingController();
   String interest = "Select a Category";
   String interest2 = "Select a Category";
@@ -127,7 +130,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   Padding(
                     padding: EdgeInsets.only(top: 25),
                     child: Text(
-                      "Content",
+                      "Others",
                       style: TextStyle(
                           color: darkblue,
                           fontSize: 18,
@@ -151,7 +154,59 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        onTap: () {}),
+                        onTap: () {
+                          final entry = CsrEntry(textController.text, interest,
+                                  interest2, _authService.returnCurrentUserid())
+                              .ToMap();
+                          if (interest != 'Select a Category' &&
+                              interest2 != 'Select a Category' &&
+                              textController.text.isNotEmpty) {
+                            FirebaseFirestore.instance
+                                .collection('CsrRegistraionDetails')
+                                .add(entry)
+                                .then(
+                                  (result) => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      content: SizedBox(
+                                        height: 150,
+                                        child: Center(
+                                          child: Text(
+                                            'Applied Successfully',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      content: Text(
+                                        'Please fill all the above fields',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.red),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ));
+                          }
+                        }),
                   )
                 ],
               ),

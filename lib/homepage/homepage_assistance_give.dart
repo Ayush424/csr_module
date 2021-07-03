@@ -45,7 +45,7 @@ class AssistanceCanGive extends StatelessWidget {
                     decoration: BoxDecoration(
                         border: Border.all(
                             color: Color.fromARGB(255, 204, 204, 204))),
-                    child: MyListView(),
+                    child: AssistanceList(),
                   ),
                 ),
               )
@@ -57,14 +57,14 @@ class AssistanceCanGive extends StatelessWidget {
   }
 }
 
-class MyListView extends StatefulWidget {
-  const MyListView({Key? key}) : super(key: key);
+class AssistanceList extends StatefulWidget {
+  const AssistanceList({Key? key}) : super(key: key);
 
   @override
-  _MyListViewState createState() => _MyListViewState();
+  _AssistanceListState createState() => _AssistanceListState();
 }
 
-class _MyListViewState extends State<MyListView> {
+class _AssistanceListState extends State<AssistanceList> {
   @override
   Widget build(BuildContext context) {
     final List<AssistanceEntry>? items =

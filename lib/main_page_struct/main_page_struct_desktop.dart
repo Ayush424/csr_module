@@ -28,21 +28,21 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.notifications_active,
-                color: Colors.white, size: 25),
+                color: Colors.white, size: 30),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(213, 63, 140, 1),
-              ),
-              child: const Text(
-                'Pro plan',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: ElevatedButton(
+          //     onPressed: () {},
+          //     style: ElevatedButton.styleFrom(
+          //       primary: const Color.fromRGBO(213, 63, 140, 1),
+          //     ),
+          //     child: const Text(
+          //       'Pro plan',
+          //       style: TextStyle(color: Colors.white),
+          //     ),
+          //   ),
+          // ),
           IconButton(
             padding: const EdgeInsets.only(right: 50),
             onPressed: () async {

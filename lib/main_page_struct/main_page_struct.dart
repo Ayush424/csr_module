@@ -15,7 +15,7 @@ class _HomePageStructState extends State<MainPageStruct> {
     var screensize = MediaQuery.of(context).size;
     if (screensize.width > 990) {
       return MainPageStructDesktop();
-    } else if (screensize.width < 900) {
+    } else if (screensize.width <= 990) {
       return MainPageStructTablet();
     } else {
       return Container();

@@ -22,37 +22,45 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_active,
-                color: Colors.white, size: 25),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(213, 63, 140, 1),
-              ),
-              child: const Text(
-                'Pro plan',
-                style: TextStyle(color: Colors.white),
-              ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Wrap(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.notifications_active,
+                      color: Colors.white, size: 25),
+                ),
+                Builder(
+                  builder: (context) => IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon:
+                        const Icon(Icons.menu, size: 30.0, color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ),
-          Builder(
-            builder: (context) => IconButton(
-              padding: const EdgeInsets.only(right: 20),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(Icons.menu, size: 30.0, color: Colors.white),
-            ),
-          ),
+
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: ElevatedButton(
+          //     onPressed: () {},
+          //     style: ElevatedButton.styleFrom(
+          //       primary: const Color.fromRGBO(213, 63, 140, 1),
+          //     ),
+          //     child: const Text(
+          //       'Pro plan',
+          //       style: TextStyle(color: Colors.white),
+          //     ),
+          //   ),
+          // ),
+
           // DropdownButton(items: items)
         ],
         leading: const Icon(Icons.air_rounded),
@@ -63,191 +71,213 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
         backgroundColor: const Color.fromARGB(255, 45, 55, 72),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Container(
-                  height: size.height * 0.05,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(
+          children: [
+            Expanded(
+              child: ListView(
+                controller: ScrollController(),
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountName: Text(
+                      'Employee Name',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    accountEmail: Text('Employee Profession'),
+                    currentAccountPicture: Icon(
+                      Icons.account_circle_rounded,
+                      size: 75,
+                      color: Colors.white70,
+                    ),
+                  ),
+                  // DrawerHeader(
+                  //     decoration: BoxDecoration(color: Colors.white),
+                  //     child: Container(
+                  //       height: size.height * 0.05,
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(left: 5, right: 5),
+                  //             child: IconButton(
+                  //               onPressed: () {},
+                  //               icon: Icon(
+                  //                 Icons.account_circle,
+                  //                 size: 70,
+                  //                 color: Colors.blue[100],
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(top: 60, left: 10),
+                  //             child: Column(
+                  //               mainAxisAlignment: MainAxisAlignment.center,
+                  //               children: [
+                  //                 TextButton(
+                  //                   child: Text(
+                  //                     'Employee Name',
+                  //                     style: TextStyle(
+                  //                         color: Colors.grey[800],
+                  //                         fontSize: 16,
+                  //                         fontWeight: FontWeight.bold),
+                  //                   ),
+                  //                   onPressed: () {},
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.only(left: 11),
+                  //                   child: Text(
+                  //                     'Employee Profession',
+                  //                     style: TextStyle(
+                  //                         color: Colors.grey[600],
+                  //                         fontSize: 14),
+                  //                   ),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(top: 60),
+                  //             child: IconButton(
+                  //                 onPressed: () {},
+                  //                 icon: Icon(Icons.arrow_right)),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     )),
+                  ListTile(
+                    leading: const MyIcon(icon: Icons.assessment_outlined),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Dashboard",
+                        bold: (_mainpage == 'dashboard'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'dashboard';
+                      });
+                    },
+                  ),
+                  ListTile(
+                    leading: const MyIcon(icon: Icons.home_outlined),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "My Home",
+                        bold: (_mainpage == 'myhome'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'myhome';
+                      });
+                    },
+                  ),
+                  ExpansionTile(
+                    childrenPadding: const EdgeInsets.only(
+                      left: 40,
+                    ),
+                    leading: MyIcon(icon: Icons.help_outline),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Assistance",
+                        bold: (_mainpage == 'assistance'),
+                      ),
+                    ),
+                    trailing: const MyIcon(icon: Icons.arrow_right),
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.account_circle,
-                            size: 70,
-                            color: Colors.blue[100],
-                          ),
+                      ListTile(
+                        title: MyText(
+                          text: "I Can",
+                          bold: (_mainpage == 'cangive'),
                         ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'cangive';
+                          });
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 60, left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              child: Text(
-                                'Employee Name',
-                                style: TextStyle(
-                                    color: Colors.grey[800],
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {},
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 11),
-                              child: Text(
-                                'Employee Profession',
-                                style: TextStyle(
-                                    color: Colors.grey[600], fontSize: 14),
-                              ),
-                            )
-                          ],
+                      ListTile(
+                        title: MyText(
+                          text: "I Need",
+                          bold: (_mainpage == 'ineed'),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 60),
-                        child: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.arrow_right)),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = "ineed";
+                          });
+                        },
                       ),
                     ],
                   ),
-                )),
-            ListTile(
-              leading: const MyIcon(icon: Icons.assessment_outlined),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Dashboard",
-                  bold: (_mainpage == 'dashboard'),
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  _mainpage = 'dashboard';
-                });
-              },
-            ),
-            ListTile(
-              leading: const MyIcon(icon: Icons.home_outlined),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "My Home",
-                  bold: (_mainpage == 'myhome'),
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  _mainpage = 'myhome';
-                });
-              },
-            ),
-            ExpansionTile(
-              childrenPadding: const EdgeInsets.only(
-                left: 40,
-              ),
-              leading: MyIcon(icon: Icons.help_outline),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Assistance",
-                  bold: (_mainpage == 'assistance'),
-                ),
-              ),
-              trailing: const MyIcon(icon: Icons.arrow_right),
-              children: [
-                ListTile(
-                  title: MyText(
-                    text: "I Can",
-                    bold: (_mainpage == 'cangive'),
+                  ExpansionTile(
+                    childrenPadding: const EdgeInsets.only(left: 40),
+                    leading: MyIcon(icon: Icons.people_outline_outlined),
+                    trailing: MyIcon(icon: Icons.arrow_right),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "CSR Cell",
+                        bold: (_mainpage == 'csrcell'),
+                      ),
+                    ),
+                    children: [
+                      ListTile(
+                        title: MyText(
+                          text: "Core Team",
+                          bold: (_mainpage == 'coreteam'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'coreteam';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: MyText(
+                          text: "Registration Form",
+                          bold: (_mainpage == 'registrationform'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'registrationform';
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = 'cangive';
-                    });
-                  },
-                ),
-                ListTile(
-                  title: MyText(
-                    text: "I Need",
-                    bold: (_mainpage == 'ineed'),
+                  ListTile(
+                    leading: MyIcon(icon: Icons.calendar_today_rounded),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Events and Calendar",
+                        bold: (_mainpage == 'recurringevents'),
+                      ),
+                    ),
+                    onTap: () {},
                   ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = "ineed";
-                    });
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              childrenPadding: const EdgeInsets.only(left: 40),
-              leading: MyIcon(icon: Icons.people_outline_outlined),
-              trailing: MyIcon(icon: Icons.arrow_right),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "CSR Cell",
-                  bold: (_mainpage == 'csrcell'),
-                ),
+                  ListTile(
+                    leading: const MyIcon(icon: Icons.extension),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Activity",
+                        bold: (_mainpage == 'activity'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'activity';
+                      });
+                    },
+                  )
+                ],
               ),
-              children: [
-                ListTile(
-                  title: MyText(
-                    text: "Core Team",
-                    bold: (_mainpage == 'coreteam'),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = 'coreteam';
-                    });
-                  },
-                ),
-                ListTile(
-                  title: MyText(
-                    text: "Registration Form",
-                    bold: (_mainpage == 'registrationform'),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = 'registrationform';
-                    });
-                  },
-                ),
-              ],
             ),
-            ListTile(
-              leading: MyIcon(icon: Icons.calendar_today_rounded),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Events and Calendar",
-                  bold: (_mainpage == 'recurringevents'),
-                ),
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const MyIcon(icon: Icons.extension),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Activity",
-                  bold: (_mainpage == 'activity'),
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  _mainpage = 'activity';
-                });
-              },
-            )
           ],
         ),
       ),

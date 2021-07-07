@@ -1,9 +1,8 @@
 import 'package:csr_module/activity/activity.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
-import 'package:csr_module/homepage/homepage_assistance_give.dart';
-import 'package:csr_module/homepage/homepage_assistance_need.dart';
-import 'package:csr_module/homepage/homepage_dashboard.dart';
-import 'package:csr_module/homepage/homepage_profile.dart';
+import 'package:csr_module/assistance/assistance_give.dart';
+import 'package:csr_module/assistance/assistance_need.dart';
+import 'package:csr_module/dashboard/dashboard.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
 import 'package:flutter/material.dart';

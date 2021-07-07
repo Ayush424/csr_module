@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/colors.dart';
-import 'package:csr_module/auth/models/assistance_entry.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -107,12 +106,13 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                           ),
                         ),
                         onTap: () {
-                          final entry = AssistanceEntry(
-                                  categoryController.text,
-                                  textController.text,
-                                  Timestamp.now(),
-                                  _authService.returnCurrentUserEmail())
-                              .toMap();
+                          final Map<String, dynamic> entry = {
+                            'category': categoryController.text,
+                            'content': textController.text,
+                            'date': Timestamp.now(),
+                            'postedBy': _authService.returnCurrentUserEmail()
+                          };
+
                           if (categoryController.text.isNotEmpty &&
                               textController.text.isNotEmpty) {
                             FirebaseFirestore.instance

@@ -3,9 +3,9 @@ import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
 import 'package:csr_module/activity/activity.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
-import 'package:csr_module/homepage/homepage_assistance_give.dart';
-import 'package:csr_module/homepage/homepage_assistance_need.dart';
-import 'package:csr_module/homepage/homepage_dashboard.dart';
+import 'package:csr_module/assistance/assistance_give.dart';
+import 'package:csr_module/assistance/assistance_need.dart';
+import 'package:csr_module/dashboard/dashboard.dart';
 import '../homepage/homepage_structure.dart';
 
 class MainPageStructTablet extends StatefulWidget {
@@ -16,7 +16,7 @@ class MainPageStructTablet extends StatefulWidget {
 }
 
 class _MainPageStructTabletState extends State<MainPageStructTablet> {
-  String _mainpage = "myhome";
+  String _mainpage = "dashboard";
 
   final AuthService _auth = AuthService();
 

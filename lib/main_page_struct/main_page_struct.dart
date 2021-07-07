@@ -13,12 +13,10 @@ class _HomePageStructState extends State<MainPageStruct> {
   @override
   Widget build(BuildContext context) {
     var screensize = MediaQuery.of(context).size;
-    if (screensize.width > 990) {
+    if (screensize.width >= 990) {
       return MainPageStructDesktop();
-    } else if (screensize.width < 900) {
-      return MainPageStructTablet();
     } else {
-      return Container();
+      return MainPageStructTablet();
     }
   }
 }

@@ -26,35 +26,31 @@ class _HomeDashboardState extends State<HomeDashboard> {
       color: Colors.white,
       padding: EdgeInsets.only(top: 40, left: 40, right: 40),
       child: ListView(
+        controller: ScrollController(),
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Dashboard',
-                style: TextStyle(
-                    fontSize: 36, color: Color.fromARGB(255, 42, 67, 101)),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(42, 67, 101, 1)),
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.add_circle, color: Colors.white)),
-                    Text('Volunteer'),
-                  ],
-                ),
-              ),
-            ],
+          Text(
+            'Dashboard',
+            style: TextStyle(
+                fontSize: 36, color: Color.fromARGB(255, 42, 67, 101)),
           ),
+          // ElevatedButton(
+          //   onPressed: () {},
+          //   style: ElevatedButton.styleFrom(
+          //       primary: Color.fromRGBO(42, 67, 101, 1)),
+          //   child: Row(
+          //     children: [
+          //       IconButton(
+          //           onPressed: () {},
+          //           icon: Icon(Icons.add_circle, color: Colors.white)),
+          //       Text('Volunteer'),
+          //     ],
+          //   ),
+          // ),
           Divider(
             thickness: 3,
             color: Color.fromARGB(255, 237, 242, 247),
           ),
-          Row(
+          Wrap(
             children: [
               Container(
                 height: screensize.height * 0.60,
@@ -81,14 +77,10 @@ class _HomeDashboardState extends State<HomeDashboard> {
               ),
             ],
           ),
-          Row(
-            children: [
-              Text(
-                'Recent Activities',
-                style: TextStyle(
-                    fontSize: 32, color: Color.fromARGB(255, 42, 67, 101)),
-              ),
-            ],
+          Text(
+            'Recent Activities',
+            style: TextStyle(
+                fontSize: 32, color: Color.fromARGB(255, 42, 67, 101)),
           ),
           Divider(
             thickness: 3,

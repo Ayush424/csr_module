@@ -1,11 +1,12 @@
+import 'package:csr_module/organization/dollar_for_dollar.dart';
 import 'package:flutter/material.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
 import 'package:csr_module/activity/activity.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
-import 'package:csr_module/homepage/homepage_assistance_give.dart';
-import 'package:csr_module/homepage/homepage_assistance_need.dart';
-import 'package:csr_module/homepage/homepage_dashboard.dart';
+import 'package:csr_module/assistance/assistance_give.dart';
+import 'package:csr_module/assistance/assistance_need.dart';
+import 'package:csr_module/dashboard/dashboard.dart';
 import '../homepage/homepage_structure.dart';
 
 class MainPageStructDesktop extends StatefulWidget {
@@ -16,7 +17,7 @@ class MainPageStructDesktop extends StatefulWidget {
 }
 
 class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
-  String _mainpage = "myhome";
+  String _mainpage = "dashboard";
 
   final AuthService _auth = AuthService();
 
@@ -184,7 +185,11 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                         bold: (_mainpage == 'recurringevents'),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'recurringevents';
+                      });
+                    },
                   ),
                   ListTile(
                     leading: const MyIcon(icon: Icons.extension),
@@ -222,6 +227,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                 return RegistrationForm();
               } else if (_mainpage == 'dashboard') {
                 return HomeDashboard();
+              } else if (_mainpage == 'recurringevents') {
+                return DollarForDollar();
               } else {
                 return Container();
               }

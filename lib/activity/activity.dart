@@ -19,6 +19,7 @@ class _ActivityState extends State<Activity> {
       child: Padding(
         padding: EdgeInsets.all(40),
         child: SingleChildScrollView(
+          controller: ScrollController(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,6 +54,7 @@ class _ActivityState extends State<Activity> {
                   width: 1,
                 )),
                 child: SingleChildScrollView(
+                  controller: ScrollController(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -124,6 +126,7 @@ class _ActivityState extends State<Activity> {
                               width: 1,
                             )),
                             child: SingleChildScrollView(
+                              controller: ScrollController(),
                               child: DataTable(
                                 columns: const <DataColumn>[
                                   DataColumn(
@@ -185,6 +188,7 @@ class _ActivityState extends State<Activity> {
                             )),
                             // width: 650,
                             child: SingleChildScrollView(
+                              controller: ScrollController(),
                               child: DataTable(
                                 columns: const <DataColumn>[
                                   DataColumn(

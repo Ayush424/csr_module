@@ -1,6 +1,6 @@
+import 'package:csr_module/homepage/homepage_setgoals.dart';
 import 'package:flutter/material.dart';
 import 'homepage_documents.dart';
-import 'homepage_setgoals.dart';
 import 'homepage_training.dart';
 import 'homepage_payroll.dart';
 import 'homepage_profile.dart';

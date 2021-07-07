@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/colors.dart';
-import 'package:csr_module/auth/models/csr_registration_entry.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 
 import 'package:flutter/material.dart';
@@ -155,9 +154,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           ),
                         ),
                         onTap: () {
-                          final entry = CsrEntry(textController.text, interest,
-                                  interest2, _authService.returnCurrentUserid())
-                              .ToMap();
+                          final Map<String, dynamic> entry = {
+                            'others': textController.text,
+                            'areaOfInterest1': interest,
+                            'areaOfInterest2': interest2,
+                            'uId': _authService.returnCurrentUserid()
+                          };
                           if (interest != 'Select a Category' &&
                               interest2 != 'Select a Category' &&
                               textController.text.isNotEmpty) {

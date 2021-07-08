@@ -1,3 +1,8 @@
+import 'dart:typed_data';
+
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class HomeDocuments extends StatefulWidget {
@@ -8,6 +13,19 @@ class HomeDocuments extends StatefulWidget {
 }
 
 class _HomeDocumentsState extends State<HomeDocuments> {
+  final AuthService authService = AuthService();
+  void _uploadDocuments() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+      String? id = authService.returnCurrentUserid();
+      // Upload file
+      await FirebaseStorage.instance.ref('$id/$fileName').putData(fileBytes);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -32,7 +50,9 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                       children: [
                         Center(
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              _uploadDocuments();
+                            },
                             label: Text('Upload'),
                             icon: Icon(Icons.upload_sharp),
                             style: ButtonStyle(
@@ -43,7 +63,7 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "Drag and Drop here",
+                          "Select Document",
                           style: TextStyle(
                             decoration: TextDecoration.none,
                             fontSize: 30,

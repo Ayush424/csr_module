@@ -29,7 +29,7 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.notifications_active,
-                color: Colors.white, size: 25),
+                color: Colors.white, size: 30),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

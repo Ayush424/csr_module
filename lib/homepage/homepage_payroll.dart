@@ -8,6 +8,8 @@ class HomePayroll extends StatefulWidget {
 }
 
 class _HomePayrollState extends State<HomePayroll> {
+  static const int numItems = 6;
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,38 +32,27 @@ class _HomePayrollState extends State<HomePayroll> {
                           DataColumn(label: Text('AMOUNT')),
                           DataColumn(label: Text('DURATION')),
                         ],
-                        rows: [
-                          DataRow(cells: [
-                            DataCell(Text('NGO 1')),
-                            DataCell(Text('500INR')),
-                            DataCell(Text("6 months ago")),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('NGO 1')),
-                            DataCell(Text('500INR')),
-                            DataCell(Text("6 months ago")),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('NGO 1')),
-                            DataCell(Text('500INR')),
-                            DataCell(Text("6 months ago")),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('NGO 1')),
-                            DataCell(Text('500INR')),
-                            DataCell(Text("6 months ago")),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('NGO 1')),
-                            DataCell(Text('500INR')),
-                            DataCell(Text("6 months ago")),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('NGO 1')),
-                            DataCell(Text('500INR')),
-                            DataCell(Text("6 months ago")),
-                          ]),
-                        ],
+                        rows: List<DataRow>.generate(
+                          numItems,
+                          (int index) => DataRow(
+                            color: MaterialStateProperty.resolveWith<Color?>(
+                                (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Color.fromARGB(255, 237, 242, 247)
+                                    .withOpacity(0.08);
+                              }
+                              if (index.isEven) {
+                                return Color.fromARGB(255, 237, 242, 247);
+                              }
+                              return null;
+                            }),
+                            cells: <DataCell>[
+                              DataCell(Text('abc')),
+                              DataCell(Text('xyz')),
+                              DataCell(Text('1 month'))
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -101,15 +92,15 @@ class _HomePayrollState extends State<HomePayroll> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Wrap(
-                    spacing: 8.0, // gap between adjacent chips
-                    runSpacing: 4.0,
-                    children: [
-                      Row(
-                        children: [],
-                      ),
-                    ],
-                  ),
+                  // // // Wrap(
+                  // // //   spacing: 8.0, // gap between adjacent chips
+                  // // //   runSpacing: 4.0,
+                  // // //   children: [
+                  // // //     Row(
+                  // // //       children: [],
+                  // // //     ),
+                  // //   ],
+                  // ),
                 ],
               ),
             ),

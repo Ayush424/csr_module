@@ -1,3 +1,4 @@
+import 'package:csr_module/events_and_calendar/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
@@ -26,34 +27,27 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_active,
-                color: Colors.white, size: 25),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
+          Flexible(
+            flex: 2,
+            child: IconButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(213, 63, 140, 1),
-              ),
-              child: const Text(
-                'Pro plan',
-                style: TextStyle(color: Colors.white),
+              tooltip: 'Notifications',
+              icon: const Icon(Icons.notifications_active,
+                  color: Colors.white, size: 25),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Builder(
+              builder: (context) => IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: 'Menu',
+                icon: const Icon(Icons.menu, size: 30.0, color: Colors.white),
               ),
             ),
           ),
-          Builder(
-            builder: (context) => IconButton(
-              padding: const EdgeInsets.only(right: 20),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(Icons.menu, size: 30.0, color: Colors.white),
-            ),
-          ),
-          // DropdownButton(items: items)
         ],
         leading: const Icon(Icons.air_rounded),
         title: const Text(
@@ -63,191 +57,175 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
         backgroundColor: const Color.fromARGB(255, 45, 55, 72),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Container(
-                  height: size.height * 0.05,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.account_circle,
-                            size: 70,
-                            color: Colors.blue[100],
-                          ),
+        child: Row(
+          children: [
+            Expanded(
+              child: ListView(
+                controller: ScrollController(),
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountName: Text(
+                      'Employee Name',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    accountEmail: Text('Employee Profession'),
+                    currentAccountPicture: Icon(
+                      Icons.account_circle_rounded,
+                      size: 75,
+                      color: Colors.white70,
+                    ),
+                    otherAccountsPictures: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.logout,
+                          color: Colors.white70,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 60, left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              child: Text(
-                                'Employee Name',
-                                style: TextStyle(
-                                    color: Colors.grey[800],
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {},
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 11),
-                              child: Text(
-                                'Employee Profession',
-                                style: TextStyle(
-                                    color: Colors.grey[600], fontSize: 14),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 60),
-                        child: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.arrow_right)),
+                        onPressed: () async {
+                          await _auth.signOut();
+                        },
+                        tooltip: 'Logout',
                       ),
                     ],
                   ),
-                )),
-            ListTile(
-              leading: const MyIcon(icon: Icons.assessment_outlined),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Dashboard",
-                  bold: (_mainpage == 'dashboard'),
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  _mainpage = 'dashboard';
-                });
-              },
-            ),
-            ListTile(
-              leading: const MyIcon(icon: Icons.home_outlined),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "My Home",
-                  bold: (_mainpage == 'myhome'),
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  _mainpage = 'myhome';
-                });
-              },
-            ),
-            ExpansionTile(
-              childrenPadding: const EdgeInsets.only(
-                left: 40,
-              ),
-              leading: MyIcon(icon: Icons.help_outline),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Assistance",
-                  bold: (_mainpage == 'assistance'),
-                ),
-              ),
-              trailing: const MyIcon(icon: Icons.arrow_right),
-              children: [
-                ListTile(
-                  title: MyText(
-                    text: "I Can",
-                    bold: (_mainpage == 'cangive'),
+                  ListTile(
+                    leading: const MyIcon(icon: Icons.assessment_outlined),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Dashboard",
+                        bold: (_mainpage == 'dashboard'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'dashboard';
+                      });
+                    },
                   ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = 'cangive';
-                    });
-                  },
-                ),
-                ListTile(
-                  title: MyText(
-                    text: "I Need",
-                    bold: (_mainpage == 'ineed'),
+                  ListTile(
+                    leading: const MyIcon(icon: Icons.home_outlined),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "My Home",
+                        bold: (_mainpage == 'myhome'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'myhome';
+                      });
+                    },
                   ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = "ineed";
-                    });
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              childrenPadding: const EdgeInsets.only(left: 40),
-              leading: MyIcon(icon: Icons.people_outline_outlined),
-              trailing: MyIcon(icon: Icons.arrow_right),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "CSR Cell",
-                  bold: (_mainpage == 'csrcell'),
-                ),
-              ),
-              children: [
-                ListTile(
-                  title: MyText(
-                    text: "Core Team",
-                    bold: (_mainpage == 'coreteam'),
+                  ExpansionTile(
+                    childrenPadding: const EdgeInsets.only(
+                      left: 40,
+                    ),
+                    leading: MyIcon(icon: Icons.help_outline),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Assistance",
+                        bold: (_mainpage == 'assistance'),
+                      ),
+                    ),
+                    trailing: const MyIcon(icon: Icons.arrow_right),
+                    children: [
+                      ListTile(
+                        title: MyText(
+                          text: "I Can",
+                          bold: (_mainpage == 'cangive'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'cangive';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: MyText(
+                          text: "I Need",
+                          bold: (_mainpage == 'ineed'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = "ineed";
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = 'coreteam';
-                    });
-                  },
-                ),
-                ListTile(
-                  title: MyText(
-                    text: "Registration Form",
-                    bold: (_mainpage == 'registrationform'),
+                  ExpansionTile(
+                    childrenPadding: const EdgeInsets.only(left: 40),
+                    leading: MyIcon(icon: Icons.people_outline_outlined),
+                    trailing: MyIcon(icon: Icons.arrow_right),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "CSR Cell",
+                        bold: (_mainpage == 'csrcell'),
+                      ),
+                    ),
+                    children: [
+                      ListTile(
+                        title: MyText(
+                          text: "Core Team",
+                          bold: (_mainpage == 'coreteam'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'coreteam';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: MyText(
+                          text: "Registration Form",
+                          bold: (_mainpage == 'registrationform'),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _mainpage = 'registrationform';
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  onTap: () {
-                    setState(() {
-                      _mainpage = 'registrationform';
-                    });
-                  },
-                ),
-              ],
-            ),
-            ListTile(
-              leading: MyIcon(icon: Icons.calendar_today_rounded),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Events and Calendar",
-                  bold: (_mainpage == 'recurringevents'),
-                ),
+                  ListTile(
+                    leading: MyIcon(icon: Icons.calendar_today_rounded),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Events and Calendar",
+                        bold: (_mainpage == 'calendar'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'calendar';
+                      });
+                    },
+                  ),
+                  ListTile(
+                    leading: const MyIcon(icon: Icons.extension),
+                    title: Transform(
+                      transform: Matrix4.translationValues(-16, 0, 0),
+                      child: MyText(
+                        text: "Activity",
+                        bold: (_mainpage == 'activity'),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'activity';
+                      });
+                    },
+                  )
+                ],
               ),
-              onTap: () {},
             ),
-            ListTile(
-              leading: const MyIcon(icon: Icons.extension),
-              title: Transform(
-                transform: Matrix4.translationValues(-16, 0, 0),
-                child: MyText(
-                  text: "Activity",
-                  bold: (_mainpage == 'activity'),
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  _mainpage = 'activity';
-                });
-              },
-            )
           ],
         ),
       ),
@@ -266,6 +244,8 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
           return RegistrationForm();
         } else if (_mainpage == 'dashboard') {
           return HomeDashboard();
+        } else if (_mainpage == 'calendar') {
+          return Calendar();
         } else {
           return Container();
         }

@@ -38,7 +38,7 @@ dependencies:
   firebase_storage: ^9.0.0
   provider: ^5.0.0
   syncfusion_flutter_charts: ^19.2.44+1
-
+  syncfusion_flutter_calendar: ^19.2.46
 dev_dependencies:
   flutter_test:
     sdk: flutter

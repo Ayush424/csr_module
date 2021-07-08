@@ -22,83 +22,83 @@ class _DollarForDollarState extends State<DollarForDollar> {
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\$ for \$",
-                    style: TextStyle(
-                        fontSize: 36, color: Color.fromARGB(255, 42, 67, 101),decoration: TextDecoration.none),
-                  ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart,
-                  color: Color.fromARGB(255, 45, 55, 72),
-                  size: 25,
-                  )),  
-                ],
-              ),
-              Divider(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "\$ for \$",
+                      style: TextStyle(
+                          fontSize: 36,
+                          color: Color.fromARGB(255, 42, 67, 101),
+                          decoration: TextDecoration.none),
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          color: Color.fromARGB(255, 45, 55, 72),
+                          size: 25,
+                        )),
+                  ],
+                ),
+                Divider(
                   color: Color.fromARGB(255, 226, 232, 240),
                   thickness: 2,
                 ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Text('NGO 1',
-                style: TextStyle(color: Color.fromARGB(255, 45, 55, 72),
-                fontSize: 22),),
-              ),
-               
-              SizedBox(
-                
-                height: 200,
-                child: ListView.builder(
-                itemCount: numItems,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index){
-                  return ItemCard();
-                }
-                
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    'NGO 1',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Text('NGO 2',
-                style: TextStyle(color: Color.fromARGB(255, 45, 55, 72),
-                fontSize: 22),),
-              ),
-               
-              SizedBox(
-                
-                height: 200,
-                child: ListView.builder(
-                itemCount: numItems,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index){
-                  return ItemCard();
-                }
-                
+                SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                      itemCount: numItems,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return ItemCard();
+                      }),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Text('NGO 3',
-                style: TextStyle(color: Color.fromARGB(255, 45, 55, 72),
-                fontSize: 22),),
-              ),
-               
-              SizedBox(
-                
-                height: 200,
-                child: ListView.builder(
-                itemCount: numItems,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index){
-                  return ItemCard();
-                }
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    'NGO 2',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
+                  ),
                 ),
-              ), 
-            ],
-          ),
+                SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                      itemCount: numItems,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return ItemCard();
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    'NGO 3',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                      itemCount: numItems,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return ItemCard();
+                      }),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -119,13 +119,9 @@ class ItemCard extends StatelessWidget {
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.blueGrey[100],
-        border: Border.all(
-           color: Color.fromARGB(255, 204, 204, 204),
-           width: 1 
-        ),
+        border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
         // image: DecorationImage(image: AssetImage('product.jpg'),
         // ),
-        
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -135,27 +131,33 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset('product.jpg',
-                width: 121,
-                height: 81,),
+                Image.asset(
+                  'product.jpg',
+                  width: 121,
+                  height: 81,
+                ),
                 SizedBox(
                   width: 10,
                 ),
                 Column(
                   children: [
-                    Text('Product Name',
-                    style: TextStyle(color: Color.fromARGB(255, 45, 55, 72),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold
-                    ),),
+                    Text(
+                      'Product Name',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 45, 55, 72),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text('\$4.99',
-                    style: TextStyle(color: Color.fromARGB(255, 45, 55, 72),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold
-                    ),)
+                    Text(
+                      '\$4.99',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 45, 55, 72),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    )
                   ],
                 )
               ],
@@ -163,17 +165,14 @@ class ItemCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text('Product Description lorem ipsum',
-            style: TextStyle(
-              fontSize: 18,
-              color: Color.fromARGB(255, 113, 128, 150)
-            ),)
+            Text(
+              'Product Description lorem ipsum',
+              style: TextStyle(
+                  fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
+            )
           ],
         ),
-        
       ),
     );
   }
 }
-
-

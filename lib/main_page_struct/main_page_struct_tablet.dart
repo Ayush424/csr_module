@@ -1,3 +1,4 @@
+import 'package:csr_module/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
@@ -25,43 +26,27 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: Wrap(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.notifications_active,
-                      color: Colors.white, size: 25),
-                ),
-                Builder(
-                  builder: (context) => IconButton(
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    icon:
-                        const Icon(Icons.menu, size: 30.0, color: Colors.white),
-                  ),
-                ),
-              ],
+          Flexible(
+            flex: 2,
+            child: IconButton(
+              onPressed: () {},
+              tooltip: 'Notifications',
+              icon: const Icon(Icons.notifications_active,
+                  color: Colors.white, size: 25),
             ),
           ),
-
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: ElevatedButton(
-          //     onPressed: () {},
-          //     style: ElevatedButton.styleFrom(
-          //       primary: const Color.fromRGBO(213, 63, 140, 1),
-          //     ),
-          //     child: const Text(
-          //       'Pro plan',
-          //       style: TextStyle(color: Colors.white),
-          //     ),
-          //   ),
-          // ),
-
-          // DropdownButton(items: items)
+          Flexible(
+            flex: 1,
+            child: Builder(
+              builder: (context) => IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: 'Menu',
+                icon: const Icon(Icons.menu, size: 30.0, color: Colors.white),
+              ),
+            ),
+          ),
         ],
         leading: const Icon(Icons.air_rounded),
         title: const Text(
@@ -90,61 +75,19 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       size: 75,
                       color: Colors.white70,
                     ),
+                    otherAccountsPictures: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.logout,
+                          color: Colors.white70,
+                        ),
+                        onPressed: () async {
+                          await _auth.signOut();
+                        },
+                        tooltip: 'Logout',
+                      ),
+                    ],
                   ),
-                  // DrawerHeader(
-                  //     decoration: BoxDecoration(color: Colors.white),
-                  //     child: Container(
-                  //       height: size.height * 0.05,
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           Padding(
-                  //             padding: const EdgeInsets.only(left: 5, right: 5),
-                  //             child: IconButton(
-                  //               onPressed: () {},
-                  //               icon: Icon(
-                  //                 Icons.account_circle,
-                  //                 size: 70,
-                  //                 color: Colors.blue[100],
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           Padding(
-                  //             padding: const EdgeInsets.only(top: 60, left: 10),
-                  //             child: Column(
-                  //               mainAxisAlignment: MainAxisAlignment.center,
-                  //               children: [
-                  //                 TextButton(
-                  //                   child: Text(
-                  //                     'Employee Name',
-                  //                     style: TextStyle(
-                  //                         color: Colors.grey[800],
-                  //                         fontSize: 16,
-                  //                         fontWeight: FontWeight.bold),
-                  //                   ),
-                  //                   onPressed: () {},
-                  //                 ),
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.only(left: 11),
-                  //                   child: Text(
-                  //                     'Employee Profession',
-                  //                     style: TextStyle(
-                  //                         color: Colors.grey[600],
-                  //                         fontSize: 14),
-                  //                   ),
-                  //                 )
-                  //               ],
-                  //             ),
-                  //           ),
-                  //           Padding(
-                  //             padding: const EdgeInsets.only(top: 60),
-                  //             child: IconButton(
-                  //                 onPressed: () {},
-                  //                 icon: Icon(Icons.arrow_right)),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     )),
                   ListTile(
                     leading: const MyIcon(icon: Icons.assessment_outlined),
                     title: Transform(
@@ -255,10 +198,14 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Events and Calendar",
-                        bold: (_mainpage == 'recurringevents'),
+                        bold: (_mainpage == 'calendar'),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'calendar';
+                      });
+                    },
                   ),
                   ListTile(
                     leading: const MyIcon(icon: Icons.extension),
@@ -296,6 +243,8 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
           return RegistrationForm();
         } else if (_mainpage == 'dashboard') {
           return HomeDashboard();
+        } else if (_mainpage == 'calendar') {
+          return Calendar();
         } else {
           return Container();
         }

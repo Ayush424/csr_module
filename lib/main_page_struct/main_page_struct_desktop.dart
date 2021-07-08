@@ -1,3 +1,4 @@
+import 'package:csr_module/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
@@ -26,28 +27,19 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
       appBar: AppBar(
         actions: [
           IconButton(
+            padding: EdgeInsets.only(right: 50),
+            tooltip: 'Notification',
             onPressed: () {},
             icon: const Icon(Icons.notifications_active,
                 color: Colors.white, size: 30),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: ElevatedButton(
-          //     onPressed: () {},
-          //     style: ElevatedButton.styleFrom(
-          //       primary: const Color.fromRGBO(213, 63, 140, 1),
-          //     ),
-          //     child: const Text(
-          //       'Pro plan',
-          //       style: TextStyle(color: Colors.white),
-          //     ),
-          //   ),
-          // ),
+
           IconButton(
             padding: const EdgeInsets.only(right: 50),
             onPressed: () async {
               await _auth.signOut();
             },
+            tooltip: 'Logout',
             icon: const Icon(Icons.account_circle,
                 size: 50.0, color: Colors.white),
           ),
@@ -181,10 +173,14 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Events and Calendar",
-                        bold: (_mainpage == 'recurringevents'),
+                        bold: (_mainpage == 'calendar'),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        _mainpage = 'calendar';
+                      });
+                    },
                   ),
                   ListTile(
                     leading: const MyIcon(icon: Icons.extension),
@@ -222,6 +218,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                 return RegistrationForm();
               } else if (_mainpage == 'dashboard') {
                 return HomeDashboard();
+              } else if (_mainpage == 'calendar') {
+                return Calendar();
               } else {
                 return Container();
               }

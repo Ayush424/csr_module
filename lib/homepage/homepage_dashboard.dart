@@ -11,6 +11,8 @@ class HomeDashboard extends StatefulWidget {
 }
 
 class _HomeDashboardState extends State<HomeDashboard> {
+  static const int numItems = 10;
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   late List<Days> _chartData;
   late TooltipBehavior _tooltipBehavior;
 
@@ -31,18 +33,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
       padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
       child: ListView(
         children: [
-          Wrap(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Dashboard',
-                    style: TextStyle(
-                        fontSize: 36, color: Color.fromARGB(255, 42, 67, 101)),
-                  ),
-                ],
-              ),
-            ],
+          ListTile(
+            title: Text(
+              'Dashboard',
+              style: TextStyle(
+                  fontSize: 36, color: Color.fromARGB(255, 42, 67, 101)),
+            ),
           ),
           Divider(
             thickness: 3,
@@ -184,434 +180,28 @@ class _HomeDashboardState extends State<HomeDashboard> {
               ),
             ],
           ),
-          Row(
-            children: [
-              Text(
-                'Recent Activities',
-                style: TextStyle(
-                    fontSize: 32, color: Color.fromARGB(255, 42, 67, 101)),
-              ),
-            ],
+          SizedBox(
+            height: 20,
+          ),
+          ListTile(
+            title: Text(
+              'Recent Activities',
+              style: TextStyle(
+                  fontSize: 32, color: Color.fromARGB(255, 42, 67, 101)),
+            ),
           ),
           Divider(
             thickness: 3,
             color: Color.fromARGB(255, 237, 242, 247),
           ),
-          ListView(
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            children: [
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.pink,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Ongoing',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 35,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('xyz',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    Text('updated 3 weeks ago',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green[300],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1)),
-                        )),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(44, 82, 130, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            )),
-                        onPressed: () {},
-                        child: Text(
-                          'Team Members',
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 252, 254, 1)),
-                        )),
-                    Text('5 hours',
-                        style:
-                            TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-                  ],
-                ),
-              ),
-            ],
+          SizedBox(
+            height: 210,
+            child: ListView.builder(
+                itemCount: numItems,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return ItemCard();
+                }),
           ),
         ],
       ),
@@ -643,6 +233,72 @@ List<Days> getChartData() {
     Days(DateTime(20), 7),
   ];
   return chartData;
+}
+
+class ItemCard extends StatelessWidget {
+  const ItemCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 35,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Text('xyz',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Text('updated 3 weeks ago',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.pink,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Ongoing',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      )),
+                  onPressed: () {},
+                  child: Text(
+                    'Team Members',
+                    style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Text('5 hours',
+                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class Days {

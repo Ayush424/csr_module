@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class DollarForDollar extends StatefulWidget {
   const DollarForDollar({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class DollarForDollar extends StatefulWidget {
 class _DollarForDollarState extends State<DollarForDollar> {
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  CarouselController buttonCarouselController = CarouselController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,13 +36,16 @@ class _DollarForDollarState extends State<DollarForDollar> {
                           color: Color.fromARGB(255, 42, 67, 101),
                           decoration: TextDecoration.none),
                     ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.shopping_cart,
-                          color: Color.fromARGB(255, 45, 55, 72),
-                          size: 25,
-                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 80, bottom: 10),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.shopping_cart,
+                            color: Color.fromARGB(255, 45, 55, 72),
+                            size: 40,
+                          )),
+                    ),
                   ],
                 ),
                 Divider(
@@ -48,59 +54,99 @@ class _DollarForDollarState extends State<DollarForDollar> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    'NGO 1',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
                   child: ListView.builder(
+                      shrinkWrap: true,
                       itemCount: numItems,
-                      scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return ItemCard();
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    'NGO 2',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                      itemCount: numItems,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return ItemCard();
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    'NGO 3',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                      itemCount: numItems,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return ItemCard();
+                        return NgoList();
                       }),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class NgoList extends StatefulWidget {
+  const NgoList({Key? key}) : super(key: key);
+
+  @override
+  _NgoListState createState() => _NgoListState();
+}
+
+class _NgoListState extends State<NgoList> {
+  static const int numItems = 6;
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  CarouselController buttonCarouselController = CarouselController();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Text(
+              'Ngo Name',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
+            ),
+          ),
+          SizedBox(
+            height: 200,
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                IconButton(
+                  onPressed: () => buttonCarouselController.previousPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.linear),
+                  icon: Icon(Icons.arrow_left_sharp),
+                  color: Color.fromARGB(255, 42, 67, 101),
+                  iconSize: 50,
+                ),
+                CarouselSlider.builder(
+                  // itemCount: numItems,
+                  carouselController: buttonCarouselController,
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    enlargeCenterPage: false,
+                    viewportFraction: 1,
+                    aspectRatio: 3.8,
+                  ),
+                  // itemCount: numItems.round(),
+                  itemCount: (numItems / 3).round(),
+                  itemBuilder:
+                      (BuildContext context, int itemIndex, int pageViewIndex) {
+                    return Row(children: [
+                      Flexible(
+                        child: ItemCard(),
+                        flex: 1,
+                      ),
+                      Flexible(
+                        child: ItemCard(),
+                        flex: 1,
+                      ),
+                      //  Flexible(child: ItemCard(),
+                      //  flex: 1,),
+                    ]);
+                  },
+                ),
+                IconButton(
+                  onPressed: () => buttonCarouselController.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.linear),
+                  icon: Icon(Icons.arrow_right_sharp),
+                  color: Color.fromARGB(255, 42, 67, 101),
+                  iconSize: 50,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

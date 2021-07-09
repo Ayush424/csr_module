@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,20 +13,38 @@ class HomePayroll extends StatefulWidget {
 }
 
 class _HomePayrollState extends State<HomePayroll> {
+  final AuthService _authService = AuthService();
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
 
-  static final List<String> items = <String>[
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
+  static final List<String> ngos = <String>[
+    'Select a Ngo',
+    'Ngo 1',
+    'Ngo 2',
+    'Ngo 3',
+    'Ngo 4',
+    'Ngo 5',
   ];
-
+  static final List<String> period = <String>[
+    'Select Duration',
+    '2 months',
+    '4 months',
+    '6 months',
+    '8 months',
+    '10 months',
+    '12 months',
+  ];
+  static final List<String> amounts = <String>[
+    'Select Amount',
+    '1000',
+    '2000',
+    '5000',
+  ];
   bool add = false;
 
-  String value = items.first;
+  String value1 = ngos.first;
+  String value2 = period.first;
+  String value3 = amounts.first;
 
   @override
   Widget build(BuildContext context) {
@@ -50,49 +69,90 @@ class _HomePayrollState extends State<HomePayroll> {
                           width: 1,
                         )),
                         child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              DataTable(
-                                columns: const <DataColumn>[
-                                  DataColumn(
-                                    label: Text('Name',
-                                        style: TextStyle(color: Colors.black)),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Department',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                        )),
-                                  ),
-                                ],
-                                rows: List<DataRow>.generate(
-                                  numItems,
-                                  (int index) => DataRow(
-                                    color: MaterialStateProperty.resolveWith<
-                                        Color?>((Set<MaterialState> states) {
-                                      if (states
-                                          .contains(MaterialState.selected)) {
-                                        return Color.fromARGB(
-                                                255, 237, 242, 247)
-                                            .withOpacity(0.08);
-                                      }
-                                      if (index.isEven) {
-                                        return Color.fromARGB(
-                                            255, 237, 242, 247);
-                                      }
-                                      return null;
-                                    }),
-                                    cells: <DataCell>[
-                                      DataCell(Text('abc')),
-                                      DataCell(Text('xyz')),
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('payroll')
+                                  .doc(_authService.returnCurrentUserid())
+                                  .collection('user_payrolls')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null)
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                else if (snapshot.data!.docs.length > 0) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      DataTable(
+                                        columns: const <DataColumn>[
+                                          DataColumn(
+                                            label: Text('Ngo Name',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 44, 82, 130))),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Period',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 44, 82, 130))),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Amount',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                )),
+                                          ),
+                                        ],
+                                        rows: List<DataRow>.generate(
+                                          snapshot.data!.docs.length,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Text(snapshot
+                                                  .data!.docs[index]['ngo'])),
+                                              DataCell(Text(snapshot.data!
+                                                  .docs[index]['period'])),
+                                              DataCell(Text(snapshot.data!
+                                                  .docs[index]['amount'])),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                  );
+                                } else {
+                                  return Center(
+                                    child: Text(
+                                        "No entries to show add some now",
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 44, 82, 130))),
+                                  );
+                                }
+                              }),
                         ),
                       ),
                     ),
@@ -172,8 +232,8 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value,
-                                              items: items
+                                              value: value1,
+                                              items: ngos
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
                                                         child: Text(
@@ -189,7 +249,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value = value!;
+                                                this.value1 = value!;
                                               }),
                                             ),
                                           ),
@@ -213,8 +273,8 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value,
-                                              items: items
+                                              value: value2,
+                                              items: period
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
                                                         child: Text(
@@ -230,7 +290,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value = value!;
+                                                this.value2 = value!;
                                               }),
                                             ),
                                           ),
@@ -255,8 +315,8 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value,
-                                              items: items
+                                              value: value3,
+                                              items: amounts
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
                                                         child: Text(
@@ -272,7 +332,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value = value!;
+                                                this.value3 = value!;
                                               }),
                                             ),
                                           ),
@@ -289,9 +349,77 @@ class _HomePayrollState extends State<HomePayroll> {
                                                         255, 42, 67, 101)),
                                           ),
                                           onPressed: () {
-                                            setState(() {
-                                              add = false;
-                                            });
+                                            if (value1 != ngos.first &&
+                                                value2 != period.first &&
+                                                value3 != amounts.first) {
+                                              FirebaseFirestore.instance
+                                                  .collection('payroll')
+                                                  .doc(_authService
+                                                      .returnCurrentUserid())
+                                                  .collection('user_payrolls')
+                                                  .add({
+                                                'ngo': value1,
+                                                'period': value2,
+                                                'amount': value3
+                                              }).then(
+                                                (result) => showDialog<String>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          AlertDialog(
+                                                    content: SizedBox(
+                                                      height: 150,
+                                                      child: Center(
+                                                        child: Text(
+                                                          'Added Successfully',
+                                                          style: TextStyle(
+                                                              fontSize: 20),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            add = false;
+                                                            value1 = ngos.first;
+                                                            value2 =
+                                                                period.first;
+                                                            value3 =
+                                                                amounts.first;
+                                                          });
+                                                          Navigator.pop(
+                                                              context, 'OK');
+                                                        },
+                                                        child: const Text('OK'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => AlertDialog(
+                                                        content: Text(
+                                                          'Please select a value for all the fields',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context,
+                                                                    'OK'),
+                                                            child: const Text(
+                                                                'OK'),
+                                                          ),
+                                                        ],
+                                                      ));
+                                            }
                                           },
                                           child: const Text("Done")),
                                     ),

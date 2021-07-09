@@ -1,4 +1,5 @@
 import 'package:csr_module/events_and_calendar/calendar.dart';
+import 'package:csr_module/organization/dollar_for_dollar.dart';
 import '../homepage/static_homepage.dart';
 import 'static_mainpage.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,9 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
           Flexible(
             flex: 2,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _auth.loadMyData();
+              },
               tooltip: 'Notifications',
               icon: const Icon(Icons.notifications_active,
                   color: Colors.white, size: 25),
@@ -254,7 +257,11 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
             update: _update,
           );
         } else if (GlobalMainPage.mainpage == 'calendar') {
-          return Calendar();
+          return Calendar(
+            update: _update,
+          );
+        } else if (GlobalMainPage.mainpage == 'Dollar') {
+          return DollarForDollar();
         } else {
           return Container();
         }

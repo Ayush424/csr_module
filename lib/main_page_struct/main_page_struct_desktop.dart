@@ -1,3 +1,5 @@
+import 'package:csr_module/events_and_calendar/calendar.dart';
+
 import '../homepage/static_homepage.dart';
 
 import 'static_mainpage.dart';
@@ -230,7 +232,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
               } else if (GlobalMainPage.mainpage == 'dashboard') {
                 return HomeDashboard(update: _update);
               } else if (GlobalMainPage.mainpage == 'calendar') {
-                //return Calendar();
+                return Calendar(update: _update);
+              } else if (GlobalMainPage.mainpage == 'Dollar') {
                 return DollarForDollar();
               } else {
                 return Container();

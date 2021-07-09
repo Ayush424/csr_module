@@ -3,7 +3,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+  final ValueChanged<String>? update;
+  const Calendar({Key? key, this.update}) : super(key: key);
 
   @override
   _CalendarState createState() => _CalendarState();
@@ -112,8 +113,11 @@ class _CalendarState extends State<Calendar> {
               ],
             ),
             ListTile(
-              trailing:
-                  TextButton(onPressed: () {}, child: Text('view more >>>')),
+              trailing: TextButton(
+                  onPressed: () {
+                    widget.update!('Dollar');
+                  },
+                  child: Text('view more >>>')),
             ),
             ListTile(
               leading: Transform(

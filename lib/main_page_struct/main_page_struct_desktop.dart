@@ -230,9 +230,13 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
               } else if (GlobalMainPage.mainpage == 'registrationform') {
                 return RegistrationForm();
               } else if (GlobalMainPage.mainpage == 'dashboard') {
-                return HomeDashboard(update: _update);
+                return HomeDashboard(
+                  update: _update,
+                );
               } else if (GlobalMainPage.mainpage == 'calendar') {
-                return Calendar(update: _update);
+                return Calendar(
+                  update: _update,
+                );
               } else if (GlobalMainPage.mainpage == 'Dollar') {
                 return DollarForDollar();
               } else {

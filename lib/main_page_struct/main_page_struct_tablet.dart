@@ -1,4 +1,6 @@
 import 'package:csr_module/events_and_calendar/calendar.dart';
+import '../homepage/static_homepage.dart';
+import 'static_mainpage.dart';
 import 'package:flutter/material.dart';
 import 'package:csr_module/organization/organization.dart';
 import 'package:csr_module/organization/registration.dart';
@@ -17,7 +19,13 @@ class MainPageStructTablet extends StatefulWidget {
 }
 
 class _MainPageStructTabletState extends State<MainPageStructTablet> {
-  String _mainpage = "dashboard";
+  //String GlobalMainPage.mainpage = "dashboard";
+  void _update(String mainpage) {
+    setState(() {
+      GlobalHomePage.homepage = "setgoals";
+      GlobalMainPage.mainpage = mainpage;
+    });
+  }
 
   final AuthService _auth = AuthService();
 
@@ -94,12 +102,12 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Dashboard",
-                        bold: (_mainpage == 'dashboard'),
+                        bold: (GlobalMainPage.mainpage == 'dashboard'),
                       ),
                     ),
                     onTap: () {
                       setState(() {
-                        _mainpage = 'dashboard';
+                        GlobalMainPage.mainpage = 'dashboard';
                       });
                     },
                   ),
@@ -109,12 +117,12 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "My Home",
-                        bold: (_mainpage == 'myhome'),
+                        bold: (GlobalMainPage.mainpage == 'myhome'),
                       ),
                     ),
                     onTap: () {
                       setState(() {
-                        _mainpage = 'myhome';
+                        GlobalMainPage.mainpage = 'myhome';
                       });
                     },
                   ),
@@ -127,7 +135,7 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Assistance",
-                        bold: (_mainpage == 'assistance'),
+                        bold: (GlobalMainPage.mainpage == 'assistance'),
                       ),
                     ),
                     trailing: const MyIcon(icon: Icons.arrow_right),
@@ -135,22 +143,22 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       ListTile(
                         title: MyText(
                           text: "I Can",
-                          bold: (_mainpage == 'cangive'),
+                          bold: (GlobalMainPage.mainpage == 'cangive'),
                         ),
                         onTap: () {
                           setState(() {
-                            _mainpage = 'cangive';
+                            GlobalMainPage.mainpage = 'cangive';
                           });
                         },
                       ),
                       ListTile(
                         title: MyText(
                           text: "I Need",
-                          bold: (_mainpage == 'ineed'),
+                          bold: (GlobalMainPage.mainpage == 'ineed'),
                         ),
                         onTap: () {
                           setState(() {
-                            _mainpage = "ineed";
+                            GlobalMainPage.mainpage = "ineed";
                           });
                         },
                       ),
@@ -164,29 +172,29 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "CSR Cell",
-                        bold: (_mainpage == 'csrcell'),
+                        bold: (GlobalMainPage.mainpage == 'csrcell'),
                       ),
                     ),
                     children: [
                       ListTile(
                         title: MyText(
                           text: "Core Team",
-                          bold: (_mainpage == 'coreteam'),
+                          bold: (GlobalMainPage.mainpage == 'coreteam'),
                         ),
                         onTap: () {
                           setState(() {
-                            _mainpage = 'coreteam';
+                            GlobalMainPage.mainpage = 'coreteam';
                           });
                         },
                       ),
                       ListTile(
                         title: MyText(
                           text: "Registration Form",
-                          bold: (_mainpage == 'registrationform'),
+                          bold: (GlobalMainPage.mainpage == 'registrationform'),
                         ),
                         onTap: () {
                           setState(() {
-                            _mainpage = 'registrationform';
+                            GlobalMainPage.mainpage = 'registrationform';
                           });
                         },
                       ),
@@ -198,12 +206,12 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Events and Calendar",
-                        bold: (_mainpage == 'calendar'),
+                        bold: (GlobalMainPage.mainpage == 'calendar'),
                       ),
                     ),
                     onTap: () {
                       setState(() {
-                        _mainpage = 'calendar';
+                        GlobalMainPage.mainpage = 'calendar';
                       });
                     },
                   ),
@@ -213,12 +221,12 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Activity",
-                        bold: (_mainpage == 'activity'),
+                        bold: (GlobalMainPage.mainpage == 'activity'),
                       ),
                     ),
                     onTap: () {
                       setState(() {
-                        _mainpage = 'activity';
+                        GlobalMainPage.mainpage = 'activity';
                       });
                     },
                   )
@@ -229,21 +237,23 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
         ),
       ),
       body: Builder(builder: (context) {
-        if (_mainpage == 'cangive') {
+        if (GlobalMainPage.mainpage == 'cangive') {
           return AssistanceCanGive();
-        } else if (_mainpage == 'ineed') {
+        } else if (GlobalMainPage.mainpage == 'ineed') {
           return AssistanceNeed();
-        } else if (_mainpage == 'coreteam') {
+        } else if (GlobalMainPage.mainpage == 'coreteam') {
           return Organization();
-        } else if (_mainpage == 'myhome') {
+        } else if (GlobalMainPage.mainpage == 'myhome') {
           return HomePageStruct();
-        } else if (_mainpage == 'activity') {
+        } else if (GlobalMainPage.mainpage == 'activity') {
           return Activity();
-        } else if (_mainpage == 'registrationform') {
+        } else if (GlobalMainPage.mainpage == 'registrationform') {
           return RegistrationForm();
-        } else if (_mainpage == 'dashboard') {
-          return HomeDashboard();
-        } else if (_mainpage == 'calendar') {
+        } else if (GlobalMainPage.mainpage == 'dashboard') {
+          return HomeDashboard(
+            update: _update,
+          );
+        } else if (GlobalMainPage.mainpage == 'calendar') {
           return Calendar();
         } else {
           return Container();

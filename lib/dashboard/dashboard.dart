@@ -70,8 +70,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
                           )
                         ],
                         primaryXAxis: DateTimeAxis(
-                          intervalType: DateTimeIntervalType.months,
-                          interval: 2,
+                          intervalType: DateTimeIntervalType.years,
+                          interval: 7,
                         ),
                       ),
                     ),
@@ -211,26 +211,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
 List<Days> getChartData() {
   final List<Days> chartData = [
-    Days(DateTime(1), 7),
-    Days(DateTime(2), 10),
-    Days(DateTime(3), 5),
-    Days(DateTime(4), 6),
-    Days(DateTime(5), 7),
-    Days(DateTime(6), 7),
-    Days(DateTime(7), 10),
-    Days(DateTime(8), 11),
-    Days(DateTime(9), 6),
-    Days(DateTime(10), 7),
-    Days(DateTime(11), 7),
-    Days(DateTime(12), 10),
-    Days(DateTime(13), 5),
-    Days(DateTime(14), 6),
-    Days(DateTime(15), 7),
-    Days(DateTime(16), 7),
-    Days(DateTime(17), 10),
-    Days(DateTime(18), 5),
-    Days(DateTime(19), 6),
-    Days(DateTime(20), 7),
+    Days(DateTime(1, 7), 7),
+    Days(DateTime(8, 7), 10),
+    Days(DateTime(15, 7), 5),
+    Days(DateTime(22, 7), 6),
+    Days(DateTime(29, 7), 7),
   ];
   return chartData;
 }

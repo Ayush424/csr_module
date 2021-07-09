@@ -27,12 +27,14 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            padding: EdgeInsets.only(right: 50),
-            tooltip: 'Notification',
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_active,
-                color: Colors.white, size: 30),
+          Transform(
+            transform: Matrix4.translationValues(-20, 0, 0),
+            child: IconButton(
+              tooltip: 'Notification',
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_active,
+                  color: Colors.white, size: 30),
+            ),
           ),
 
           IconButton(

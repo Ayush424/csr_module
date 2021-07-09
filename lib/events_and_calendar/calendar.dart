@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  CarouselController buttonCarouselController = CarouselController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +21,7 @@ class _CalendarState extends State<Calendar> {
         constraints: BoxConstraints.expand(),
         padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: ListView(
+          controller: ScrollController(),
           children: [
             ListTile(
               title: Text(
@@ -30,6 +34,7 @@ class _CalendarState extends State<Calendar> {
               thickness: 3,
               color: Color.fromARGB(255, 237, 242, 247),
             ),
+            SizedBox(height: 10),
             Row(
               children: [
                 Flexible(
@@ -37,75 +42,129 @@ class _CalendarState extends State<Calendar> {
                   child: Column(
                     children: [
                       Container(
-                        height: 600,
+                        padding: EdgeInsets.only(left: 12, top: 12),
+                        height: 650,
                         child: SfCalendar(
+                          backgroundColor: Colors.white70,
                           view: CalendarView.month,
+                          appointmentTextStyle: TextStyle(
+                              fontSize: 25,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                           headerStyle: CalendarHeaderStyle(
                               textAlign: TextAlign.center,
                               textStyle: TextStyle(
                                   color: Color.fromRGBO(42, 67, 101, 1),
-                                  fontSize: 28)),
+                                  fontSize: 26)),
+                          headerHeight: 50,
                           viewHeaderStyle: ViewHeaderStyle(
                             backgroundColor: Colors.grey[300],
                             dayTextStyle: TextStyle(
-                                fontSize: 28,
+                                fontSize: 18,
                                 color: Color.fromRGBO(42, 67, 101, 1),
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                           ),
-                          viewHeaderHeight: 30,
+                          viewHeaderHeight: 40,
                           showNavigationArrow: true,
                           dataSource: MeetingDataSource(getAppointments()),
                           monthViewSettings: const MonthViewSettings(
-                            appointmentDisplayMode:
-                                MonthAppointmentDisplayMode.appointment,
-                          ),
-                          appointmentTextStyle: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
+                              appointmentDisplayMode:
+                                  MonthAppointmentDisplayMode.appointment,
+                              dayFormat: 'EEE',
+                              monthCellStyle: MonthCellStyle(
+                                  textStyle: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600))),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Flexible(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        ListView(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          children: [
-                            ListTile(
-                              leading:
-                                  Icon(Icons.crop_square, color: Colors.green),
-                              title: Text('Plantation Drive'),
-                            ),
-                            ListTile(
-                              leading:
-                                  Icon(Icons.crop_square, color: Colors.red),
-                              title: Text('Village Visit'),
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.crop_square,
-                                  color: Colors.deepPurple),
-                              title: Text('Yoga Event'),
-                            )
-                          ],
-                        )
-                      ],
-                    ))
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListView(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        children: [
+                          ListTile(
+                            leading:
+                                Icon(Icons.crop_square, color: Colors.green),
+                            title: Text('Plantation Drive'),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.crop_square, color: Colors.red),
+                            title: Text('Village Visit'),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.crop_square,
+                                color: Colors.deepPurple),
+                            title: Text('Yoga Event'),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-            SizedBox(
-              height: 210,
-              child: ListView.builder(
-                  itemCount: numItems,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return ItemCard();
-                  }),
+            ListTile(
+              trailing:
+                  TextButton(onPressed: () {}, child: Text('view more >>>')),
+            ),
+            ListTile(
+              leading: Transform(
+                transform: Matrix4.translationValues(0, 100, 0),
+                child: IconButton(
+                  onPressed: () => buttonCarouselController.previousPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.linear),
+                  icon: Icon(Icons.arrow_back_ios_new_outlined),
+                  color: Color.fromARGB(255, 42, 67, 101),
+                ),
+              ),
+              title: CarouselSlider.builder(
+                // itemCount: numItems,
+                carouselController: buttonCarouselController,
+                options: CarouselOptions(
+                  autoPlay: false,
+                  enlargeCenterPage: false,
+                  viewportFraction: 1,
+                  aspectRatio: 3.0,
+                ),
+                // itemCount: numItems.round(),
+                itemCount: (numItems / 2).round(),
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) {
+                  return Row(children: [
+                    Flexible(
+                      child: ItemCard(),
+                      flex: 1,
+                    ),
+                    Flexible(
+                      child: ItemCard(),
+                      flex: 1,
+                    ),
+                    Flexible(
+                      child: ItemCard(),
+                      flex: 1,
+                    ),
+                  ]);
+                },
+              ),
+              trailing: Transform(
+                transform: Matrix4.translationValues(0, 100, 0),
+                child: IconButton(
+                  onPressed: () => buttonCarouselController.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.linear),
+                  icon: Icon(Icons.arrow_forward_ios_outlined),
+                  color: Color.fromARGB(255, 42, 67, 101),
+                ),
+              ),
             ),
           ],
         ),
@@ -150,8 +209,8 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 210,
-      width: 340,
+      height: 250,
+      width: 400,
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.blueGrey[100],
@@ -166,7 +225,7 @@ class ItemCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Image.asset(
-                  'product.jpeg',
+                  'product.jpg',
                   width: 121,
                   height: 81,
                 ),

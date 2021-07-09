@@ -88,11 +88,20 @@ class _ActivityState extends State<Activity> {
                                                     label: Text('Name',
                                                         style: TextStyle(
                                                             color:
-                                                                Colors.black)),
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    44,
+                                                                    82,
+                                                                    130),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
                                                   ),
                                                   DataColumn(
                                                     label: Text('Description',
                                                         style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                           color: Color.fromARGB(
                                                               255, 44, 82, 130),
                                                         )),
@@ -178,10 +187,18 @@ class _ActivityState extends State<Activity> {
                                                         columns: const <
                                                             DataColumn>[
                                                           DataColumn(
-                                                            label: Text('Name',
+                                                            label: Text(
+                                                                'Name of Activites',
                                                                 style: TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            44,
+                                                                            82,
+                                                                            130),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
                                                           ),
                                                         ],
                                                         rows: List<
@@ -243,7 +260,7 @@ class _ActivityState extends State<Activity> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              'Goverment Initiated Activities',
+                                              'Government Initiated Activities',
                                               style: TextStyle(
                                                 fontSize: 24,
                                                 color: Color.fromARGB(
@@ -271,10 +288,18 @@ class _ActivityState extends State<Activity> {
                                                         columns: const <
                                                             DataColumn>[
                                                           DataColumn(
-                                                            label: Text('Name',
+                                                            label: Text(
+                                                                'Name of Activites',
                                                                 style: TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            44,
+                                                                            82,
+                                                                            130),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
                                                           ),
                                                         ],
                                                         rows: List<

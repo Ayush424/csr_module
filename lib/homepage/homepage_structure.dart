@@ -1,4 +1,5 @@
 import 'package:csr_module/homepage/homepage_setgoals.dart';
+import 'static_homepage.dart';
 import 'package:flutter/material.dart';
 import 'homepage_documents.dart';
 import 'homepage_training.dart';
@@ -13,7 +14,7 @@ class HomePageStruct extends StatefulWidget {
 }
 
 class _MyHomeState extends State<HomePageStruct> {
-  String _homepage = 'profile';
+  //String GlobalHomePage.homepage = 'profile';
   @override
 //row data
 
@@ -52,15 +53,16 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(100, 40)),
-                            backgroundColor: _homepage == 'profile'
-                                ? MaterialStateProperty.all(Colors.white)
-                                : MaterialStateProperty.all(
-                                    Color.fromRGBO(247, 250, 252, 1)),
+                            backgroundColor:
+                                GlobalHomePage.homepage == 'profile'
+                                    ? MaterialStateProperty.all(Colors.white)
+                                    : MaterialStateProperty.all(
+                                        Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             {
                               setState(() {
-                                _homepage = 'profile';
+                                GlobalHomePage.homepage = 'profile';
                               });
                             }
                           },
@@ -74,14 +76,15 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(140, 40)),
-                            backgroundColor: _homepage == 'documents'
-                                ? MaterialStateProperty.all(Colors.white)
-                                : MaterialStateProperty.all(
-                                    Color.fromRGBO(247, 250, 252, 1)),
+                            backgroundColor:
+                                GlobalHomePage.homepage == 'documents'
+                                    ? MaterialStateProperty.all(Colors.white)
+                                    : MaterialStateProperty.all(
+                                        Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             setState(() {
-                              _homepage = 'documents';
+                              GlobalHomePage.homepage = 'documents';
                             });
                           },
                           child: const Text(
@@ -96,14 +99,15 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(100, 40)),
-                            backgroundColor: _homepage == 'payroll'
-                                ? MaterialStateProperty.all(Colors.white)
-                                : MaterialStateProperty.all(
-                                    Color.fromRGBO(247, 250, 252, 1)),
+                            backgroundColor:
+                                GlobalHomePage.homepage == 'payroll'
+                                    ? MaterialStateProperty.all(Colors.white)
+                                    : MaterialStateProperty.all(
+                                        Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             setState(() {
-                              _homepage = 'payroll';
+                              GlobalHomePage.homepage = 'payroll';
                             });
                           },
                           child: const Text(
@@ -116,14 +120,15 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(140, 40)),
-                            backgroundColor: _homepage == 'trainings'
-                                ? MaterialStateProperty.all(Colors.white)
-                                : MaterialStateProperty.all(
-                                    Color.fromRGBO(247, 250, 252, 1)),
+                            backgroundColor:
+                                GlobalHomePage.homepage == 'trainings'
+                                    ? MaterialStateProperty.all(Colors.white)
+                                    : MaterialStateProperty.all(
+                                        Color.fromRGBO(247, 250, 252, 1)),
                           ),
                           onPressed: () {
                             setState(() {
-                              _homepage = 'trainings';
+                              GlobalHomePage.homepage = 'trainings';
                             });
                           },
                           child: const Text(
@@ -135,14 +140,15 @@ class _MyHomeState extends State<HomePageStruct> {
                         ElevatedButton(
                           style: ButtonStyle(
                             fixedSize: MaterialStateProperty.all(Size(170, 40)),
-                            backgroundColor: _homepage == 'setgoals'
-                                ? MaterialStateProperty.all(Colors.white)
-                                : MaterialStateProperty.all(
-                                    Color.fromRGBO(247, 250, 252, 1)),
+                            backgroundColor:
+                                GlobalHomePage.homepage == 'setgoals'
+                                    ? MaterialStateProperty.all(Colors.white)
+                                    : MaterialStateProperty.all(
+                                        Color.fromRGBO(247, 250, 252, 1)),
                           ), //history
                           onPressed: () {
                             setState(() {
-                              _homepage = 'setgoals';
+                              GlobalHomePage.homepage = 'setgoals';
                             });
                           },
 
@@ -158,19 +164,19 @@ class _MyHomeState extends State<HomePageStruct> {
               ),
             ),
             Builder(builder: (context) {
-              if (_homepage == 'profile') {
+              if (GlobalHomePage.homepage == 'profile') {
                 return HomeProfile();
               }
-              //  else if (_homepage == 'details') {
+              //  else if (GlobalHomePage.homepage == 'details') {
               //   return;
               // }
-              else if (_homepage == 'documents') {
+              else if (GlobalHomePage.homepage == 'documents') {
                 return HomeDocuments();
-              } else if (_homepage == 'payroll') {
+              } else if (GlobalHomePage.homepage == 'payroll') {
                 return HomePayroll();
-              } else if (_homepage == 'trainings') {
+              } else if (GlobalHomePage.homepage == 'trainings') {
                 return HomeTrainings();
-              } else if (_homepage == 'setgoals') {
+              } else if (GlobalHomePage.homepage == 'setgoals') {
                 return SetGoals();
               } else {
                 return HomeProfile();

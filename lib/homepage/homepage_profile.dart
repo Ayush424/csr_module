@@ -5,6 +5,35 @@ import 'package:flutter/material.dart';
 class HomeProfile extends StatelessWidget {
   final AuthService _authService = AuthService();
   final collection = FirebaseFirestore.instance.collection("Users");
+
+  TextEditingController _textFieldController = TextEditingController();
+
+  _displayDialog(BuildContext context, String details) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Enter" + details),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Enter"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: new Text('Save'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,12 +102,30 @@ class HomeProfile extends StatelessWidget {
                           DataRow(cells: [
                             DataCell(Text('Phone Number')),
                             DataCell(Text('1234567891')),
-                            DataCell(Icon(Icons.edit)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                ),
+                                onPressed: () {
+                                  _displayDialog(context, " new Phone Number");
+                                },
+                              ),
+                            ),
                           ]),
                           DataRow(cells: [
                             DataCell(Text('skype_id')),
                             DataCell(Text('mayank15')),
-                            DataCell(Icon(Icons.edit)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                ),
+                                onPressed: () {
+                                  _displayDialog(context, "new Skype_Id");
+                                },
+                              ),
+                            ),
                           ]),
                           DataRow(cells: [
                             DataCell(Text('Department')),
@@ -96,21 +143,43 @@ class HomeProfile extends StatelessWidget {
                             DataCell(Text('Home_Address')),
                             DataCell(Text('Madhya Pradesh')),
                             DataCell(
-                              Icon(Icons.edit),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                ),
+                                onPressed: () {
+                                  _displayDialog(context, " new Home Address");
+                                },
+                              ),
                             ),
                           ]),
                           DataRow(cells: [
                             DataCell(Text('Current_Address')),
                             DataCell(Text('Madhya Pradesh')),
                             DataCell(
-                              Icon(Icons.edit),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                ),
+                                onPressed: () {
+                                  _displayDialog(
+                                      context, " new Current Address");
+                                },
+                              ),
                             ),
                           ]),
                           DataRow(cells: [
                             DataCell(Text('Marital Status')),
                             DataCell(Text('Married')),
                             DataCell(
-                              Icon(Icons.edit),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                ),
+                                onPressed: () {
+                                  _displayDialog(context, "Marital Status");
+                                },
+                              ),
                             ),
                           ]),
                         ]),

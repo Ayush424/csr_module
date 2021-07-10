@@ -24,6 +24,7 @@ class _HomePayrollState extends State<HomePayroll> {
   ];
 
   bool add = false;
+  bool edit = false;
 
   String value = items.first;
 
@@ -113,7 +114,11 @@ class _HomePayrollState extends State<HomePayroll> {
                                   MaterialStateProperty.all(EdgeInsets.all(10)),
                             ),
                             label: Text('Request Edit'),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                edit = true;
+                              });
+                            },
                           ),
                           SizedBox(width: 30),
                           ElevatedButton.icon(
@@ -135,6 +140,173 @@ class _HomePayrollState extends State<HomePayroll> {
                         ],
                       ),
                     ),
+
+                    SizedBox(height: 20),
+                    edit == true
+                        ? Center(
+                            child: Container(
+                              height: 200,
+                              decoration: new BoxDecoration(
+                                color: Color.fromARGB(255, 237, 242, 247),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 50, 30, 50),
+                                child: Wrap(
+                                  spacing: 200,
+                                  runSpacing: 30,
+                                  children: [
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "NGO",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1)),
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Colors.white,
+                                            ),
+                                            child: DropdownButton<String>(
+                                              value: value,
+                                              items: items
+                                                  .map((item) =>
+                                                      DropdownMenuItem<String>(
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                        value: item,
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (value) =>
+                                                  setState(() {
+                                                this.value = value!;
+                                              }),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Period",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1)),
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Colors.white,
+                                            ),
+                                            child: DropdownButton<String>(
+                                              value: value,
+                                              items: items
+                                                  .map((item) =>
+                                                      DropdownMenuItem<String>(
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                        value: item,
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (value) =>
+                                                  setState(() {
+                                                this.value = value!;
+                                              }),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Amount",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1)),
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Colors.white,
+                                            ),
+                                            child: DropdownButton<String>(
+                                              value: value,
+                                              items: items
+                                                  .map((item) =>
+                                                      DropdownMenuItem<String>(
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 10,
+                                                          ),
+                                                        ),
+                                                        value: item,
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (value) =>
+                                                  setState(() {
+                                                this.value = value!;
+                                              }),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Color.fromARGB(
+                                                        255, 42, 67, 101)),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              edit = false;
+                                            });
+                                          },
+                                          child: const Text("Done")),
+                                    ),
+                                    edit == false ? Text("Done") : Text(""),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        : Text(""),
                     SizedBox(height: 20),
 
                     add == true

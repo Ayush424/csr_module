@@ -71,12 +71,16 @@ class _AssistanceListState extends State<AssistanceList> {
               title: Wrap(
                 spacing: MediaQuery.of(context).size.width / 5,
                 children: [
-                  Text(
-                    items[index]['category'],
-                    style: TextStyle(
-                        color: darkblue,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    width: 300,
+                    child: Text(
+                      items[index]['category'],
+                      maxLines: 2,
+                      style: TextStyle(
+                          color: darkblue,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Text(
                     "posted " +

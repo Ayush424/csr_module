@@ -1,10 +1,59 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
+import 'package:csr_module/auth/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeProfile extends StatelessWidget {
   final AuthService _authService = AuthService();
   final collection = FirebaseFirestore.instance.collection("Users");
+  TextEditingController _textFieldController = TextEditingController();
+
+  _displayDialog(BuildContext context, String details, String field) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Enter" + details),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Changed Value"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: new Text('Save'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  if (field == "phoneNo") {
+                    FirestoreService(_authService.returnCurrentUserid())
+                        .updatePhone(_textFieldController.text);
+                  }
+                  if (field == "skypeId") {
+                    FirestoreService(_authService.returnCurrentUserid())
+                        .updatePhone(_textFieldController.text);
+                  }
+                  if (field == "homeAddress") {
+                    FirestoreService(_authService.returnCurrentUserid())
+                        .updatePhone(_textFieldController.text);
+                  }
+                  if (field == "currentAddress") {
+                    FirestoreService(_authService.returnCurrentUserid())
+                        .updatePhone(_textFieldController.text);
+                  }
+                  if (field == "maritalStatus") {
+                    FirestoreService(_authService.returnCurrentUserid())
+                        .updatePhone(_textFieldController.text);
+                  }
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -81,12 +130,32 @@ class HomeProfile extends StatelessWidget {
                                 DataRow(cells: [
                                   DataCell(Text('Phone Number')),
                                   DataCell(Text(snapshot.data!.get('phoneNo'))),
-                                  DataCell(Icon(Icons.edit)),
+                                  DataCell(
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                      ),
+                                      onPressed: () {
+                                        _displayDialog(context,
+                                            " new Phone Number", "phoneNo");
+                                      },
+                                    ),
+                                  ),
                                 ]),
                                 DataRow(cells: [
                                   DataCell(Text('skype_id')),
                                   DataCell(Text(snapshot.data!.get('skypeId'))),
-                                  DataCell(Icon(Icons.edit)),
+                                  DataCell(
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                      ),
+                                      onPressed: () {
+                                        _displayDialog(
+                                            context, "new Skype_Id", "skypeId");
+                                      },
+                                    ),
+                                  ),
                                 ]),
                                 DataRow(cells: [
                                   DataCell(Text('Department')),
@@ -106,7 +175,15 @@ class HomeProfile extends StatelessWidget {
                                   DataCell(
                                       Text(snapshot.data!.get('homeAddress'))),
                                   DataCell(
-                                    Icon(Icons.edit),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                      ),
+                                      onPressed: () {
+                                        _displayDialog(context,
+                                            " new Home Address", "homeAddress");
+                                      },
+                                    ),
                                   ),
                                 ]),
                                 DataRow(cells: [
@@ -114,7 +191,17 @@ class HomeProfile extends StatelessWidget {
                                   DataCell(
                                       Text(snapshot.data!.get('homeAddress'))),
                                   DataCell(
-                                    Icon(Icons.edit),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                      ),
+                                      onPressed: () {
+                                        _displayDialog(
+                                            context,
+                                            " new Current Address",
+                                            "currentAddress");
+                                      },
+                                    ),
                                   ),
                                 ]),
                                 DataRow(cells: [
@@ -122,7 +209,15 @@ class HomeProfile extends StatelessWidget {
                                   DataCell(Text(
                                       snapshot.data!.get('maritalStatus'))),
                                   DataCell(
-                                    Icon(Icons.edit),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                      ),
+                                      onPressed: () {
+                                        _displayDialog(context,
+                                            "Marital Status", "maritalStatus");
+                                      },
+                                    ),
                                   ),
                                 ]),
                               ]),

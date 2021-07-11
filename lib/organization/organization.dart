@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Organization extends StatefulWidget {
@@ -8,6 +9,7 @@ class Organization extends StatefulWidget {
 }
 
 class _OrganizationState extends State<Organization> {
+  final year = DateTime.now().year.toString();
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
@@ -58,40 +60,70 @@ class _OrganizationState extends State<Organization> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    DataTable(
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text('Name',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                        DataColumn(
-                          label: Text('Department',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                      ],
-                      rows: List<DataRow>.generate(
-                        numItems,
-                        (int index) => DataRow(
-                          color: MaterialStateProperty.resolveWith<Color?>(
-                              (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.selected)) {
-                              return Color.fromARGB(255, 237, 242, 247)
-                                  .withOpacity(0.08);
-                            }
-                            if (index.isEven) {
-                              return Color.fromARGB(255, 237, 242, 247);
-                            }
-                            return null;
-                          }),
-                          cells: <DataCell>[
-                            DataCell(Text('abc')),
-                            DataCell(Text('xyz')),
-                          ],
-                        ),
-                      ),
-                    ),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('core_team')
+                            .where('Year', isEqualTo: year)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.data!.docs.length == 0) {
+                            return Center(
+                              child: Text(
+                                "Core Team for this year not set yet, ask admin to set it.",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 44, 82, 130)),
+                              ),
+                            );
+                          } else {
+                            return DataTable(
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text('Name',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                DataColumn(
+                                  label: Text('Department',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                              rows: List<DataRow>.generate(
+                                snapshot.data!.docs.single['Members'].length,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Text(snapshot
+                                        .data!.docs.single['Members'].values
+                                        .toList()[index])),
+                                    DataCell(Text(snapshot
+                                        .data!.docs.single['Members'].keys
+                                        .toList()[index])),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                   ],
                 ),
               ),
@@ -121,40 +153,68 @@ class _OrganizationState extends State<Organization> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    DataTable(
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text('Name ',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                        DataColumn(
-                          label: Text('Department',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                      ],
-                      rows: List<DataRow>.generate(
-                        numItems,
-                        (int index) => DataRow(
-                          color: MaterialStateProperty.resolveWith<Color?>(
-                              (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.selected)) {
-                              return Color.fromARGB(255, 237, 242, 247)
-                                  .withOpacity(0.08);
-                            }
-                            if (index.isEven) {
-                              return Color.fromARGB(255, 237, 242, 247);
-                            }
-                            return null;
-                          }),
-                          cells: <DataCell>[
-                            DataCell(Text('abc')),
-                            DataCell(Text('xyz')),
-                          ],
-                        ),
-                      ),
-                    ),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Users')
+                            .where('volunteering hours', isGreaterThan: 0)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null)
+                            return Center(child: CircularProgressIndicator());
+                          else if (snapshot.data!.docs.length == 0) {
+                            return Center(
+                              child: Text(
+                                "No one is eligible",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 44, 82, 130)),
+                              ),
+                            );
+                          } else {
+                            return DataTable(
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text('Name ',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                DataColumn(
+                                  label: Text('Department',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                              rows: List<DataRow>.generate(
+                                snapshot.data!.docs.length,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Text(snapshot.data!.docs[index]
+                                        ['displayName'])),
+                                    DataCell(Text(snapshot.data!.docs[index]
+                                        ['department'])),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                   ],
                 ),
               ),

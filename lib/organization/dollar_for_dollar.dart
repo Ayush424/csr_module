@@ -268,6 +268,7 @@ class _NgoListState extends State<NgoList> {
   // static const int numItems = 6;
   // List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   final ScrollController _controllerOne = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -284,24 +285,24 @@ class _NgoListState extends State<NgoList> {
           ),
           SizedBox(
             height: 200,
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: _controllerOne,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('ngos')
-                        .doc(widget.id)
-                        .collection('Products')
-                        .snapshots(),
-                    builder: (context, snapshot2) {
-                      if (snapshot2.data == null) {
-                        return CircularProgressIndicator();
-                      } else if (snapshot2.data!.docs.length == 0) {
-                        return Text('no products to show');
-                      } else {
-                        return ListView.builder(
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('ngos')
+                    .doc(widget.id)
+                    .collection('Products')
+                    .snapshots(),
+                builder: (context, snapshot2) {
+                  if (snapshot2.data == null) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot2.data!.docs.isEmpty) {
+                    return Text('no products to show');
+                  } else {
+                    return Scrollbar(
+                      isAlwaysShown: true,
+                      controller: _controllerOne,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: ListView.builder(
                             controller: _controllerOne,
                             itemCount: snapshot2.data!.docs.length,
                             shrinkWrap: true,
@@ -311,11 +312,11 @@ class _NgoListState extends State<NgoList> {
                                 child:
                                     ItemCard(data: snapshot2.data!.docs[index]),
                               );
-                            });
-                      }
-                    }),
-              ),
-            ),
+                            }),
+                      ),
+                    );
+                  }
+                }),
           ),
         ],
       ),

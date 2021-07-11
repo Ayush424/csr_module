@@ -21,6 +21,7 @@ class AuthService {
       User? user = result.user;
       // create a new document for the user with the uid
       await FirestoreService(user!.uid).updateUserData(
+          0,
           "displayName",
           email,
           "phoneNo",
@@ -42,6 +43,7 @@ class AuthService {
   Future<void> loadMyData() async {
     User? user = _auth.currentUser;
     await FirestoreService(user!.uid).updateUserData(
+        0,
         "displayName",
         user.email,
         "phoneNo",

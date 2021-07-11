@@ -42,6 +42,9 @@ class _HomePayrollState extends State<HomePayroll> {
   ];
   bool add = false;
   bool edit = false;
+  String editvalue1 = ngos.first;
+  String editvalue2 = period.first;
+  String editvalue3 = amounts.first;
   String value1 = ngos.first;
   String value2 = period.first;
   String value3 = amounts.first;
@@ -236,7 +239,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value1,
+                                              value: editvalue1,
                                               items: ngos
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
@@ -253,7 +256,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value1 = value!;
+                                                this.editvalue1 = value!;
                                               }),
                                             ),
                                           ),
@@ -277,7 +280,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value2,
+                                              value: editvalue2,
                                               items: period
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
@@ -294,7 +297,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value2 = value!;
+                                                this.editvalue2 = value!;
                                               }),
                                             ),
                                           ),
@@ -319,7 +322,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value3,
+                                              value: editvalue3,
                                               items: amounts
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
@@ -336,7 +339,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value3 = value!;
+                                                this.editvalue3 = value!;
                                               }),
                                             ),
                                           ),

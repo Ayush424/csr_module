@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/animation.dart';
 
 class FirestoreService {
   final String? uId;
@@ -7,6 +6,7 @@ class FirestoreService {
   FirestoreService(this.uId);
 
   Future<void> updateUserData(
+      int volunteeringHours,
       String displayName,
       String? email,
       String phoneNo,
@@ -18,6 +18,7 @@ class FirestoreService {
       String homeAddress,
       String maritalStatus) async {
     return await FirebaseFirestore.instance.collection("Users").doc(uId).set({
+      'volunteering': volunteeringHours,
       'displayName': displayName,
       'email': email,
       "phoneNo": phoneNo,

@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'cart.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 class ProductDetails extends StatefulWidget {
   ProductDetails({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   final ScrollController _controllerOne = ScrollController();
+  bool pressAttention = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: ListView(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 'Product Details',
@@ -51,6 +53,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ], options: CarouselOptions()),
               ),
+              new DotsIndicator(
+                dotsCount: 8,
+                position: 1,
+                decorator: DotsDecorator(
+                  size: const Size.square(9.0),
+                  activeSize: const Size(18.0, 9.0),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Divider(
@@ -77,22 +89,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ))
                     ],
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.favorite_border),
-                      SizedBox(width: 20),
-                      ElevatedButton.icon(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color.fromRGBO(45, 55, 72, 1)),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Cart()));
-                          },
-                          icon: Icon(Icons.shopping_bag),
-                          label: Text("Add to cart")),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.favorite_outline),
+                        // IconButton(
+                        //     color: pressAttention ? Colors.grey : Colors.blue,
+                        //     onPressed: () {
+                        //       setState(() {
+                        //         pressAttention = !pressAttention;
+                        //       });
+                        //     },
+                        //     icon: Icon(Icons.favorite_border)),
+                        SizedBox(width: 20),
+                        ElevatedButton.icon(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromRGBO(45, 55, 72, 1)),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Cart()));
+                            },
+                            icon: Icon(Icons.shopping_bag),
+                            label: Text("Add to cart")),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -123,7 +147,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return ItemCard();
+                          return GestureDetector(
+                              onTap: () {}, child: ItemCard());
                         }),
                   ),
                 ),

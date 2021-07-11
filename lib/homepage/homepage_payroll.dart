@@ -61,7 +61,14 @@ class _HomePayrollState extends State<HomePayroll> {
                                         style: TextStyle(color: Colors.black)),
                                   ),
                                   DataColumn(
-                                    label: Text('Department',
+                                    label: Text('Duration',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Amount',
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
@@ -87,6 +94,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                     }),
                                     cells: <DataCell>[
                                       DataCell(Text('abc')),
+                                      DataCell(Text('xyz')),
                                       DataCell(Text('xyz')),
                                     ],
                                   ),

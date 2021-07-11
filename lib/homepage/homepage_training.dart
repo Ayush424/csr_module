@@ -157,6 +157,12 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                               color: Color.fromARGB(255, 44, 82, 130),
                             )),
                       ),
+                      DataColumn(
+                        label: Text('Status',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 44, 82, 130),
+                            )),
+                      ),
                     ],
                     rows: List<DataRow>.generate(
                       numItems,
@@ -174,6 +180,7 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                         }),
                         cells: <DataCell>[
                           DataCell(Text('abc')),
+                          DataCell(Text('xyz')),
                           DataCell(Text('xyz')),
                           DataCell(Text('xyz')),
                         ],

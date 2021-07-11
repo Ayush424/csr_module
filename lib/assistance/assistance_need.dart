@@ -214,49 +214,58 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                       ),
                       Padding(
                         padding: EdgeInsets.all((10)),
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 237, 242, 247),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: Flexible(
-                            child: DataTable(
-                              columns: [
-                                DataColumn(label: Text('DOCUMENT')),
-                                DataColumn(label: Text('TYPE')),
-                                DataColumn(label: Text('ACTION')),
-                              ],
-                              rows: [
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text("zxdcfvgbhnjmkuyyyyuu")),
-                                    DataCell(Text('doc')),
-                                    DataCell(
-                                      ElevatedButton.icon(
-                                        icon: Icon(
-                                          Icons.change_circle,
-                                          size: 24.0,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          controller: ScrollController(),
+                          child: Center(
+                            child: Container(
+                              width: 900,
+                              decoration: new BoxDecoration(
+                                color: Color.fromARGB(255, 237, 242, 247),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                              ),
+                              child: Flexible(
+                                child: DataTable(
+                                  columns: [
+                                    DataColumn(label: Text('Name')),
+                                    DataColumn(label: Text('Duration')),
+                                    DataColumn(label: Text('ACTION')),
+                                  ],
+                                  rows: [
+                                    DataRow(
+                                      cells: [
+                                        DataCell(Text("zxdcfvgbhnjmkuyyyyuu")),
+                                        DataCell(Text('doc')),
+                                        DataCell(
+                                          ElevatedButton.icon(
+                                            icon: Icon(
+                                              Icons.change_circle,
+                                              size: 24.0,
+                                            ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      const Color.fromRGBO(
+                                                          255, 75, 162, 1)),
+                                              padding:
+                                                  MaterialStateProperty.all(
+                                                      EdgeInsets.all(10)),
+                                            ),
+                                            label: Text(
+                                              'Mark as completed',
+                                              maxLines: 2,
+                                            ),
+                                            onPressed: () {
+                                              _showMyDialog();
+                                            },
+                                          ),
                                         ),
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  const Color.fromRGBO(
-                                                      255, 75, 162, 1)),
-                                          padding: MaterialStateProperty.all(
-                                              EdgeInsets.all(10)),
-                                        ),
-                                        label: Text(
-                                          'Mark as completed',
-                                          maxLines: 2,
-                                        ),
-                                        onPressed: () {
-                                          _showMyDialog();
-                                        },
-                                      ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),

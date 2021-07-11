@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
 class DollarForDollar extends StatefulWidget {
   const DollarForDollar({Key? key}) : super(key: key);
 
@@ -10,7 +9,6 @@ class DollarForDollar extends StatefulWidget {
 }
 
 class _DollarForDollarState extends State<DollarForDollar> {
-  
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   String _searchText = "";
@@ -19,109 +17,142 @@ class _DollarForDollarState extends State<DollarForDollar> {
     myController.dispose();
     super.dispose();
   }
+
   void initState() {
     super.initState();
-    
+
     myController.addListener(() {
       setState(() {
         _searchText = myController.text;
       });
     });
   }
-  Future<void> _showMyDialog() async{
-    return showDialog(context: context, builder: (BuildContext context){
-      return Wrap(
-        alignment: WrapAlignment.center,
-        direction: Axis.vertical,
-        children :[
-         Padding(
-           padding: const EdgeInsets.all(100),
-           child: Container(
-             margin: EdgeInsets.only(left:275),
-             height: 150,
-               decoration: BoxDecoration(
-              color: Color.fromARGB(255, 237, 242, 247,),
-              border: Border.all(
-              color: Color.fromARGB(255, 204, 204, 204),
-              width: 1,
-              )
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+
+  Future<void> _showMyDialog() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Wrap(
+              alignment: WrapAlignment.center,
+              direction: Axis.vertical,
               children: [
-                Text('Search Using',
-                style: TextStyle(color: Color.fromARGB(255, 113, 128, 150),
-                fontSize:24,
-                decoration: TextDecoration.none ),
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  children: [
-                    ElevatedButton(
-                  onPressed: () {
-                     setState(() {
-                      Color.fromARGB(255, 44, 82, 130);
-                      
-                    });
-                  },
-                  child: Icon(Icons.check_circle_outline,color: Colors.white,),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(CircleBorder()),
-                    padding: MaterialStateProperty.all(EdgeInsets.all(4)),
-                    backgroundColor: MaterialStateProperty.all(Colors.white), // <-- Button color
-                    // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                    //   if (states.contains(MaterialState.pressed)) return Colors.blue; // <-- Splash color
-                    //     }),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(100),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 275),
+                    height: 150,
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(
+                          255,
+                          237,
+                          242,
+                          247,
+                        ),
+                        border: Border.all(
+                          color: Color.fromARGB(255, 204, 204, 204),
+                          width: 1,
+                        )),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Search Using',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 113, 128, 150),
+                              fontSize: 24,
+                              decoration: TextDecoration.none),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  Color.fromARGB(255, 44, 82, 130);
+                                });
+                              },
+                              child: Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.white,
+                              ),
+                              style: ButtonStyle(
+                                shape:
+                                    MaterialStateProperty.all(CircleBorder()),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(4)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.white), // <-- Button color
+                                // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+                                //   if (states.contains(MaterialState.pressed)) return Colors.blue; // <-- Splash color
+                                //     }),
+                              ),
+                            ),
+                            Text(
+                              'NGO Name',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 42, 67, 101),
+                                  fontSize: 28,
+                                  decoration: TextDecoration.none),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  Color.fromARGB(255, 44, 82, 130);
+                                });
+                              },
+                              child: Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.white,
+                              ),
+                              style: ButtonStyle(
+                                shape:
+                                    MaterialStateProperty.all(CircleBorder()),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(4)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.white), // <-- Button color
+                                // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+                                //   if (states.contains(MaterialState.pressed)) return Colors.blue; // <-- Splash color
+                                //     }),
+                              ),
+                            ),
+                            Text(
+                              'Product Name',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 42, 67, 101),
+                                  fontSize: 28,
+                                  decoration: TextDecoration.none),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Apply',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 26),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                primary: Color.fromARGB(
+                              255,
+                              45,
+                              55,
+                              72,
+                            )))
+                      ],
                     ),
-                    Text('NGO Name',
-                    style: TextStyle(color: Color.fromARGB(255, 42,67,101),
-                    fontSize:28,
-                    decoration: TextDecoration.none ),
-                    ),
-                    SizedBox(width: 50,),
-                    ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      Color.fromARGB(255, 44, 82, 130);
-                      
-                    });
-                  },
-                  child: Icon(Icons.check_circle_outline,color: Colors.white,),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(CircleBorder()),
-                    padding: MaterialStateProperty.all(EdgeInsets.all(4)),
-                    backgroundColor: MaterialStateProperty.all(Colors.white), // <-- Button color
-                    // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                    //   if (states.contains(MaterialState.pressed)) return Colors.blue; // <-- Splash color
-                    //     }),
-                      ),
-                    ),
-                    Text('Product Name',
-                    style: TextStyle(color: Color.fromARGB(255, 42,67,101),
-                    fontSize:28,
-                    decoration: TextDecoration.none ),
-                    )
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10,), 
-                ElevatedButton(onPressed: (){}, child: Text('Apply',
-                style: TextStyle(
-                  
-                  color: Colors.white,
-                  fontSize: 26
-                ),
-                ),
-                style: ElevatedButton.styleFrom(primary: Color.fromARGB(255,45, 55, 72,))
-                )
-              ],
-            ),
-            
-        ),
-         ),
-        ]
-      );
-    });
+              ]);
+        });
   }
 
   @override
@@ -154,8 +185,7 @@ class _DollarForDollarState extends State<DollarForDollar> {
                             Icons.shopping_cart,
                             color: Color.fromARGB(255, 45, 55, 72),
                             size: 40,
-                          )
-                      ),
+                          )),
                     ),
                   ],
                 ),
@@ -163,7 +193,6 @@ class _DollarForDollarState extends State<DollarForDollar> {
                   color: Color.fromARGB(255, 226, 232, 240),
                   thickness: 2,
                 ),
-               
                 Padding(
                   padding: EdgeInsets.only(left: 150, top: 10),
                   child: Wrap(
@@ -178,37 +207,47 @@ class _DollarForDollarState extends State<DollarForDollar> {
                           width: 1,
                         )),
                         child: TextField(
-                        controller: myController,
-                        decoration: InputDecoration(
-                          // labelText: "Search",
-                          hintText: "Search",
-                          focusColor: Color.fromARGB(255, 204, 204, 204),
-                          fillColor: Color.fromARGB(255, 204, 204, 204),
-                          prefixIcon: _searchText.isNotEmpty ? IconButton(icon: Icon(Icons.clear,
-                          color: Color.fromARGB(255, 204, 204, 204),),onPressed: () {
-                            setState(() {
-                              myController.clear();
-                            });},) : IconButton( icon: Icon(Icons.search,
-                            color: Color.fromARGB(255, 204, 204, 204),),
-                            onPressed: (){
-                              setState(() {
-                                Color.fromARGB(255, 204, 204, 204);
-                              // myController.search();
-                            });
-                            },),
-                            suffixIcon: IconButton(onPressed: (){
-                              _showMyDialog();
-                            }, icon: Icon(Icons.filter_alt)
-                            ),
-                         
+                          controller: myController,
+                          decoration: InputDecoration(
+                            // labelText: "Search",
+                            hintText: "Search",
+                            focusColor: Color.fromARGB(255, 204, 204, 204),
+                            fillColor: Color.fromARGB(255, 204, 204, 204),
+                            prefixIcon: _searchText.isNotEmpty
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.clear,
+                                      color: Color.fromARGB(255, 204, 204, 204),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        myController.clear();
+                                      });
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: Icon(
+                                      Icons.search,
+                                      color: Color.fromARGB(255, 204, 204, 204),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        Color.fromARGB(255, 204, 204, 204);
+                                        // myController.search();
+                                      });
+                                    },
+                                  ),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
+                                icon: Icon(Icons.filter_alt)),
+                          ),
                         ),
                       ),
-                      ),
-                  
                     ],
                   ),
                 ),
-                
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: ListView.builder(
@@ -253,24 +292,23 @@ class _NgoListState extends State<NgoList> {
             ),
           ),
           SizedBox(
-                height: 200,
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                  controller: _controllerOne,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ListView.builder(
-                      controller: _controllerOne,
+            height: 200,
+            child: Scrollbar(
+              isAlwaysShown: true,
+              controller: _controllerOne,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ListView.builder(
+                    controller: _controllerOne,
                     itemCount: numItems,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index){
+                    itemBuilder: (context, index) {
                       return ItemCard();
-                    }
-                    ),
-                  ),
-                ),
+                    }),
               ),
+            ),
+          ),
         ],
       ),
     );

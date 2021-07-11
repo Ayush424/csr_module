@@ -53,7 +53,7 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.data == null)
-                          return CircularProgressIndicator();
+                          return Center(child: CircularProgressIndicator());
                         return DataTable(
                           columns: const <DataColumn>[
                             DataColumn(

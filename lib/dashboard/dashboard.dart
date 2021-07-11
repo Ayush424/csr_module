@@ -367,9 +367,11 @@ class _GoalSectionState extends State<GoalSection> {
                           final id = snapshot.data!.docs[index].id;
                           if (index == snapshot.data!.docs.length)
                             index = 0;
-                          else
-                            index = index - 1;
-
+                          else {
+                            if (index != 0) {
+                              index = index - 1;
+                            }
+                          }
                           FirebaseFirestore.instance
                               .collection('goals')
                               .doc(_authService.returnCurrentUserid())

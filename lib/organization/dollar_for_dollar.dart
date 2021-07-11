@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,13 @@ class _DollarForDollarState extends State<DollarForDollar> {
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   String _searchText = "";
   final myController = TextEditingController();
+  @override
   void dispose() {
     myController.dispose();
     super.dispose();
   }
 
+  @override
   void initState() {
     super.initState();
 
@@ -164,6 +167,7 @@ class _DollarForDollarState extends State<DollarForDollar> {
         child: Padding(
           padding: const EdgeInsets.all(40),
           child: SingleChildScrollView(
+            controller: ScrollController(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -250,11 +254,25 @@ class _DollarForDollarState extends State<DollarForDollar> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: numItems,
-                      itemBuilder: (context, index) {
-                        return NgoList();
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('ngos')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null)
+                          return CircularProgressIndicator();
+                        else if (snapshot.data!.docs.length == 0) {
+                          return Text('No ngo partners right now');
+                        } else {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                final id = snapshot.data!.docs[index].id;
+                                return NgoList(
+                                    data: snapshot.data!.docs[index], id: id);
+                              });
+                        }
                       }),
                 ),
               ],
@@ -267,15 +285,18 @@ class _DollarForDollarState extends State<DollarForDollar> {
 }
 
 class NgoList extends StatefulWidget {
-  const NgoList({Key? key}) : super(key: key);
+  final String id;
+  final QueryDocumentSnapshot<Object?> data;
+  const NgoList({Key? key, required this.data, required this.id})
+      : super(key: key);
 
   @override
   _NgoListState createState() => _NgoListState();
 }
 
 class _NgoListState extends State<NgoList> {
-  static const int numItems = 6;
-  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  // static const int numItems = 6;
+  // List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   final ScrollController _controllerOne = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -286,7 +307,7 @@ class _NgoListState extends State<NgoList> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Text(
-              'Ngo Name',
+              widget.data['name'],
               style: TextStyle(
                   color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
             ),
@@ -298,13 +319,28 @@ class _NgoListState extends State<NgoList> {
               controller: _controllerOne,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: ListView.builder(
-                    controller: _controllerOne,
-                    itemCount: numItems,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ItemCard();
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('ngos')
+                        .doc(widget.id)
+                        .collection('Products')
+                        .snapshots(),
+                    builder: (context, snapshot2) {
+                      if (snapshot2.data == null) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot2.data!.docs.length == 0) {
+                        return Text('no products to show');
+                      } else {
+                        return ListView.builder(
+                            controller: _controllerOne,
+                            itemCount: snapshot2.data!.docs.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return ItemCard(
+                                  data: snapshot2.data!.docs[index]);
+                            });
+                      }
                     }),
               ),
             ),
@@ -316,16 +352,18 @@ class _NgoListState extends State<NgoList> {
 }
 
 class ItemCard extends StatelessWidget {
+  final QueryDocumentSnapshot<Object?> data;
   const ItemCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 186,
+      height: 200,
       width: 340,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.blueGrey[100],
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
@@ -340,28 +378,37 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'product.jpg',
-                  width: 121,
-                  height: 81,
+                SizedBox(
+                  height: 50,
+                  width: 110,
+                  child: Image(
+                    image: NetworkImage(
+                      data['imgUrl'],
+                    ),
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Column(
                   children: [
-                    Text(
-                      'Product Name',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 45, 55, 72),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        data['product name'],
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 45, 55, 72),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
-                      '\$4.99',
+                      '₹' + data['product price'].toString(),
                       style: TextStyle(
                           color: Color.fromARGB(255, 45, 55, 72),
                           fontSize: 24,
@@ -375,7 +422,9 @@ class ItemCard extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'Product Description lorem ipsum',
+              data['description'],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
             )

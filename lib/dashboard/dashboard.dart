@@ -91,12 +91,33 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   width: screensize.width * 0.2,
                   margin: EdgeInsets.only(left: 20),
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(237, 242, 247, 1),
-                      border:
-                          Border.all(color: Color.fromRGBO(204, 204, 204, 1))),
-                  child: GoalSection(
-                    update: widget.update,
+                  child: ListView(
+                    physics: ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    controller: ScrollController(),
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Goals',
+                          style: TextStyle(
+                              fontSize: 32,
+                              color: Color.fromARGB(255, 42, 67, 101)),
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                        width: screensize.width * 0.2,
+                        margin: EdgeInsets.only(left: 20),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(237, 242, 247, 1),
+                            border: Border.all(
+                                color: Color.fromRGBO(204, 204, 204, 1))),
+                        child: GoalSection(
+                          update: widget.update,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -311,15 +332,15 @@ class _GoalSectionState extends State<GoalSection> {
           else if (snapshot.data!.docs.length > 0) {
             return Column(
               children: [
-                Text(
-                  'Current GOAL -',
-                  style: TextStyle(
-                      color: Color.fromRGBO(45, 55, 72, 1),
-                      fontFamily: 'Rubik',
-                      fontSize: 24,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w700),
-                ),
+                // Text(
+                //   'Current GOAL -',
+                //   style: TextStyle(
+                //       color: Color.fromRGBO(45, 55, 72, 1),
+                //       fontFamily: 'Rubik',
+                //       fontSize: 24,
+                //       fontStyle: FontStyle.italic,
+                //       fontWeight: FontWeight.w700),
+                // ),
                 Text(
                   snapshot.data!.docs[index]['goal'],
                   style: TextStyle(

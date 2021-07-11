@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+enum SingingCharacter { ngo, product }
+
 class DollarForDollar extends StatefulWidget {
   const DollarForDollar({Key? key}) : super(key: key);
 
@@ -31,132 +33,7 @@ class _DollarForDollarState extends State<DollarForDollar> {
     });
   }
 
-  Future<void> _showMyDialog() async {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Wrap(
-              alignment: WrapAlignment.center,
-              direction: Axis.vertical,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(100),
-                  child: Container(
-                    margin: EdgeInsets.only(left: 275),
-                    height: 150,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(
-                          255,
-                          237,
-                          242,
-                          247,
-                        ),
-                        border: Border.all(
-                          color: Color.fromARGB(255, 204, 204, 204),
-                          width: 1,
-                        )),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Search Using',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 113, 128, 150),
-                              fontSize: 24,
-                              decoration: TextDecoration.none),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  Color.fromARGB(255, 44, 82, 130);
-                                });
-                              },
-                              child: Icon(
-                                Icons.check_circle_outline,
-                                color: Colors.white,
-                              ),
-                              style: ButtonStyle(
-                                shape:
-                                    MaterialStateProperty.all(CircleBorder()),
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.all(4)),
-                                backgroundColor: MaterialStateProperty.all(
-                                    Colors.white), // <-- Button color
-                                // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                                //   if (states.contains(MaterialState.pressed)) return Colors.blue; // <-- Splash color
-                                //     }),
-                              ),
-                            ),
-                            Text(
-                              'NGO Name',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 42, 67, 101),
-                                  fontSize: 28,
-                                  decoration: TextDecoration.none),
-                            ),
-                            SizedBox(
-                              width: 50,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  Color.fromARGB(255, 44, 82, 130);
-                                });
-                              },
-                              child: Icon(
-                                Icons.check_circle_outline,
-                                color: Colors.white,
-                              ),
-                              style: ButtonStyle(
-                                shape:
-                                    MaterialStateProperty.all(CircleBorder()),
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.all(4)),
-                                backgroundColor: MaterialStateProperty.all(
-                                    Colors.white), // <-- Button color
-                                // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                                //   if (states.contains(MaterialState.pressed)) return Colors.blue; // <-- Splash color
-                                //     }),
-                              ),
-                            ),
-                            Text(
-                              'Product Name',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 42, 67, 101),
-                                  fontSize: 28,
-                                  decoration: TextDecoration.none),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Apply',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 26),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(
-                              255,
-                              45,
-                              55,
-                              72,
-                            )))
-                      ],
-                    ),
-                  ),
-                ),
-              ]);
-        });
-  }
+  SingingCharacter? _character = SingingCharacter.ngo;
 
   @override
   Widget build(BuildContext context) {
@@ -242,9 +119,102 @@ class _DollarForDollarState extends State<DollarForDollar> {
                                     },
                                   ),
                             suffixIcon: IconButton(
-                                onPressed: () {
-                                  _showMyDialog();
-                                },
+                                onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: const Text(
+                                          'Search Using',
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 113, 128, 150),
+                                              fontSize: 24,
+                                              decoration: TextDecoration.none),
+                                        ),
+                                        // content: const Text('AlertDialog description'),
+                                        actions: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5, right: 2),
+                                                child: Radio<SingingCharacter>(
+                                                  value: SingingCharacter.ngo,
+                                                  groupValue: _character,
+                                                  onChanged: (SingingCharacter?
+                                                      value) {
+                                                    setState(() {
+                                                      _character = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Text(
+                                                'NGO Name',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 28,
+                                                    decoration:
+                                                        TextDecoration.none),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 2),
+                                                child: Radio<SingingCharacter>(
+                                                  value:
+                                                      SingingCharacter.product,
+                                                  groupValue: _character,
+                                                  onChanged: (SingingCharacter?
+                                                      value) {
+                                                    setState(() {
+                                                      _character = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Text(
+                                                'Product Name',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 28,
+                                                    decoration:
+                                                        TextDecoration.none),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10, bottom: 10),
+                                            child: ElevatedButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Apply'),
+                                                child: Text(
+                                                  'Apply',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 26),
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                    primary: Color.fromARGB(
+                                                  255,
+                                                  45,
+                                                  55,
+                                                  72,
+                                                ))),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                 icon: Icon(Icons.filter_alt)),
                           ),
                         ),
@@ -337,8 +307,10 @@ class _NgoListState extends State<NgoList> {
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              return ItemCard(
-                                  data: snapshot2.data!.docs[index]);
+                              return GestureDetector(
+                                child:
+                                    ItemCard(data: snapshot2.data!.docs[index]),
+                              );
                             });
                       }
                     }),

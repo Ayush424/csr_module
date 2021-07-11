@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HomeProfile extends StatelessWidget {
   final AuthService _authService = AuthService();
   final collection = FirebaseFirestore.instance.collection("Users");
-  TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
 
   _displayDialog(BuildContext context, String details, String field) async {
     return showDialog(

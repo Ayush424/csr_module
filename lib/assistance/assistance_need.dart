@@ -15,7 +15,8 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
   TextEditingController textController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
   String dropdownvalue = "Select Category";
-
+static const int numItems = 6;
+  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -270,21 +271,53 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                                 fontWeight: FontWeight.bold),
                                           )),
                                         ],
-                                        rows: [
-                                          DataRow(
-                                            cells: [
-                                              DataCell(
-                                                  Text("zxdcfvgbhnjmkuyyyyuu")),
-                                              DataCell(Text('doc')),
-                                              DataCell(
-                                                SizedBox(
+                                        rows: 
+                                          List<DataRow>.generate(
+                                                          numItems,
+                                                          (int index) =>
+                                                              DataRow(
+                                                            color: MaterialStateProperty
+                                                                .resolveWith<
+                                                                    Color?>((Set<
+                                                                        MaterialState>
+                                                                    states) {
+                                                              if (states.contains(
+                                                                  MaterialState
+                                                                      .selected)) {
+                                                                return Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            237,
+                                                                            242,
+                                                                            247)
+                                                                    .withOpacity(
+                                                                        0.08);
+                                                              }
+                                                              if (index
+                                                                  .isEven) {
+                                                                return Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        237,
+                                                                        242,
+                                                                        247);
+                                                              }
+                                                              return null;
+                                                            }),
+                                        cells: <DataCell>[
+                                                              DataCell(Text('name',style: TextStyle(
+                                                              color: darkblue,
+                                                              fontSize: 20,
+                                                              fontWeight: FontWeight.bold),)),
+                                                              DataCell(Text('Updated')),
+                                                              DataCell(SizedBox(
                                                   width: 175,
                                                   child: ElevatedButton(
                                                     style: ButtonStyle(
                                                         backgroundColor:
                                                             MaterialStateProperty
                                                                 .all(Colors
-                                                                    .orange)),
+                                                                    .pinkAccent)),
                                                     child: Text(
                                                       'Mark as completed',
                                                       maxLines: 2,
@@ -293,11 +326,39 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                                       _showMyDialog();
                                                     },
                                                   ),
-                                                ),
-                                              ),
-                                            ],
+                                                ),) ,
+              
+                                                            ],
+                                        // rows: [
+                                        //   DataRow(
+                                        //     cells: [
+                                        //       DataCell(
+                                        //           Text("zxdcfvgbhnjmkuyyyyuu")),
+                                        //       DataCell(Text('doc')),
+                                        //       DataCell(
+                                        //         SizedBox(
+                                        //           width: 175,
+                                        //           child: ElevatedButton(
+                                        //             style: ButtonStyle(
+                                        //                 backgroundColor:
+                                        //                     MaterialStateProperty
+                                        //                         .all(Colors
+                                        //                             .orange)),
+                                        //             child: Text(
+                                        //               'Mark as completed',
+                                        //               maxLines: 2,
+                                        //             ),
+                                        //             onPressed: () {
+                                        //               _showMyDialog();
+                                        //             },
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                                              ),
                                           ),
-                                        ],
+                                      
                                       );
                                     }
                                   }),

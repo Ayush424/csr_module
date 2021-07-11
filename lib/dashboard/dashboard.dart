@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
-import '../main_page_struct/static_mainpage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

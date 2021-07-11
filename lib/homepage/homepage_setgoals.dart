@@ -203,7 +203,9 @@ class GoalsList extends StatefulWidget {
 
 class _GoalsListState extends State<GoalsList> {
   // final AuthService _authService = AuthService();
+
   static const int numItems = 6;
+
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   @override
   Widget build(BuildContext context) {
@@ -224,6 +226,7 @@ class _GoalsListState extends State<GoalsList> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+
                 DataTable(
                     columns: <DataColumn>[
                       DataColumn(
@@ -340,6 +343,7 @@ class _GoalsListState extends State<GoalsList> {
                             ),
                           ]),
                     ))
+
               ],
             ),
           );

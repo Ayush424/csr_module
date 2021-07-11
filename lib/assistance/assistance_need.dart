@@ -15,7 +15,9 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
   TextEditingController textController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
   String dropdownvalue = "Select Category";
+
   static const int numItems = 6;
+	
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -271,6 +273,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                                 fontWeight: FontWeight.bold),
                                           )),
                                         ],
+
                                         rows: List<DataRow>.generate(
                                           numItems,
                                           (int index) => DataRow(
@@ -302,6 +305,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                               DataCell(Text('Updated')),
                                               DataCell(
                                                 SizedBox(
+
                                                   width: 175,
                                                   child: ElevatedButton(
                                                     style: ButtonStyle(
@@ -317,6 +321,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                                       _showMyDialog();
                                                     },
                                                   ),
+
                                                 ),
                                               ),
                                             ],

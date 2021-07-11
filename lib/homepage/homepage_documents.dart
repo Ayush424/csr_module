@@ -13,6 +13,68 @@ class HomeDocuments extends StatefulWidget {
 }
 
 class _HomeDocumentsState extends State<HomeDocuments> {
+  TextEditingController _textFieldController = TextEditingController();
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Enter Text'),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Enter"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: new Text('Edit'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('Do you want to delete the file?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Confirm'),
+              onPressed: () {
+                print('Confirmed');
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   final AuthService authService = AuthService();
   void _uploadDocuments() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -36,6 +98,7 @@ class _HomeDocumentsState extends State<HomeDocuments> {
           child: Wrap(
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
                     width: 780,
@@ -100,34 +163,144 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                         ],
                         rows: [
                           DataRow(cells: [
-                            DataCell(Text('1')),
+                            DataCell(Wrap(
+                              spacing: 10,
+                              children: [
+                                Text('1'),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.drive_file_rename_outline,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    _displayDialog(context);
+                                  },
+                                ),
+                              ],
+                            )),
                             DataCell(Text('doc')),
-                            DataCell(Icon(Icons.delete)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
+                              ),
+                            ),
                           ]),
                           DataRow(cells: [
-                            DataCell(Text('2')),
+                            DataCell(Wrap(
+                              spacing: 10,
+                              children: [
+                                Text('1'),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.drive_file_rename_outline,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    _displayDialog(context);
+                                  },
+                                ),
+                              ],
+                            )),
                             DataCell(Text("pdf")),
-                            DataCell(Icon(Icons.delete)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
+                              ),
+                            ),
                           ]),
                           DataRow(cells: [
-                            DataCell(Text('2')),
-                            DataCell(Text('pdf')),
-                            DataCell(Icon(Icons.delete)),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(Text('3')),
+                            DataCell(Wrap(
+                              spacing: 10,
+                              children: [
+                                Text('1'),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.drive_file_rename_outline,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    _displayDialog(context);
+                                  },
+                                ),
+                              ],
+                            )),
                             DataCell(Text('img')),
-                            DataCell(Icon(Icons.delete)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
+                              ),
+                            ),
                           ]),
                           DataRow(cells: [
-                            DataCell(Text('4')),
+                            DataCell(Wrap(
+                              spacing: 10,
+                              children: [
+                                Text('1'),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.drive_file_rename_outline,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    _displayDialog(context);
+                                  },
+                                ),
+                              ],
+                            )),
                             DataCell(Text("img")),
-                            DataCell(Icon(Icons.delete)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
+                              ),
+                            ),
                           ]),
                           DataRow(cells: [
-                            DataCell(Text('5')),
+                            DataCell(Wrap(
+                              spacing: 10,
+                              children: [
+                                Text('1'),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.drive_file_rename_outline,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    _displayDialog(context);
+                                  },
+                                ),
+                              ],
+                            )),
                             DataCell(Text('pdf')),
-                            DataCell(Icon(Icons.delete)),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
+                              ),
+                            ),
                           ]),
                         ],
                       ),

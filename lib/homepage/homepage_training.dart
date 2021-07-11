@@ -12,6 +12,7 @@ class HomeTrainings extends StatefulWidget {
 }
 
 class _HomeTrainingsState extends State<HomeTrainings> {
+  Duration duration = Duration(days: 0);
   final AuthService _authService = AuthService();
   final f = DateFormat('dd-MM-yyyy');
   static const int numItems = 6;
@@ -226,6 +227,7 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                       builder: (context, snapshot) {
                         if (snapshot.data == null)
                           return Center(child: CircularProgressIndicator());
+
                         return DataTable(
                           columns: const <DataColumn>[
                             DataColumn(
@@ -245,6 +247,12 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                               label: Text('Starting On',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 44, 82, 130),
+                                  )),
+                            ),
+                            DataColumn(
+                              label: Text('Status',
+                                  style: TextStyle(
                                     color: Color.fromARGB(255, 44, 82, 130),
                                   )),
                             ),
@@ -285,6 +293,16 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                                         .toDate()
                                         .year
                                         .toString())),
+                                DataCell(DateTime.now().difference(snapshot
+                                            .data!.docs[index]['startDate']
+                                            .toDate()) >=
+                                        duration
+                                    ? Text("Completed",
+                                        style: TextStyle(color: Colors.green))
+                                    : Text(
+                                        "Registered",
+                                        style: TextStyle(color: Colors.orange),
+                                      )),
                               ],
                             ),
                           ),

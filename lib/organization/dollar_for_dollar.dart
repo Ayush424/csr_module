@@ -400,7 +400,7 @@ class ItemCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
-            )
+            ),
           ],
         ),
       ),

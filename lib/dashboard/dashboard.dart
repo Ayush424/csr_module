@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import '../main_page_struct/static_mainpage.dart';
@@ -59,26 +59,28 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       height: screensize.height * 0.60,
                       width: screensize.width * 0.65,
                       child: SfCartesianChart(
-                        title: ChartTitle(
-                          text: 'Total Volunteering Hours',
-                          alignment: ChartAlignment.near,
-                        ),
-                        tooltipBehavior: _tooltipBehavior,
-                        plotAreaBorderColor: Colors.green,
-                        series: <ChartSeries>[
-                          ColumnSeries<Days, DateTime>(
-                            enableTooltip: true,
-                            dataSource: _chartData,
-                            xValueMapper: (Days day, _) => day.month,
-                            yValueMapper: (Days day, _) =>
-                                day.volunteeringHours,
-                          )
-                        ],
-                        primaryXAxis: DateTimeAxis(
-                          intervalType: DateTimeIntervalType.years,
-                          interval: 7,
-                        ),
-                      ),
+                          title: ChartTitle(
+                            text: 'Total Volunteering Hours',
+                            alignment: ChartAlignment.near,
+                          ),
+                          tooltipBehavior: _tooltipBehavior,
+                          plotAreaBorderColor: Colors.green,
+                          series: <ChartSeries>[
+                            ColumnSeries<Days, DateTime>(
+                              width: 0.5,
+                              spacing: 0.3,
+                              enableTooltip: true,
+                              dataSource: _chartData,
+                              xValueMapper: (Days day, _) => day.month,
+                              yValueMapper: (Days day, _) =>
+                                  day.volunteeringHours,
+                            )
+                          ],
+                          primaryXAxis: DateTimeCategoryAxis(
+                              intervalType: DateTimeIntervalType.days,
+                              isVisible: true,
+                              interval: 7,
+                              dateFormat: DateFormat.MMMd())),
                     ),
                   ],
                 ),
@@ -121,7 +123,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 itemCount: numItems,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  return ItemCard();
+                  return ItemCard(numItems: 6);
                 }),
           ),
         ],
@@ -132,11 +134,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
 List<Days> getChartData() {
   final List<Days> chartData = [
-    Days(DateTime(1, 7), 7),
-    Days(DateTime(8, 7), 10),
-    Days(DateTime(15, 7), 5),
-    Days(DateTime(22, 7), 6),
-    Days(DateTime(29, 7), 7),
+    Days(DateTime(2021, 1, 7), 7),
+    Days(DateTime(2022, 1, 14), 10),
+    Days(DateTime(2021, 15, 7), 5),
+    Days(DateTime(2021, 22, 7), 6),
+    Days(DateTime(2021, 29, 7), 7),
   ];
   return chartData;
 }
@@ -144,10 +146,12 @@ List<Days> getChartData() {
 class ItemCard extends StatelessWidget {
   const ItemCard({
     Key? key,
+    required this.numItems,
   }) : super(key: key);
-
+  final int numItems;
   @override
   Widget build(BuildContext context) {
+    var screensize = MediaQuery.of(context).size;
     return SizedBox(
       height: 35,
       child: Padding(
@@ -189,7 +193,74 @@ class ItemCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       )),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              content: Container(
+                                height: screensize.height * 0.5,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      DataTable(
+                                        columns: const <DataColumn>[
+                                          DataColumn(
+                                            label: Text('Name',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Id',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Profession',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                )),
+                                          )
+                                        ],
+                                        rows: List<DataRow>.generate(
+                                          numItems,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Text('Employee Name')),
+                                              DataCell(Text('Employee Id')),
+                                              DataCell(Text('Profession'))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ));
+                  },
                   child: Text(
                     'Team Members',
                     style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Calendar extends StatefulWidget {
   final ValueChanged<String>? update;
@@ -13,7 +12,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  CarouselController buttonCarouselController = CarouselController();
+  final ScrollController _controllerOne = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -119,54 +118,21 @@ class _CalendarState extends State<Calendar> {
                   },
                   child: Text('view more >>>')),
             ),
-            ListTile(
-              leading: Transform(
-                transform: Matrix4.translationValues(0, 100, 0),
-                child: IconButton(
-                  onPressed: () => buttonCarouselController.previousPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear),
-                  icon: Icon(Icons.arrow_back_ios_new_outlined),
-                  color: Color.fromARGB(255, 42, 67, 101),
-                ),
-              ),
-              title: CarouselSlider.builder(
-                // itemCount: numItems,
-                carouselController: buttonCarouselController,
-                options: CarouselOptions(
-                  autoPlay: false,
-                  enlargeCenterPage: false,
-                  viewportFraction: 1,
-                  aspectRatio: 3.0,
-                ),
-                // itemCount: numItems.round(),
-                itemCount: (numItems / 2).round(),
-                itemBuilder:
-                    (BuildContext context, int itemIndex, int pageViewIndex) {
-                  return Row(children: [
-                    Flexible(
-                      child: ItemCard(),
-                      flex: 1,
-                    ),
-                    Flexible(
-                      child: ItemCard(),
-                      flex: 1,
-                    ),
-                    Flexible(
-                      child: ItemCard(),
-                      flex: 1,
-                    ),
-                  ]);
-                },
-              ),
-              trailing: Transform(
-                transform: Matrix4.translationValues(0, 100, 0),
-                child: IconButton(
-                  onPressed: () => buttonCarouselController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear),
-                  icon: Icon(Icons.arrow_forward_ios_outlined),
-                  color: Color.fromARGB(255, 42, 67, 101),
+            SizedBox(
+              height: 250,
+              child: Scrollbar(
+                isAlwaysShown: true,
+                controller: _controllerOne,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: ListView.builder(
+                      controller: _controllerOne,
+                      itemCount: numItems,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return ItemCard();
+                      }),
                 ),
               ),
             ),

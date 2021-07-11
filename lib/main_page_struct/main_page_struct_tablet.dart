@@ -1,3 +1,4 @@
+import 'package:csr_module/Admin/admin_page_struct_tablet.dart';
 import 'package:csr_module/events_and_calendar/calendar.dart';
 import 'package:csr_module/organization/dollar_for_dollar.dart';
 import '../homepage/static_homepage.dart';
@@ -59,7 +60,16 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
             ),
           ),
         ],
-        leading: const Icon(Icons.air_rounded),
+        leading: IconButton(
+          tooltip: 'Admin portal for now',
+          icon: Icon(Icons.air_rounded),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AdminPageStructTablet()),
+            );
+          },
+        ),
         title: const Text(
           "CSR Management",
           style: TextStyle(color: Colors.white),

@@ -1,4 +1,7 @@
 import 'package:csr_module/events_and_calendar/calendar.dart';
+import 'dart:html';
+
+import 'package:csr_module/Admin/admin_page_struct.dart';
 
 import '../homepage/static_homepage.dart';
 
@@ -35,6 +38,74 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: Container(
+        width: 350,
+        height: 100,
+        color: Color.fromARGB(255, 45, 55, 72),
+        margin: EdgeInsets.only(bottom: 430),
+        child: DrawerHeader(
+          child: Wrap(
+            children: [
+              Column(
+                children: [
+                  Image.asset(
+                    'userImage.png',
+                    width: 100,
+                    height: 81,
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Employee Name',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    'Employee Profession',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'Emp-id',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    'employee@gmail.com',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      await _auth.signOut();
+                    },
+                    tooltip: 'Logout',
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         actions: [
           Transform(
@@ -46,19 +117,30 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                   color: Colors.white, size: 30),
             ),
           ),
-
-          IconButton(
-            padding: const EdgeInsets.only(right: 50),
-            onPressed: () async {
-              await _auth.signOut();
-            },
-            tooltip: 'Logout',
-            icon: const Icon(Icons.account_circle,
-                size: 50.0, color: Colors.white),
+          Builder(
+            builder: (context) => Transform(
+              transform: Matrix4.translationValues(-20, 0, 0),
+              child: IconButton(
+                tooltip: 'User',
+                icon: const Icon(Icons.account_circle,
+                    color: Colors.white, size: 50),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ),
           ),
-          // DropdownButton(items: items)
         ],
-        leading: const Icon(Icons.air_rounded),
+        leading: IconButton(
+          tooltip: 'Admin portal for now',
+          icon: Icon(Icons.air_rounded),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AdminPageStruct()),
+            );
+          },
+        ),
         title: const Text(
           "CSR Management",
           style: TextStyle(color: Colors.white),
@@ -249,6 +331,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
     );
   }
 }
+
+void DropDown(String choice) {}
 
 class MyText extends StatefulWidget {
   final bool bold;

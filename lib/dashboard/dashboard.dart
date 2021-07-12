@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeDashboard extends StatefulWidget {
   final ValueChanged<String>? update;
+
   const HomeDashboard({Key? key, this.update}) : super(key: key);
 
   @override

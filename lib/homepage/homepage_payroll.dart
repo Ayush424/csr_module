@@ -178,6 +178,7 @@ class _HomePayrollState extends State<HomePayroll> {
                             onPressed: () {
                               setState(() {
                                 edit = true;
+                                add = false;
                               });
                             },
                           ),
@@ -195,6 +196,7 @@ class _HomePayrollState extends State<HomePayroll> {
                             onPressed: () {
                               setState(() {
                                 add = true;
+                                edit = false;
                               });
                             },
                           ),
@@ -460,7 +462,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                           },
                                           child: const Text("Done")),
                                     ),
-                                    edit == false ? Text("Done") : Text(""),
+                                    // edit == false ? Text("Done") : Text(""),
                                   ],
                                 ),
                               ),
@@ -480,7 +482,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                 padding:
                                     const EdgeInsets.fromLTRB(50, 50, 30, 50),
                                 child: Wrap(
-                                  spacing: 200,
+                                  spacing: 70,
                                   runSpacing: 30,
                                   children: [
                                     Container(
@@ -519,7 +521,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value1 = value!;
+                                                value1 = value!;
                                               }),
                                             ),
                                           ),
@@ -560,7 +562,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value2 = value!;
+                                                value2 = value!;
                                               }),
                                             ),
                                           ),
@@ -602,7 +604,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value3 = value!;
+                                                value3 = value!;
                                               }),
                                             ),
                                           ),
@@ -610,7 +612,26 @@ class _HomePayrollState extends State<HomePayroll> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(10),
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Color.fromARGB(
+                                                        255, 42, 67, 101)),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              add = false;
+                                              value1 = ngos.first;
+                                              value2 = period.first;
+                                              value3 = amounts.first;
+                                            });
+                                          },
+                                          child: const Text("Cancel")),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
                                       child: ElevatedButton(
                                           style: ButtonStyle(
                                             backgroundColor:
@@ -693,7 +714,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                           },
                                           child: const Text("Done")),
                                     ),
-                                    add == false ? Text("Done") : Text(""),
+                                    //add == false ? Text("Done") : Text(""),
                                   ],
                                 ),
                               ),

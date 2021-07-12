@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:csr_module/Theme/colors.dart';
+import 'package:csr_module/auth/services/firestore_service.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
@@ -16,6 +18,7 @@ class HomeDashboard extends StatefulWidget {
 }
 
 class _HomeDashboardState extends State<HomeDashboard> {
+  final AuthService _authService = AuthService();
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   late List<Days> _chartData;
@@ -140,12 +143,33 @@ class _HomeDashboardState extends State<HomeDashboard> {
           ),
           SizedBox(
             height: 210,
-            child: ListView.builder(
-                controller: ScrollController(),
-                itemCount: numItems,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return ItemCard(numItems: 6);
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('events')
+                    .where('team',
+                        arrayContains: _authService.returnCurrentUserid())
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.data!.docs.isEmpty) {
+                    return Center(
+                      child: Text(
+                          "You have not registered/participated in any events till now.",
+                          style: TextStyle(
+                              color: lightblue,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                    );
+                  } else {
+                    return ListView.builder(
+                        controller: ScrollController(),
+                        itemCount: snapshot.data!.docs.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return ItemCard(snapshot: snapshot, counter: index);
+                        });
+                  }
                 }),
           ),
         ],
@@ -168,11 +192,14 @@ List<Days> getChartData() {
 class ItemCard extends StatelessWidget {
   const ItemCard({
     Key? key,
-    required this.numItems,
+    required this.counter,
+    required this.snapshot,
   }) : super(key: key);
-  final int numItems;
+  final int counter;
+  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   @override
   Widget build(BuildContext context) {
+    final AuthService authService = AuthService();
     var screensize = MediaQuery.of(context).size;
     return SizedBox(
       height: 35,
@@ -185,28 +212,35 @@ class ItemCard extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text('xyz',
+              child: Text(snapshot.data!.docs[counter]['name'],
                   style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text('updated 3 weeks ago',
+              child: Text(
+                  'updated ' +
+                      DateTime.now()
+                          .difference(snapshot.data!.docs[counter]['startdate']
+                              .toDate())
+                          .inDays
+                          .toString() +
+                      ' days ago',
                   style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.pink,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      )),
-                  onPressed: () {},
-                  child: Text(
-                    'Ongoing',
-                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-                  )),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 50),
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           primary: Colors.pink,
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(50),
+            //           )),
+            //       onPressed: () {},
+            //       child: Text(
+            //         'Ongoing',
+            //         style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+            //       )),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: ElevatedButton(
@@ -243,7 +277,7 @@ class ItemCard extends StatelessWidget {
                                                 )),
                                           ),
                                           DataColumn(
-                                            label: Text('Profession',
+                                            label: Text('Department',
                                                 style: TextStyle(
                                                   color: Color.fromARGB(
                                                       255, 44, 82, 130),
@@ -251,7 +285,7 @@ class ItemCard extends StatelessWidget {
                                           )
                                         ],
                                         rows: List<DataRow>.generate(
-                                          numItems,
+                                          6,
                                           (int index) => DataRow(
                                             color: MaterialStateProperty
                                                 .resolveWith<Color?>(
@@ -270,9 +304,9 @@ class ItemCard extends StatelessWidget {
                                               return null;
                                             }),
                                             cells: <DataCell>[
-                                              DataCell(Text('Employee Name')),
+                                              DataCell(Text("Name")),
                                               DataCell(Text('Employee Id')),
-                                              DataCell(Text('Profession'))
+                                              DataCell(Text('Department'))
                                             ],
                                           ),
                                         ),
@@ -288,11 +322,11 @@ class ItemCard extends StatelessWidget {
                     style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
                   )),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text('5 hours',
-                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 50),
+            //   child: Text('5 hours',
+            //       style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            // ),
           ],
         ),
       ),

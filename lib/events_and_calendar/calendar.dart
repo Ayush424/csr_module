@@ -87,27 +87,22 @@ class _CalendarState extends State<Calendar> {
                   flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ListView(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          ListTile(
-                            leading:
-                                Icon(Icons.crop_square, color: Colors.green),
-                            title: Text('Plantation Drive'),
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.crop_square, color: Colors.red),
-                            title: Text('Village Visit'),
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.crop_square,
-                                color: Colors.deepPurple),
-                            title: Text('Yoga Event'),
-                          )
-                        ],
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 30, top: 2, bottom: 50),
+                        child: SizedBox(
+                          height: 90,
+                          child: ListView.builder(
+                              controller: ScrollController(),
+                              itemCount: numItems,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return EventsList(numItems: 3);
+                              }),
+                        ),
                       ),
                     ],
                   ),
@@ -306,5 +301,28 @@ class ItemCard extends StatelessWidget {
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<Appointment> source) {
     appointments = source;
+  }
+}
+
+class EventsList extends StatelessWidget {
+  const EventsList({Key? key, required this.numItems}) : super(key: key);
+  final int numItems;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, top: 10),
+      child: Container(
+        height: 20,
+        child: Row(
+          children: [
+            Icon(Icons.crop_square, color: Colors.green),
+            SizedBox(
+              width: 10,
+            ),
+            Text('Plantation Drive'),
+          ],
+        ),
+      ),
+    );
   }
 }

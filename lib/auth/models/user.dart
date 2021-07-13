@@ -1,4 +1,5 @@
 class MyUser {
+  final Map<String, String>? documents;
   final String uid;
   final String? displayName;
   final String? email;
@@ -11,7 +12,8 @@ class MyUser {
   final String? homeAddress;
   final String? maritalStatus;
   MyUser(this.uid, this.email,
-      {this.empCode,
+      {this.documents,
+      this.empCode,
       this.phoneNo,
       this.dateOfJoining,
       this.skypeId,

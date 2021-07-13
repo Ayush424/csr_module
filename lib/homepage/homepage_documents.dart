@@ -1,5 +1,9 @@
+// import 'dart:io';
+
+import 'dart:html';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,7 +17,42 @@ class HomeDocuments extends StatefulWidget {
 }
 
 class _HomeDocumentsState extends State<HomeDocuments> {
-  TextEditingController _textFieldController = TextEditingController();
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+
+    super.dispose();
+  }
+
+  final TextEditingController _textFieldController = TextEditingController();
+  final AuthService _authService = AuthService();
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  //UploadTask uploadedTask;
+
+  void _uploadDocuments() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+      String? id = _authService.returnCurrentUserid();
+      // Upload file
+      UploadTask task =
+          _firebaseStorage.ref('$id/$fileName').putData(fileBytes);
+      String url = await (await task).ref.getDownloadURL();
+      DocumentSnapshot<Map<String, dynamic>> data = await _firebaseFirestore
+          .collection('Users')
+          .doc(_authService.returnCurrentUserid())
+          .get();
+      Map<String, dynamic> documents = data['documents'];
+      documents.putIfAbsent(fileName, () => url);
+      _firebaseFirestore
+          .collection('Users')
+          .doc(_authService.returnCurrentUserid())
+          .update({'documents': documents});
+    }
+  }
 
   _displayDialog(BuildContext context) async {
     return showDialog(
@@ -59,7 +98,7 @@ class _HomeDocumentsState extends State<HomeDocuments> {
             TextButton(
               child: Text('Confirm'),
               onPressed: () {
-                print('Confirmed');
+                // print('Confirmed');
                 Navigator.of(context).pop();
               },
             ),
@@ -73,19 +112,6 @@ class _HomeDocumentsState extends State<HomeDocuments> {
         );
       },
     );
-  }
-
-  final AuthService authService = AuthService();
-  void _uploadDocuments() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes!;
-      String fileName = result.files.first.name;
-      String? id = authService.returnCurrentUserid();
-      // Upload file
-      await FirebaseStorage.instance.ref('$id/$fileName').putData(fileBytes);
-    }
   }
 
   @override

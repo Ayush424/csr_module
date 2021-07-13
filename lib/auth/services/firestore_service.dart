@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-
-
 class FirestoreService {
   final String? uId;
 
   FirestoreService(this.uId);
 
   Future<void> updateUserData(
+      Map<String, String> documents,
       int volunteeringHours,
       String displayName,
       String? email,
@@ -21,7 +19,8 @@ class FirestoreService {
       String homeAddress,
       String maritalStatus) async {
     return await FirebaseFirestore.instance.collection("Users").doc(uId).set({
-      'volunteering': volunteeringHours,
+      'documents': documents,
+      'volunteering hours': volunteeringHours,
       'displayName': displayName,
       'email': email,
       "phoneNo": phoneNo,

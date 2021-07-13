@@ -21,6 +21,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
   final AuthService _authService = AuthService();
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+
   late List<Days> _chartData;
   late TooltipBehavior _tooltipBehavior;
 
@@ -189,12 +190,16 @@ List<Days> getChartData() {
   return chartData;
 }
 
+const int numMember = 5;
+List<bool> selected = List<bool>.generate(numMember, (int index) => false);
+
 class ItemCard extends StatelessWidget {
   const ItemCard({
     Key? key,
     required this.counter,
     required this.snapshot,
   }) : super(key: key);
+
   final int counter;
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   @override
@@ -252,69 +257,17 @@ class ItemCard extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                         context: context,
-                        builder: (_) => AlertDialog(
-                              content: Container(
-                                height: screensize.height * 0.5,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      DataTable(
-                                        columns: const <DataColumn>[
-                                          DataColumn(
-                                            label: Text('Name',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          ),
-                                          DataColumn(
-                                            label: Text('Id',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          ),
-                                          DataColumn(
-                                            label: Text('Department',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          )
-                                        ],
-                                        rows: List<DataRow>.generate(
-                                          6,
-                                          (int index) => DataRow(
-                                            color: MaterialStateProperty
-                                                .resolveWith<Color?>(
-                                                    (Set<MaterialState>
-                                                        states) {
-                                              if (states.contains(
-                                                  MaterialState.selected)) {
-                                                return Color.fromARGB(
-                                                        255, 237, 242, 247)
-                                                    .withOpacity(0.08);
-                                              }
-                                              if (index.isEven) {
-                                                return Color.fromARGB(
-                                                    255, 237, 242, 247);
-                                              }
-                                              return null;
-                                            }),
-                                            cells: <DataCell>[
-                                              DataCell(Text("Name")),
-                                              DataCell(Text('Employee Id')),
-                                              DataCell(Text('Department'))
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+
+                        builder: (BuildContext context) => AlertDialog(
+                              title: Center(
+                                  child: Text(
+                                'Team Members',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(42, 67, 101, 1),
+
                                 ),
-                              ),
+                              )),
+                              content: Teammembers(numMember: 5),
                             ));
                   },
                   child: Text(
@@ -330,6 +283,39 @@ class ItemCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Teammembers extends StatelessWidget {
+  const Teammembers({
+    Key? key,
+    required this.numMember,
+  }) : super(key: key);
+  final int numMember;
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height * 0.3,
+      width: size.width * 0.3,
+      child: ListView.builder(
+          controller: ScrollController(),
+          physics: ClampingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: numMember,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              tileColor: Colors.grey[200],
+              horizontalTitleGap: 25,
+              leading: Text('Employee Name'),
+              title: Transform(
+                  transform: Matrix4.translationValues(20, 0, 0),
+                  child: Text('Employee id')),
+              trailing: Text('Profession'),
+            );
+          }),
     );
   }
 }

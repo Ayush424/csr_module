@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -18,6 +20,7 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         constraints: BoxConstraints.expand(),
         padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: ListView(
@@ -120,21 +123,38 @@ class _CalendarState extends State<Calendar> {
             ),
             SizedBox(
               height: 250,
-              child: Scrollbar(
-                isAlwaysShown: true,
-                controller: _controllerOne,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: ListView.builder(
-                      controller: _controllerOne,
-                      itemCount: numItems,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return ItemCard();
-                      }),
-                ),
-              ),
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collectionGroup('Products')
+                      .where('likes', isGreaterThan: 0)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.data!.docs.isEmpty) {
+                      return Text(
+                        'no products to show',
+                        style: TextStyle(fontSize: 20, color: lightblue),
+                      );
+                    } else {
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controllerOne,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: ListView.builder(
+                              controller: _controllerOne,
+                              itemCount: snapshot.data!.docs.length,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ItemCard(
+                                    data: snapshot.data!.docs[index]);
+                              }),
+                        ),
+                      );
+                    }
+                  }),
             ),
           ],
         ),
@@ -172,8 +192,10 @@ List<Appointment> getAppointments() {
 }
 
 class ItemCard extends StatelessWidget {
+  final QueryDocumentSnapshot<Object?> data;
   const ItemCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -194,28 +216,39 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'product.jpg',
-                  width: 121,
-                  height: 81,
+                SizedBox(
+                  height: 70,
+                  width: 140,
+                  child: Image(
+                    image: NetworkImage(
+                      data['imgUrl'],
+                    ),
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Column(
                   children: [
-                    Text(
-                      'Product Name',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 45, 55, 72),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 230,
+                      child: Center(
+                        child: Text(
+                          data['product name'],
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 45, 55, 72),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
-                      '\$4.99',
+                      '₹' + data['product price'].toString(),
                       style: TextStyle(
                           color: Color.fromARGB(255, 45, 55, 72),
                           fontSize: 24,
@@ -249,7 +282,9 @@ class ItemCard extends StatelessWidget {
               height: 5,
             ),
             Text(
-              'Product Description lorem ipsum',
+              data['description'],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
             ),

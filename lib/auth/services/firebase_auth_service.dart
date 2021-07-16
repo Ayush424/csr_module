@@ -20,7 +20,9 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       // create a new document for the user with the uid
-      await FirestoreService(user!.uid).updateUserData({},
+      await FirestoreService(user!.uid).updateUserData(
+          "https://firebasestorage.googleapis.com/v0/b/csrmanagement-a6a16.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=733e7008-60af-48d8-9c86-d09b3e0e2152",
+          {},
           0,
           "displayName",
           email,
@@ -43,6 +45,7 @@ class AuthService {
   Future<void> loadMyData() async {
     User? user = _auth.currentUser;
     await FirestoreService(user!.uid).updateUserData(
+        "https://firebasestorage.googleapis.com/v0/b/csrmanagement-a6a16.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=733e7008-60af-48d8-9c86-d09b3e0e2152",
         {},
         0,
         "displayName",

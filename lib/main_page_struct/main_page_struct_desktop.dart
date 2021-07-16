@@ -55,15 +55,10 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
               return DrawerHeader(
                 child: Wrap(
                   children: [
-                    Column(
-                      children: [
-                        Image.asset(
-                          'userImage.png',
-                          width: 100,
-                          height: 81,
-                        ),
-                      ],
-                    ),
+                    SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: Image.network(snapshot.data!['imgUrl'])),
                     SizedBox(
                       width: 15,
                     ),

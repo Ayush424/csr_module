@@ -6,6 +6,7 @@ class FirestoreService {
   FirestoreService(this.uId);
 
   Future<void> updateUserData(
+      String imgUrl,
       Map<String, String> documents,
       int volunteeringHours,
       String displayName,
@@ -19,6 +20,7 @@ class FirestoreService {
       String homeAddress,
       String maritalStatus) async {
     return await FirebaseFirestore.instance.collection("Users").doc(uId).set({
+      'imgUrl': imgUrl,
       'documents': documents,
       'volunteering hours': volunteeringHours,
       'displayName': displayName,
@@ -39,6 +41,13 @@ class FirestoreService {
         .collection('Users')
         .doc(uId)
         .update({"phoneNo": phoneNo});
+  }
+
+  Future<void> updateImg(String imgUrl) async {
+    return await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uId)
+        .update({"imgUrl": imgUrl});
   }
 
   Future<void> updateSkype(String skype) async {

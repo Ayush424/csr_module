@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/colors.dart';
+import 'package:csr_module/events_and_calendar/dollar_for_dollar/productdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -148,8 +151,16 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return ItemCard(
-                                    data: snapshot.data!.docs[index]);
+                                return GestureDetector(
+                                  onTap: () {
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ProductDetails()));
+                                  },
+                                  child: ItemCard(
+                                      data: snapshot.data!.docs[index]),
+                                );
                               }),
                         ),
                       );

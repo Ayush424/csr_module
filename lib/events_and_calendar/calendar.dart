@@ -100,7 +100,7 @@ class _CalendarState extends State<Calendar> {
                           ),
                           ListTile(
                             leading: Icon(Icons.crop_square, color: Colors.red),
-                            title: Text('Village Visit'),
+                            title: Text('Village Visit Day'),
                           ),
                           ListTile(
                             leading: Icon(Icons.crop_square,

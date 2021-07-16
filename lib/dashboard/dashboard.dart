@@ -204,8 +204,7 @@ class ItemCard extends StatelessWidget {
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   @override
   Widget build(BuildContext context) {
-    final AuthService authService = AuthService();
-    var screensize = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return SizedBox(
       height: 35,
       child: Padding(
@@ -257,18 +256,62 @@ class ItemCard extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                         context: context,
-
                         builder: (BuildContext context) => AlertDialog(
-                              title: Center(
-                                  child: Text(
-                                'Team Members',
-                                style: TextStyle(
-                                  color: Color.fromRGBO(42, 67, 101, 1),
+                            title: Center(
+                                child: Text(
+                              'Team Members',
+                              style: TextStyle(
+                                color: Color.fromRGBO(42, 67, 101, 1),
+                              ),
+                            )),
+                            content: Container(
+                              height: size.height * 0.3,
+                              width: size.width * 0.3,
+                              child: ListView.builder(
+                                  controller: ScrollController(),
+                                  physics: ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: snapshot
+                                      .data!.docs[counter]['team'].length,
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final docId = snapshot.data!.docs[counter]
+                                        ['team'][index];
 
-                                ),
-                              )),
-                              content: Teammembers(numMember: 5),
-                            ));
+                                    return StreamBuilder<DocumentSnapshot>(
+                                        stream: FirebaseFirestore.instance
+                                            .collection('Users')
+                                            .doc(docId)
+                                            .snapshots(),
+                                        builder: (context, snapshot2) {
+                                          if (snapshot2.data == null) {
+                                            return Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          }
+                                          return ListTile(
+                                            tileColor: Colors.grey[200],
+                                            horizontalTitleGap: 25,
+                                            leading: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                snapshot2.data!['displayName'],
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                            title: Transform(
+                                                transform:
+                                                    Matrix4.translationValues(
+                                                        20, 0, 0),
+                                                child: Text(snapshot2
+                                                    .data!['empcode'])),
+                                            trailing: Text(
+                                                snapshot2.data!['department']),
+                                          );
+                                        });
+                                  }),
+                            )));
                   },
                   child: Text(
                     'Team Members',
@@ -283,39 +326,6 @@ class ItemCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class Teammembers extends StatelessWidget {
-  const Teammembers({
-    Key? key,
-    required this.numMember,
-  }) : super(key: key);
-  final int numMember;
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.3,
-      width: size.width * 0.3,
-      child: ListView.builder(
-          controller: ScrollController(),
-          physics: ClampingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: numMember,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              tileColor: Colors.grey[200],
-              horizontalTitleGap: 25,
-              leading: Text('Employee Name'),
-              title: Transform(
-                  transform: Matrix4.translationValues(20, 0, 0),
-                  child: Text('Employee id')),
-              trailing: Text('Profession'),
-            );
-          }),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/events_and_calendar/calendar.dart';
 
 import 'package:csr_module/Admin/admin_page_struct.dart';
@@ -42,68 +43,73 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
         height: 100,
         color: Color.fromARGB(255, 45, 55, 72),
         margin: EdgeInsets.only(bottom: 430),
-        child: DrawerHeader(
-          child: Wrap(
-            children: [
-              Column(
-                children: [
-                  Image.asset(
-                    'userImage.png',
-                    width: 100,
-                    height: 81,
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Employee Name',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  Text(
-                    'Employee Profession',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    'Emp-id',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    'employee@gmail.com',
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.logout,
-                      color: Colors.white,
+        child: StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('Users')
+                .doc(_auth.returnCurrentUserid())
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return DrawerHeader(
+                child: Wrap(
+                  children: [
+                    SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: Image.network(snapshot.data!['imgUrl'])),
+                    SizedBox(
+                      width: 15,
                     ),
-                    onPressed: () async {
-                      await _auth.signOut();
-                    },
-                    tooltip: 'Logout',
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          snapshot.data!['displayName'],
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          snapshot.data!['department'],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Text(
+                          snapshot.data!['empcode'],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Text(
+                          snapshot.data!['email'],
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async {
+                            await _auth.signOut();
+                          },
+                          tooltip: 'Logout',
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }),
       ),
       appBar: AppBar(
         actions: [

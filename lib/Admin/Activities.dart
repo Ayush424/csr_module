@@ -304,7 +304,8 @@ class _ActivitiesState extends State<Activities> {
                                       ),
                                       DataColumn(
                                         label: Padding(
-                                          padding: EdgeInsets.fromLTRB(40,0,0,0),
+                                          padding:
+                                              EdgeInsets.fromLTRB(40, 0, 0, 0),
                                           child: Text('Action',
                                               style: TextStyle(
                                                 color: Color.fromARGB(
@@ -335,7 +336,8 @@ class _ActivitiesState extends State<Activities> {
                                           DataCell(Text('abc')),
                                           DataCell(
                                             Padding(
-                                             padding: EdgeInsets.fromLTRB(40,0,0,0),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  40, 0, 0, 0),
                                               child: IconButton(
                                                 icon: Icon(
                                                   Icons.delete,

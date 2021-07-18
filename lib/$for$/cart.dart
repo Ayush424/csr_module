@@ -14,199 +14,171 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          Expanded(child: LeftView()),
-          RightView(),
-        ],
-      ),
-    );
-  }
-}
-
-class RightView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(32),
-      color: Color.fromRGBO(218, 235, 247, 1),
-      width: 500,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 16,
-          ),
-          Text("Order Summary", style: TextStyle(fontWeight: FontWeight.bold)),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 16.0),
-            height: 1.0,
-            color: Colors.grey,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Items 3",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 44, 82, 130),
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                "6000",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 44, 82, 130),
-                  fontSize: 15,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 32,
-          ),
-          Text(
-            "VAT",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          Container(
-            height: 50,
-            width: double.infinity,
-            color: Colors.grey.shade200,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  icon: Icon(Icons.keyboard_arrow_down),
-                  items: [
-                    DropdownMenuItem(
-                      child: Text("Standard Delivery"),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 32,
-          ),
-          Text(
-            "GST",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: TextField(
-              controller: TextEditingController(text: "Enter your code"),
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade200,
-                  border: InputBorder.none,
-                  hintText: "Enter your Code",
-                  hintStyle: TextStyle(color: Colors.grey.shade400),
-                  suffixIcon: Icon(Icons.keyboard_arrow_down)),
-            ),
-          ),
-          Center(
-            child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromARGB(255, 44, 82, 130),
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+          child: SingleChildScrollView(
+            child: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Product Details',
+                    style: TextStyle(
+                      fontSize: 36,
+                      color: Color.fromARGB(255, 42, 67, 101),
+                      decoration: TextDecoration.none,
+                    ),
                   ),
-                ),
-                child: Text("Confirm")),
+                  Divider(
+                    color: Color.fromARGB(255, 226, 232, 240),
+                    thickness: 2,
+                  ),
+                  ListView.builder(
+                    itemBuilder: (context, index) => ProductItemViews(),
+                    itemCount: 3,
+                    shrinkWrap: true,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      width: 200,
+                      height: 300,
+                      color: Color.fromRGBO(218, 235, 247, 1),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  " Price:",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                                Text(
+                                  "Rs 100",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  " VAT:",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                                Text(
+                                  "0.01",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  " GST:",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                                Text(
+                                  "2.01",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  " Total:",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                                Text(
+                                  "Rs 150",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: ElevatedButton.icon(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        const Color.fromRGBO(45, 55, 72, 1)),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => Cart()));
+                                  },
+                                  icon: Icon(Icons.payment_outlined),
+                                  label: Text("Pay")),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class LeftView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var textStyle = TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 44, 82, 130),
-      fontSize: 18,
-    );
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Product Cart",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 44, 82, 130),
-                    fontSize: 30,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 16.0),
-              height: 1.0,
-              color: Colors.grey,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Product Details",
-                  style: textStyle,
-                ),
-                Text(
-                  "Quantity",
-                  style: textStyle,
-                ),
-                Text(
-                  "Price",
-                  style: textStyle,
-                ),
-                Text(
-                  "Total",
-                  style: textStyle,
-                ),
-              ],
-            ),
-            ListView.builder(
-              itemBuilder: (context, index) => ProductItemViews(),
-              itemCount: 3,
-              shrinkWrap: true,
-            ),
-            Spacer(),
-            ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ProductDetails()));
-                },
-                icon: Icon(Icons.keyboard_arrow_left),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromARGB(255, 44, 82, 130),
-                  ),
-                ),
-                label: Text("Continue Shopping")),
-          ],
         ),
       ),
     );
@@ -237,22 +209,31 @@ class ProductItemViews extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Product 1",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(" Product Name",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        decoration: TextDecoration.none,
+                      )),
+                  SizedBox(
+                    height: 10,
                   ),
-                  Text(
-                    "Product 1",
-                    style: TextStyle(color: Colors.orange),
+                  Text("Company Shares",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        decoration: TextDecoration.none,
+                      )),
+                  SizedBox(
+                    height: 10,
                   ),
-                  ElevatedButton.icon(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red),
-                      ),
-                      icon: Icon(Icons.delete),
-                      label: Text("Remove"))
+                  Text("Buys",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        decoration: TextDecoration.none,
+                      )),
                 ],
               ),
             ],
@@ -280,7 +261,14 @@ class ProductItemViews extends StatelessWidget {
           Text(
             "99",
             style: TextStyle(fontWeight: FontWeight.bold),
-          )
+          ),
+          ElevatedButton.icon(
+              onPressed: () {},
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.pink),
+              ),
+              icon: Icon(Icons.delete),
+              label: Text("Remove"))
         ],
       ),
     );

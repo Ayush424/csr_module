@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'cart.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:like_button/like_button.dart';
 
 class ProductDetails extends StatefulWidget {
   ProductDetails({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: ListView(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Product Details',
@@ -70,57 +71,130 @@ class _ProductDetailsState extends State<ProductDetails> {
                   thickness: 2,
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
                 children: [
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(" Product Name",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            decoration: TextDecoration.none,
-                          )),
-                      Text("Cost",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            decoration: TextDecoration.none,
-                          ))
+                      Column(
+                        children: [
+                          Text(" Product Name",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              )),
+                          Text("Cost",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                decoration: TextDecoration.none,
+                              ))
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          LikeButton(
+                            circleColor: CircleColor(
+                                start: Color(0xFFF44336),
+                                end: Color(0xFFF44336)),
+                            likeBuilder: (bool isLiked) {
+                              return Icon(
+                                Icons.favorite,
+                                size: 30,
+                                color: isLiked ? Colors.red : Colors.grey,
+                              );
+                            },
+                          ),
+                          ElevatedButton.icon(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(45, 55, 72, 1)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Cart()));
+                              },
+                              icon: Icon(Icons.shopping_bag),
+                              label: Text("Add to cart")),
+                          SizedBox(height: 90),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Divider(
+                              color: Color.fromARGB(255, 226, 232, 240),
+                              thickness: 2,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.favorite_outline),
-                        // IconButton(
-                        //     color: pressAttention ? Colors.grey : Colors.blue,
-                        //     onPressed: () {
-                        //       setState(() {
-                        //         pressAttention = !pressAttention;
-                        //       });
-                        //     },
-                        //     icon: Icon(Icons.favorite_border)),
-                        SizedBox(width: 20),
-                        ElevatedButton.icon(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(45, 55, 72, 1)),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Cart()));
-                            },
-                            icon: Icon(Icons.shopping_bag),
-                            label: Text("Add to cart")),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text(" NGO by:",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(" Product Description",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 200,
+                      ),
+                      Column(
+                        children: [
+                          Text("Company Shares",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Buys",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              )),
+                        ],
+                      ),
+                      // Row(
+                      //   children: [
+                      //     IconButton(
+                      //         onPressed: () {}, icon: Icon(Icons.remove)),
+                      //     Container(
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(
+                      //           color: Colors.grey,
+                      //           width: 1,
+                      //         ),
+                      //       ),
+                      //       padding: EdgeInsets.symmetric(
+                      //           vertical: 4, horizontal: 5),
+                      //       child: Text("2"),
+                      //     ),
+                      //     IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                      //   ],
+                      // ),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: 90),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Divider(

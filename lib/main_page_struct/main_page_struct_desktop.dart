@@ -1,6 +1,5 @@
 import 'package:csr_module/events_and_calendar/calendar.dart';
 
-
 import 'package:csr_module/Admin/admin_page_struct.dart';
 
 import '../homepage/static_homepage.dart';
@@ -331,8 +330,6 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
     );
   }
 }
-
-void DropDown(String choice) {}
 
 class MyText extends StatefulWidget {
   final bool bold;

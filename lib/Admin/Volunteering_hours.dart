@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:intl/intl.dart';
 
 class VolunteeringHours extends StatefulWidget {
   const VolunteeringHours({Key? key}) : super(key: key);
@@ -24,6 +25,8 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
   }
 
   void initState() {
+    date = DateTime.now();
+
     super.initState();
 
     myController.addListener(() {
@@ -38,6 +41,9 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
   static const int numItems = 4;
   int hours = 00;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  late DateTime date;
+
+  DateFormat format = DateFormat('MMM, y');
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +80,11 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                         width: 60,
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              date = DateTime(date.year, date.month - 1, 15);
+                            });
+                          },
                           icon: Icon(
                             Icons.arrow_left,
                             size: 30,
@@ -86,12 +96,12 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                             text: TextSpan(children: [
                           WidgetSpan(
                               child: Icon(
-                            Icons.calendar_today,
+                            Icons.event,
                             color: Color.fromARGB(255, 44, 82, 130),
                             size: 23,
                           )),
                           TextSpan(
-                              text: ' June, 2021',
+                              text: format.format(date),
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Color.fromARGB(255, 44, 82, 130),
@@ -99,7 +109,11 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                         ])),
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              date = DateTime(date.year, date.month + 1, 15);
+                            });
+                          },
                           icon: Icon(
                             Icons.arrow_right,
                             size: 30,
@@ -189,16 +203,22 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                               controller: myController,
                               decoration: InputDecoration(
                                 // labelText: "Search",
-                                hintText: "Search",
-                                focusColor:
-                                    Color.fromARGB(255, 204, 204, 204),
+                                hintText: "Search employee",
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 113, 128, 150))),
+                                hintStyle: TextStyle(
+                                  color: Color.fromARGB(255, 204, 204, 204),
+                                ),
+                                focusColor: Color.fromARGB(255, 204, 204, 204),
                                 fillColor: Color.fromARGB(255, 204, 204, 204),
                                 suffixIcon: _searchText.isNotEmpty
                                     ? IconButton(
                                         icon: Icon(
                                           Icons.clear,
                                           color: Color.fromARGB(
-                                              255, 204, 204, 204),
+                                              255, 113, 128, 150),
                                         ),
                                         onPressed: () {
                                           setState(() {
@@ -210,12 +230,11 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                                         icon: Icon(
                                           Icons.search,
                                           color: Color.fromARGB(
-                                              255, 204, 204, 204),
+                                              255, 113, 128, 150),
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            Color.fromARGB(
-                                                255, 204, 204, 204);
+                                            Color.fromARGB(255, 113, 128, 150);
                                             // myController.search();
                                           });
                                         },
@@ -261,13 +280,13 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                         ),
                       )
                     ]),
-                    Divider(
-                      color: Color.fromARGB(255, 226, 232, 240),
+                Divider(
+                  color: Color.fromARGB(255, 226, 232, 240),
                   thickness: 2,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 dropdownValue == "Select Event"
                     ? Container()
                     : Container(

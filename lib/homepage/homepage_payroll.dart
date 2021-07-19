@@ -17,11 +17,9 @@ class _HomePayrollState extends State<HomePayroll> {
 
   static final List<String> ngos = <String>[
     'Select a Ngo',
-    'Sikh foundation',
-    'Ekohum Foundation',
-    'Child In Need Institute',
-    'Deepalaya',
-    'EVidyaloka',
+    'Rasta',
+    'Sanskaar',
+    'SD',
   ];
   static final List<String> period = <String>[
     'Select Duration',
@@ -35,9 +33,9 @@ class _HomePayrollState extends State<HomePayroll> {
   static final List<String> amounts = <String>[
     'Select Amount',
     '0',
-    '1000',
-    '2000',
-    '5000',
+    '100',
+    '200',
+    '500',
   ];
   bool add = false;
   bool edit = false;

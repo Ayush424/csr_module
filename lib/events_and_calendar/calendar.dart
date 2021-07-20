@@ -12,7 +12,7 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  static const int numItems = 6;
+  static const int numItems = 3;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   final ScrollController _controllerOne = ScrollController();
 
@@ -100,7 +100,8 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
-                                return EventsList(numItems: 3);
+                                return EventsList(
+                                    numItems: numItems, index: index);
                               }),
                         ),
                       ),
@@ -164,14 +165,14 @@ List<Appointment> getAppointments() {
   DateTime startTime = DateTime(today.year, today.month, today.day, 9, 0, 0);
   DateTime endTime = startTime.add(const Duration(hours: 2));
   meetings.add(Appointment(
-    subject: 'Plantation Drive',
+    subject: 'Drawing Competition',
     startTime: startTime.add(Duration(days: 6)),
     endTime: endTime.add(Duration(days: 6)),
     color: Colors.green,
   ));
 
   meetings.add(Appointment(
-    subject: 'Village Visit',
+    subject: 'Sports Day',
     startTime: startTime,
     endTime: endTime,
     color: Colors.red,
@@ -200,7 +201,7 @@ class ItemCard extends StatelessWidget {
       width: 400,
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100],
+        color: teal,
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
       ),
       child: Padding(
@@ -252,23 +253,23 @@ class ItemCard extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Comp. shares: 30%',
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 113, 128, 150)),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Buys: 2000 units',
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 113, 128, 150)),
-                        )
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       'Comp. shares: 30%',
+                    //       style: TextStyle(
+                    //           fontSize: 10,
+                    //           color: Color.fromARGB(255, 113, 128, 150)),
+                    //     ),
+                    //     SizedBox(width: 10),
+                    //     Text(
+                    //       'Buys: 2000 units',
+                    //       style: TextStyle(
+                    //           fontSize: 10,
+                    //           color: Color.fromARGB(255, 113, 128, 150)),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 )
               ],
@@ -304,8 +305,13 @@ class MeetingDataSource extends CalendarDataSource {
   }
 }
 
+List events = ['Sports Day', "Drawing Competition", "Yoga event"];
+List colors = [Colors.red, Colors.green, Colors.purple];
+
 class EventsList extends StatelessWidget {
-  const EventsList({Key? key, required this.numItems}) : super(key: key);
+  const EventsList({Key? key, required this.numItems, required this.index})
+      : super(key: key);
+  final int index;
   final int numItems;
   @override
   Widget build(BuildContext context) {
@@ -315,11 +321,11 @@ class EventsList extends StatelessWidget {
         height: 20,
         child: Row(
           children: [
-            Icon(Icons.crop_square, color: Colors.green),
+            Icon(Icons.crop_square, color: colors[index]),
             SizedBox(
               width: 10,
             ),
-            Text('Plantation Drive'),
+            Text(events[index]),
           ],
         ),
       ),

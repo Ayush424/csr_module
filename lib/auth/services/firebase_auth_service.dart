@@ -20,20 +20,71 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       // create a new document for the user with the uid
+      // await FirestoreService(user!.uid).updateUserData(
+      //     "https://firebasestorage.googleapis.com/v0/b/csrmanagement-a6a16.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=733e7008-60af-48d8-9c86-d09b3e0e2152",
+      //     {},
+      //     0,
+      //     "displayName",
+      //     email,
+      //     "phoneNo",
+      //     "empcode",
+      //     "dateOfJoining",
+      //     "skypeId",
+      //     "department",
+      //     "gender",
+      //     "homeAddress",
+      //     "maritalStatus");
       await FirestoreService(user!.uid).updateUserData(
-          "https://firebasestorage.googleapis.com/v0/b/csrmanagement-a6a16.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=733e7008-60af-48d8-9c86-d09b3e0e2152",
-          {},
           0,
+          {},
+          "",
+          "uid",
           "displayName",
+          "firstName",
+          "middleName",
+          "lastName",
+          "reportingManagerEmail",
+          "designation",
+          "businessUnit",
           email,
+          "empCode",
           "phoneNo",
-          "empcode",
-          "dateOfJoining",
+          user.metadata.creationTime!.day.toString() +
+              '/' +
+              user.metadata.creationTime!.month.toString() +
+              '/' +
+              user.metadata.creationTime!.year.toString(),
           "skypeId",
           "department",
           "gender",
           "homeAddress",
-          "maritalStatus");
+          "maritalStatus",
+          "referedBy",
+          "sourceOfHire",
+          "exitDate",
+          "exitType",
+          "exitRemarks",
+          "dateOfBirth",
+          "placeOfBirth",
+          "marriageDate",
+          "citizenship",
+          "religion",
+          "bloodGroup",
+          "spouseName",
+          "passportNumber",
+          "city",
+          "state",
+          "zipCode",
+          "country",
+          "personalEmail",
+          "employmentType",
+          "serviceStatus",
+          "enrollmentNo",
+          "aadhaarNo",
+          0,
+          "noticePeriod",
+          "confirmationDate",
+          "probationPeriod");
       return _userFromFirebaseUser(user);
     } catch (error) {
       //print(error.toString());
@@ -45,13 +96,20 @@ class AuthService {
   Future<void> loadMyData() async {
     User? user = _auth.currentUser;
     await FirestoreService(user!.uid).updateUserData(
-        "https://firebasestorage.googleapis.com/v0/b/csrmanagement-a6a16.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=733e7008-60af-48d8-9c86-d09b3e0e2152",
-        {},
         0,
+        {},
+        "",
+        "uid",
         "displayName",
+        "firstName",
+        "middleName",
+        "lastName",
+        "reportingManagerEmail",
+        "designation",
+        "businessUnit",
         user.email,
+        "empCode",
         "phoneNo",
-        "empcode",
         user.metadata.creationTime!.day.toString() +
             '/' +
             user.metadata.creationTime!.month.toString() +
@@ -61,7 +119,33 @@ class AuthService {
         "department",
         "gender",
         "homeAddress",
-        "maritalStatus");
+        "maritalStatus",
+        "referedBy",
+        "sourceOfHire",
+        "exitDate",
+        "exitType",
+        "exitRemarks",
+        "dateOfBirth",
+        "placeOfBirth",
+        "marriageDate",
+        "citizenship",
+        "religion",
+        "bloodGroup",
+        "spouseName",
+        "passportNumber",
+        "city",
+        "state",
+        "zipCode",
+        "country",
+        "personalEmail",
+        "employmentType",
+        "serviceStatus",
+        "enrollmentNo",
+        "aadhaarNo",
+        0,
+        "noticePeriod",
+        "confirmationDate",
+        "probationPeriod");
   }
 
   //signin anonm

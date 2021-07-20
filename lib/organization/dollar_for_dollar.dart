@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -338,7 +339,7 @@ class ItemCard extends StatelessWidget {
       width: 340,
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100],
+        color: teal,
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
         // image: DecorationImage(image: AssetImage('product.jpg'),
         // ),
@@ -365,6 +366,7 @@ class ItemCard extends StatelessWidget {
                   width: 10,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: 200,
@@ -394,12 +396,15 @@ class ItemCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(
-              data['description'],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                data['description'],
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
+              ),
             ),
           ],
         ),

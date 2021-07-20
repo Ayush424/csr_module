@@ -66,19 +66,19 @@ class _HomeProfileState extends State<HomeProfile> {
                   }
                   if (field == "skypeId") {
                     FirestoreService(_authService.returnCurrentUserid())
-                        .updatePhone(_textFieldController.text);
+                        .updateSkype(_textFieldController.text);
                   }
                   if (field == "homeAddress") {
                     FirestoreService(_authService.returnCurrentUserid())
-                        .updatePhone(_textFieldController.text);
+                        .updateHome(_textFieldController.text);
                   }
                   if (field == "currentAddress") {
                     FirestoreService(_authService.returnCurrentUserid())
-                        .updatePhone(_textFieldController.text);
+                        .updateCurrent(_textFieldController.text);
                   }
                   if (field == "maritalStatus") {
                     FirestoreService(_authService.returnCurrentUserid())
-                        .updatePhone(_textFieldController.text);
+                        .updateMarital(_textFieldController.text);
                   }
                   Navigator.of(context).pop();
                 },

@@ -337,8 +337,6 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
   }
 }
 
-void DropDown(String choice) {}
-
 class MyText extends StatefulWidget {
   final bool bold;
   final String text;

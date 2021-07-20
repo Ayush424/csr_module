@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:csr_module/Theme/colors.dart';
+import 'package:csr_module/auth/services/firestore_service.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
@@ -8,6 +10,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeDashboard extends StatefulWidget {
   final ValueChanged<String>? update;
+
   const HomeDashboard({Key? key, this.update}) : super(key: key);
 
   @override
@@ -15,8 +18,10 @@ class HomeDashboard extends StatefulWidget {
 }
 
 class _HomeDashboardState extends State<HomeDashboard> {
+  final AuthService _authService = AuthService();
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+
   late List<Days> _chartData;
   late TooltipBehavior _tooltipBehavior;
 
@@ -91,12 +96,33 @@ class _HomeDashboardState extends State<HomeDashboard> {
                   padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   width: screensize.width * 0.2,
                   margin: EdgeInsets.only(left: 20),
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(237, 242, 247, 1),
-                      border:
-                          Border.all(color: Color.fromRGBO(204, 204, 204, 1))),
-                  child: GoalSection(
-                    update: widget.update,
+                  child: ListView(
+                    physics: ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    controller: ScrollController(),
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Goals',
+                          style: TextStyle(
+                              fontSize: 32,
+                              color: Color.fromARGB(255, 42, 67, 101)),
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                        width: screensize.width * 0.2,
+                        margin: EdgeInsets.only(left: 20),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(237, 242, 247, 1),
+                            border: Border.all(
+                                color: Color.fromRGBO(204, 204, 204, 1))),
+                        child: GoalSection(
+                          update: widget.update,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -118,12 +144,33 @@ class _HomeDashboardState extends State<HomeDashboard> {
           ),
           SizedBox(
             height: 210,
-            child: ListView.builder(
-                controller: ScrollController(),
-                itemCount: numItems,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  return ItemCard(numItems: 6);
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('events')
+                    .where('team',
+                        arrayContains: _authService.returnCurrentUserid())
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.data!.docs.isEmpty) {
+                    return Center(
+                      child: Text(
+                          "You have not registered/participated in any events till now.",
+                          style: TextStyle(
+                              color: lightblue,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                    );
+                  } else {
+                    return ListView.builder(
+                        controller: ScrollController(),
+                        itemCount: snapshot.data!.docs.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return ItemCard(snapshot: snapshot, counter: index);
+                        });
+                  }
                 }),
           ),
         ],
@@ -143,15 +190,21 @@ List<Days> getChartData() {
   return chartData;
 }
 
+const int numMember = 5;
+List<bool> selected = List<bool>.generate(numMember, (int index) => false);
+
 class ItemCard extends StatelessWidget {
   const ItemCard({
     Key? key,
-    required this.numItems,
+    required this.counter,
+    required this.snapshot,
   }) : super(key: key);
-  final int numItems;
+
+  final int counter;
+  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   @override
   Widget build(BuildContext context) {
-    var screensize = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return SizedBox(
       height: 35,
       child: Padding(
@@ -163,28 +216,35 @@ class ItemCard extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text('xyz',
+              child: Text(snapshot.data!.docs[counter]['name'],
                   style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text('updated 3 weeks ago',
+              child: Text(
+                  'updated ' +
+                      DateTime.now()
+                          .difference(snapshot.data!.docs[counter]['startdate']
+                              .toDate())
+                          .inDays
+                          .toString() +
+                      ' days ago',
                   style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.pink,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      )),
-                  onPressed: () {},
-                  child: Text(
-                    'Ongoing',
-                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-                  )),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 50),
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           primary: Colors.pink,
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(50),
+            //           )),
+            //       onPressed: () {},
+            //       child: Text(
+            //         'Ongoing',
+            //         style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+            //       )),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: ElevatedButton(
@@ -196,81 +256,73 @@ class ItemCard extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                         context: context,
-                        builder: (_) => AlertDialog(
-                              content: Container(
-                                height: screensize.height * 0.5,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      DataTable(
-                                        columns: const <DataColumn>[
-                                          DataColumn(
-                                            label: Text('Name',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          ),
-                                          DataColumn(
-                                            label: Text('Id',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          ),
-                                          DataColumn(
-                                            label: Text('Profession',
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          )
-                                        ],
-                                        rows: List<DataRow>.generate(
-                                          numItems,
-                                          (int index) => DataRow(
-                                            color: MaterialStateProperty
-                                                .resolveWith<Color?>(
-                                                    (Set<MaterialState>
-                                                        states) {
-                                              if (states.contains(
-                                                  MaterialState.selected)) {
-                                                return Color.fromARGB(
-                                                        255, 237, 242, 247)
-                                                    .withOpacity(0.08);
-                                              }
-                                              if (index.isEven) {
-                                                return Color.fromARGB(
-                                                    255, 237, 242, 247);
-                                              }
-                                              return null;
-                                            }),
-                                            cells: <DataCell>[
-                                              DataCell(Text('Employee Name')),
-                                              DataCell(Text('Employee Id')),
-                                              DataCell(Text('Profession'))
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                        builder: (BuildContext context) => AlertDialog(
+                            title: Center(
+                                child: Text(
+                              'Team Members',
+                              style: TextStyle(
+                                color: Color.fromRGBO(42, 67, 101, 1),
                               ),
-                            ));
+                            )),
+                            content: Container(
+                              height: size.height * 0.3,
+                              width: size.width * 0.3,
+                              child: ListView.builder(
+                                  controller: ScrollController(),
+                                  physics: ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: snapshot
+                                      .data!.docs[counter]['team'].length,
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final docId = snapshot.data!.docs[counter]
+                                        ['team'][index];
+
+                                    return StreamBuilder<DocumentSnapshot>(
+                                        stream: FirebaseFirestore.instance
+                                            .collection('Users')
+                                            .doc(docId)
+                                            .snapshots(),
+                                        builder: (context, snapshot2) {
+                                          if (snapshot2.data == null) {
+                                            return Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          }
+                                          return ListTile(
+                                            tileColor: Colors.grey[200],
+                                            horizontalTitleGap: 25,
+                                            leading: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                snapshot2.data!['displayName'],
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                            title: Transform(
+                                                transform:
+                                                    Matrix4.translationValues(
+                                                        20, 0, 0),
+                                                child: Text(snapshot2
+                                                    .data!['empcode'])),
+                                            trailing: Text(
+                                                snapshot2.data!['department']),
+                                          );
+                                        });
+                                  }),
+                            )));
                   },
                   child: Text(
                     'Team Members',
                     style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
                   )),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Text('5 hours',
-                  style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 50),
+            //   child: Text('5 hours',
+            //       style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
+            // ),
           ],
         ),
       ),
@@ -311,15 +363,15 @@ class _GoalSectionState extends State<GoalSection> {
           else if (snapshot.data!.docs.length > 0) {
             return Column(
               children: [
-                Text(
-                  'Current GOAL -',
-                  style: TextStyle(
-                      color: Color.fromRGBO(45, 55, 72, 1),
-                      fontFamily: 'Rubik',
-                      fontSize: 24,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w700),
-                ),
+                // Text(
+                //   'Current GOAL -',
+                //   style: TextStyle(
+                //       color: Color.fromRGBO(45, 55, 72, 1),
+                //       fontFamily: 'Rubik',
+                //       fontSize: 24,
+                //       fontStyle: FontStyle.italic,
+                //       fontWeight: FontWeight.w700),
+                // ),
                 Text(
                   snapshot.data!.docs[index]['goal'],
                   style: TextStyle(

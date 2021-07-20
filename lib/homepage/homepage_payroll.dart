@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
 
@@ -19,29 +17,33 @@ class _HomePayrollState extends State<HomePayroll> {
 
   static final List<String> ngos = <String>[
     'Select a Ngo',
-    'Ngo 1',
-    'Ngo 2',
-    'Ngo 3',
-    'Ngo 4',
-    'Ngo 5',
+    'Sikh foundation',
+    'Ekohum Foundation',
+    'Child In Need Institute',
+    'Deepalaya',
+    'EVidyaloka',
   ];
   static final List<String> period = <String>[
     'Select Duration',
+    '0 months',
     '2 months',
     '4 months',
     '6 months',
     '8 months',
     '10 months',
-    '12 months',
   ];
   static final List<String> amounts = <String>[
     'Select Amount',
+    '0',
     '1000',
     '2000',
     '5000',
   ];
   bool add = false;
   bool edit = false;
+  String editvalue1 = ngos.first;
+  String editvalue2 = period.first;
+  String editvalue3 = amounts.first;
   String value1 = ngos.first;
   String value2 = period.first;
   String value3 = amounts.first;
@@ -176,6 +178,7 @@ class _HomePayrollState extends State<HomePayroll> {
                             onPressed: () {
                               setState(() {
                                 edit = true;
+                                add = false;
                               });
                             },
                           ),
@@ -193,6 +196,7 @@ class _HomePayrollState extends State<HomePayroll> {
                             onPressed: () {
                               setState(() {
                                 add = true;
+                                edit = false;
                               });
                             },
                           ),
@@ -214,7 +218,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                 padding:
                                     const EdgeInsets.fromLTRB(50, 50, 30, 50),
                                 child: Wrap(
-                                  spacing: 200,
+                                  spacing: 70,
                                   runSpacing: 30,
                                   children: [
                                     Container(
@@ -229,14 +233,14 @@ class _HomePayrollState extends State<HomePayroll> {
                                                     45, 55, 72, 1)),
                                           ),
                                           Container(
-                                            width: 100,
+                                            width: 150,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value1,
+                                              value: editvalue1,
                                               items: ngos
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
@@ -253,7 +257,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value1 = value!;
+                                                this.editvalue1 = value!;
                                               }),
                                             ),
                                           ),
@@ -277,7 +281,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value2,
+                                              value: editvalue2,
                                               items: period
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
@@ -294,7 +298,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value2 = value!;
+                                                this.editvalue2 = value!;
                                               }),
                                             ),
                                           ),
@@ -319,7 +323,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                               color: Colors.white,
                                             ),
                                             child: DropdownButton<String>(
-                                              value: value3,
+                                              value: editvalue3,
                                               items: amounts
                                                   .map((item) =>
                                                       DropdownMenuItem<String>(
@@ -336,7 +340,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value3 = value!;
+                                                this.editvalue3 = value!;
                                               }),
                                             ),
                                           ),
@@ -344,7 +348,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(10),
+                                      padding: const EdgeInsets.only(top: 20),
                                       child: ElevatedButton(
                                           style: ButtonStyle(
                                             backgroundColor:
@@ -357,9 +361,108 @@ class _HomePayrollState extends State<HomePayroll> {
                                               edit = false;
                                             });
                                           },
+                                          child: const Text("Cancel")),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Color.fromARGB(
+                                                        255, 42, 67, 101)),
+                                          ),
+                                          onPressed: () async {
+                                            if (editvalue1 != ngos.first &&
+                                                editvalue2 != period.first &&
+                                                editvalue3 != amounts.first) {
+                                              final query =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('payroll')
+                                                      .doc(_authService
+                                                          .returnCurrentUserid())
+                                                      .collection(
+                                                          'user_payrolls')
+                                                      .where('ngo',
+                                                          isEqualTo: editvalue1)
+                                                      .get();
+                                              if (query.docs.isEmpty) {
+                                                setState(() {
+                                                  edit = false;
+                                                });
+                                              } else {
+                                                query.docs.single.reference
+                                                    .update({
+                                                  "amount": editvalue3,
+                                                  "period": editvalue2
+                                                }).then(
+                                                  (result) =>
+                                                      showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AlertDialog(
+                                                      content: SizedBox(
+                                                        height: 150,
+                                                        child: Center(
+                                                          child: Text(
+                                                            'Changed Successfully',
+                                                            style: TextStyle(
+                                                                fontSize: 20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              edit = false;
+                                                              editvalue1 =
+                                                                  ngos.first;
+                                                              editvalue2 =
+                                                                  period.first;
+                                                              editvalue3 =
+                                                                  amounts.first;
+                                                            });
+                                                            Navigator.pop(
+                                                                context, 'OK');
+                                                          },
+                                                          child:
+                                                              const Text('OK'),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => AlertDialog(
+                                                        content: Text(
+                                                          'Please select a value for all the fields',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context,
+                                                                    'OK'),
+                                                            child: const Text(
+                                                                'OK'),
+                                                          ),
+                                                        ],
+                                                      ));
+                                            }
+                                          },
                                           child: const Text("Done")),
                                     ),
-                                    edit == false ? Text("Done") : Text(""),
+                                    // edit == false ? Text("Done") : Text(""),
                                   ],
                                 ),
                               ),
@@ -379,7 +482,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                 padding:
                                     const EdgeInsets.fromLTRB(50, 50, 30, 50),
                                 child: Wrap(
-                                  spacing: 200,
+                                  spacing: 70,
                                   runSpacing: 30,
                                   children: [
                                     Container(
@@ -394,7 +497,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                     45, 55, 72, 1)),
                                           ),
                                           Container(
-                                            width: 100,
+                                            width: 150,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -418,7 +521,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value1 = value!;
+                                                value1 = value!;
                                               }),
                                             ),
                                           ),
@@ -459,7 +562,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value2 = value!;
+                                                value2 = value!;
                                               }),
                                             ),
                                           ),
@@ -501,7 +604,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                                   .toList(),
                                               onChanged: (value) =>
                                                   setState(() {
-                                                this.value3 = value!;
+                                                value3 = value!;
                                               }),
                                             ),
                                           ),
@@ -509,7 +612,26 @@ class _HomePayrollState extends State<HomePayroll> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(10),
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Color.fromARGB(
+                                                        255, 42, 67, 101)),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              add = false;
+                                              value1 = ngos.first;
+                                              value2 = period.first;
+                                              value3 = amounts.first;
+                                            });
+                                          },
+                                          child: const Text("Cancel")),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
                                       child: ElevatedButton(
                                           style: ButtonStyle(
                                             backgroundColor:
@@ -592,7 +714,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                           },
                                           child: const Text("Done")),
                                     ),
-                                    add == false ? Text("Done") : Text(""),
+                                    //add == false ? Text("Done") : Text(""),
                                   ],
                                 ),
                               ),

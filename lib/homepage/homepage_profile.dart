@@ -1,12 +1,46 @@
+import 'dart:html';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/auth/services/firebase_auth_service.dart';
-import 'package:csr_module/auth/services/firestore_service.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-class HomeProfile extends StatelessWidget {
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
+import 'package:csr_module/auth/services/firestore_service.dart';
+
+class HomeProfile extends StatefulWidget {
+  @override
+  State<HomeProfile> createState() => _HomeProfileState();
+}
+
+class _HomeProfileState extends State<HomeProfile> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+
   final AuthService _authService = AuthService();
+
   final collection = FirebaseFirestore.instance.collection("Users");
+
   final TextEditingController _textFieldController = TextEditingController();
+
+  void _uploadImg() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String fileName = result.files.first.name;
+      String? id = _authService.returnCurrentUserid();
+      // Upload file
+      UploadTask task =
+          _firebaseStorage.ref('$id/profile/$fileName').putData(fileBytes);
+      String url = await (await task).ref.getDownloadURL();
+      FirestoreService(_authService.returnCurrentUserid()).updateImg(url);
+    }
+  }
 
   _displayDialog(BuildContext context, String details, String field) async {
     return showDialog(
@@ -231,12 +265,31 @@ class HomeProfile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CircleAvatar(
-                          radius: 60,
-                          backgroundImage: NetworkImage(
-                            'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/104113705/original/6076831db34315e45bd2a31a9d79bb7b91d48e04/design-flat-style-minimalist-avatar-of-you.jpg',
-                          ),
-                        ),
+                        snapshot.data!['imgUrl'].isEmpty
+                            ? CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 60,
+                                backgroundImage: NetworkImage(
+                                  'https://firebasestorage.googleapis.com/v0/b/csrmanagement-a6a16.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=733e7008-60af-48d8-9c86-d09b3e0e2152',
+                                ),
+                                child: Center(
+                                  child: TextButton(
+                                    child: Text(
+                                      "Upload image",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () {
+                                      _uploadImg();
+                                    },
+                                  ),
+                                ),
+                              )
+                            : CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    NetworkImage(snapshot.data!['imgUrl'])),
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(

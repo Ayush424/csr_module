@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Calendar extends StatefulWidget {
   final ValueChanged<String>? update;
@@ -11,14 +12,15 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  static const int numItems = 6;
+  static const int numItems = 3;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  CarouselController buttonCarouselController = CarouselController();
+  final ScrollController _controllerOne = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         constraints: BoxConstraints.expand(),
         padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: ListView(
@@ -85,27 +87,23 @@ class _CalendarState extends State<Calendar> {
                   flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ListView(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          ListTile(
-                            leading:
-                                Icon(Icons.crop_square, color: Colors.green),
-                            title: Text('Plantation Drive'),
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.crop_square, color: Colors.red),
-                            title: Text('Village Visit'),
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.crop_square,
-                                color: Colors.deepPurple),
-                            title: Text('Yoga Event'),
-                          )
-                        ],
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 30, top: 2, bottom: 50),
+                        child: SizedBox(
+                          height: 90,
+                          child: ListView.builder(
+                              controller: ScrollController(),
+                              itemCount: numItems,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return EventsList(
+                                    numItems: numItems, index: index);
+                              }),
+                        ),
                       ),
                     ],
                   ),
@@ -119,56 +117,40 @@ class _CalendarState extends State<Calendar> {
                   },
                   child: Text('view more >>>')),
             ),
-            ListTile(
-              leading: Transform(
-                transform: Matrix4.translationValues(0, 100, 0),
-                child: IconButton(
-                  onPressed: () => buttonCarouselController.previousPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear),
-                  icon: Icon(Icons.arrow_back_ios_new_outlined),
-                  color: Color.fromARGB(255, 42, 67, 101),
-                ),
-              ),
-              title: CarouselSlider.builder(
-                // itemCount: numItems,
-                carouselController: buttonCarouselController,
-                options: CarouselOptions(
-                  autoPlay: false,
-                  enlargeCenterPage: false,
-                  viewportFraction: 1,
-                  aspectRatio: 3.0,
-                ),
-                // itemCount: numItems.round(),
-                itemCount: (numItems / 2).round(),
-                itemBuilder:
-                    (BuildContext context, int itemIndex, int pageViewIndex) {
-                  return Row(children: [
-                    Flexible(
-                      child: ItemCard(),
-                      flex: 1,
-                    ),
-                    Flexible(
-                      child: ItemCard(),
-                      flex: 1,
-                    ),
-                    Flexible(
-                      child: ItemCard(),
-                      flex: 1,
-                    ),
-                  ]);
-                },
-              ),
-              trailing: Transform(
-                transform: Matrix4.translationValues(0, 100, 0),
-                child: IconButton(
-                  onPressed: () => buttonCarouselController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear),
-                  icon: Icon(Icons.arrow_forward_ios_outlined),
-                  color: Color.fromARGB(255, 42, 67, 101),
-                ),
-              ),
+            SizedBox(
+              height: 250,
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collectionGroup('Products')
+                      .where('likes', isGreaterThan: 0)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.data!.docs.isEmpty) {
+                      return Text(
+                        'no products to show',
+                        style: TextStyle(fontSize: 20, color: lightblue),
+                      );
+                    } else {
+                      return Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _controllerOne,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: ListView.builder(
+                              controller: _controllerOne,
+                              itemCount: snapshot.data!.docs.length,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ItemCard(
+                                    data: snapshot.data!.docs[index]);
+                              }),
+                        ),
+                      );
+                    }
+                  }),
             ),
           ],
         ),
@@ -183,14 +165,14 @@ List<Appointment> getAppointments() {
   DateTime startTime = DateTime(today.year, today.month, today.day, 9, 0, 0);
   DateTime endTime = startTime.add(const Duration(hours: 2));
   meetings.add(Appointment(
-    subject: 'Plantation Drive',
+    subject: 'Drawing Competition',
     startTime: startTime.add(Duration(days: 6)),
     endTime: endTime.add(Duration(days: 6)),
     color: Colors.green,
   ));
 
   meetings.add(Appointment(
-    subject: 'Village Visit',
+    subject: 'Sports Day',
     startTime: startTime,
     endTime: endTime,
     color: Colors.red,
@@ -206,8 +188,10 @@ List<Appointment> getAppointments() {
 }
 
 class ItemCard extends StatelessWidget {
+  final QueryDocumentSnapshot<Object?> data;
   const ItemCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -217,7 +201,7 @@ class ItemCard extends StatelessWidget {
       width: 400,
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100],
+        color: teal,
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
       ),
       child: Padding(
@@ -228,28 +212,39 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'product.jpg',
-                  width: 121,
-                  height: 81,
+                SizedBox(
+                  height: 70,
+                  width: 140,
+                  child: Image(
+                    image: NetworkImage(
+                      data['imgUrl'],
+                    ),
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Column(
                   children: [
-                    Text(
-                      'Product Name',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 45, 55, 72),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 230,
+                      child: Center(
+                        child: Text(
+                          data['product name'],
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 45, 55, 72),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
-                      '\$4.99',
+                      '₹' + data['product price'].toString(),
                       style: TextStyle(
                           color: Color.fromARGB(255, 45, 55, 72),
                           fontSize: 24,
@@ -258,23 +253,23 @@ class ItemCard extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Comp. shares: 30%',
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 113, 128, 150)),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Buys: 2000 units',
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 113, 128, 150)),
-                        )
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       'Comp. shares: 30%',
+                    //       style: TextStyle(
+                    //           fontSize: 10,
+                    //           color: Color.fromARGB(255, 113, 128, 150)),
+                    //     ),
+                    //     SizedBox(width: 10),
+                    //     Text(
+                    //       'Buys: 2000 units',
+                    //       style: TextStyle(
+                    //           fontSize: 10,
+                    //           color: Color.fromARGB(255, 113, 128, 150)),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 )
               ],
@@ -283,7 +278,9 @@ class ItemCard extends StatelessWidget {
               height: 5,
             ),
             Text(
-              'Product Description lorem ipsum',
+              data['description'],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
             ),
@@ -305,5 +302,33 @@ class ItemCard extends StatelessWidget {
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<Appointment> source) {
     appointments = source;
+  }
+}
+
+List events = ['Sports Day', "Drawing Competition", "Yoga event"];
+List colors = [Colors.red, Colors.green, Colors.purple];
+
+class EventsList extends StatelessWidget {
+  const EventsList({Key? key, required this.numItems, required this.index})
+      : super(key: key);
+  final int index;
+  final int numItems;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, top: 10),
+      child: Container(
+        height: 20,
+        child: Row(
+          children: [
+            Icon(Icons.crop_square, color: colors[index]),
+            SizedBox(
+              width: 10,
+            ),
+            Text(events[index]),
+          ],
+        ),
+      ),
+    );
   }
 }

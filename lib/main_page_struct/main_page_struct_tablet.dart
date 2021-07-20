@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Admin/admin_page_struct_tablet.dart';
 import 'package:csr_module/events_and_calendar/calendar.dart';
+import 'package:csr_module/organization/dollar_for_dollar.dart';
 import '../homepage/static_homepage.dart';
 import 'static_mainpage.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +22,7 @@ class MainPageStructTablet extends StatefulWidget {
 }
 
 class _MainPageStructTabletState extends State<MainPageStructTablet> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   //String GlobalMainPage.mainpage = "dashboard";
   void _update(String mainpage) {
     setState(() {
@@ -37,7 +41,9 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
           Flexible(
             flex: 2,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _auth.loadMyData();
+              },
               tooltip: 'Notifications',
               icon: const Icon(Icons.notifications_active,
                   color: Colors.white, size: 25),
@@ -56,7 +62,16 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
             ),
           ),
         ],
-        leading: const Icon(Icons.air_rounded),
+        leading: IconButton(
+          tooltip: 'Admin portal for now',
+          icon: Icon(Icons.air_rounded),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AdminPageStructTablet()),
+            );
+          },
+        ),
         title: const Text(
           "CSR Management",
           style: TextStyle(color: Colors.white),
@@ -71,31 +86,38 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                 controller: ScrollController(),
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    accountName: Text(
-                      'Employee Name',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    accountEmail: Text('Employee Profession'),
-                    currentAccountPicture: Icon(
-                      Icons.account_circle_rounded,
-                      size: 75,
-                      color: Colors.white70,
-                    ),
-                    otherAccountsPictures: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.logout,
-                          color: Colors.white70,
-                        ),
-                        onPressed: () async {
-                          await _auth.signOut();
-                        },
-                        tooltip: 'Logout',
-                      ),
-                    ],
-                  ),
+                  StreamBuilder<DocumentSnapshot>(
+                      stream: _firebaseFirestore
+                          .collection('Users')
+                          .doc(_auth.returnCurrentUserid())
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return CircularProgressIndicator();
+                        }
+                        return UserAccountsDrawerHeader(
+                          accountName: Text(
+                            snapshot.data!['displayName'],
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          accountEmail: Text(snapshot.data!['department']),
+                          currentAccountPicture:
+                              Image.network(snapshot.data!['imgUrl']),
+                          otherAccountsPictures: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.logout,
+                                color: Colors.white70,
+                              ),
+                              onPressed: () async {
+                                await _auth.signOut();
+                              },
+                              tooltip: 'Logout',
+                            ),
+                          ],
+                        );
+                      }),
                   ListTile(
                     leading: const MyIcon(icon: Icons.assessment_outlined),
                     title: Transform(
@@ -254,7 +276,11 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
             update: _update,
           );
         } else if (GlobalMainPage.mainpage == 'calendar') {
-          return Calendar();
+          return Calendar(
+            update: _update,
+          );
+        } else if (GlobalMainPage.mainpage == 'Dollar') {
+          return DollarForDollar();
         } else {
           return Container();
         }

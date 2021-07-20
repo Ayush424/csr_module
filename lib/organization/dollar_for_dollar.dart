@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
+enum SingingCharacter { ngo, product }
 
 class DollarForDollar extends StatefulWidget {
   const DollarForDollar({Key? key}) : super(key: key);
@@ -12,7 +15,26 @@ class DollarForDollar extends StatefulWidget {
 class _DollarForDollarState extends State<DollarForDollar> {
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  CarouselController buttonCarouselController = CarouselController();
+  String _searchText = "";
+  final myController = TextEditingController();
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    myController.addListener(() {
+      setState(() {
+        _searchText = myController.text;
+      });
+    });
+  }
+
+  SingingCharacter? _character = SingingCharacter.ngo;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +45,7 @@ class _DollarForDollarState extends State<DollarForDollar> {
         child: Padding(
           padding: const EdgeInsets.all(40),
           child: SingleChildScrollView(
+            controller: ScrollController(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,12 +76,174 @@ class _DollarForDollarState extends State<DollarForDollar> {
                   thickness: 2,
                 ),
                 Padding(
+                  padding: EdgeInsets.only(left: 150, top: 10),
+                  child: Wrap(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    direction: Axis.horizontal,
+                    children: [
+                      Container(
+                        width: 232,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: Color.fromARGB(255, 204, 204, 204),
+                          width: 1,
+                        )),
+                        child: TextField(
+                          controller: myController,
+                          decoration: InputDecoration(
+                            // labelText: "Search",
+                            hintText: "Search",
+                            focusColor: Color.fromARGB(255, 204, 204, 204),
+                            fillColor: Color.fromARGB(255, 204, 204, 204),
+                            prefixIcon: _searchText.isNotEmpty
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.clear,
+                                      color: Color.fromARGB(255, 204, 204, 204),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        myController.clear();
+                                      });
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: Icon(
+                                      Icons.search,
+                                      color: Color.fromARGB(255, 204, 204, 204),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        Color.fromARGB(255, 204, 204, 204);
+                                        // myController.search();
+                                      });
+                                    },
+                                  ),
+                            suffixIcon: IconButton(
+                                onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: const Text(
+                                          'Search Using',
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 113, 128, 150),
+                                              fontSize: 24,
+                                              decoration: TextDecoration.none),
+                                        ),
+                                        // content: const Text('AlertDialog description'),
+                                        actions: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5, right: 2),
+                                                child: Radio<SingingCharacter>(
+                                                  value: SingingCharacter.ngo,
+                                                  groupValue: _character,
+                                                  onChanged: (SingingCharacter?
+                                                      value) {
+                                                    setState(() {
+                                                      _character = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Text(
+                                                'NGO Name',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 28,
+                                                    decoration:
+                                                        TextDecoration.none),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 2),
+                                                child: Radio<SingingCharacter>(
+                                                  value:
+                                                      SingingCharacter.product,
+                                                  groupValue: _character,
+                                                  onChanged: (SingingCharacter?
+                                                      value) {
+                                                    setState(() {
+                                                      _character = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Text(
+                                                'Product Name',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 28,
+                                                    decoration:
+                                                        TextDecoration.none),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10, bottom: 10),
+                                            child: ElevatedButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Apply'),
+                                                child: Text(
+                                                  'Apply',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 26),
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                    primary: Color.fromARGB(
+                                                  255,
+                                                  45,
+                                                  55,
+                                                  72,
+                                                ))),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                icon: Icon(Icons.filter_alt)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: numItems,
-                      itemBuilder: (context, index) {
-                        return NgoList();
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('ngos')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null)
+                          return CircularProgressIndicator();
+                        else if (snapshot.data!.docs.length == 0) {
+                          return Text('No ngo partners right now');
+                        } else {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                final id = snapshot.data!.docs[index].id;
+                                return NgoList(
+                                    data: snapshot.data!.docs[index], id: id);
+                              });
+                        }
                       }),
                 ),
               ],
@@ -71,16 +256,20 @@ class _DollarForDollarState extends State<DollarForDollar> {
 }
 
 class NgoList extends StatefulWidget {
-  const NgoList({Key? key}) : super(key: key);
+  final String id;
+  final QueryDocumentSnapshot<Object?> data;
+  const NgoList({Key? key, required this.data, required this.id})
+      : super(key: key);
 
   @override
   _NgoListState createState() => _NgoListState();
 }
 
 class _NgoListState extends State<NgoList> {
-  static const int numItems = 6;
-  List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  CarouselController buttonCarouselController = CarouselController();
+  // static const int numItems = 6;
+  // List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+  final ScrollController _controllerOne = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,63 +277,47 @@ class _NgoListState extends State<NgoList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 18),
             child: Text(
-              'Ngo Name',
+              widget.data['name'],
               style: TextStyle(
                   color: Color.fromARGB(255, 45, 55, 72), fontSize: 22),
             ),
           ),
           SizedBox(
             height: 200,
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                IconButton(
-                  onPressed: () => buttonCarouselController.previousPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear),
-                  icon: Icon(Icons.arrow_left_sharp),
-                  color: Color.fromARGB(255, 42, 67, 101),
-                  iconSize: 50,
-                ),
-                CarouselSlider.builder(
-                  // itemCount: numItems,
-                  carouselController: buttonCarouselController,
-                  options: CarouselOptions(
-                    autoPlay: false,
-                    enlargeCenterPage: false,
-                    viewportFraction: 1,
-                    aspectRatio: 3.8,
-                  ),
-                  // itemCount: numItems.round(),
-                  itemCount: (numItems / 3).round(),
-                  itemBuilder:
-                      (BuildContext context, int itemIndex, int pageViewIndex) {
-                    return Row(children: [
-                      Flexible(
-                        child: ItemCard(),
-                        flex: 1,
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('ngos')
+                    .doc(widget.id)
+                    .collection('Products')
+                    .snapshots(),
+                builder: (context, snapshot2) {
+                  if (snapshot2.data == null) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot2.data!.docs.isEmpty) {
+                    return Text('no products to show');
+                  } else {
+                    return Scrollbar(
+                      isAlwaysShown: true,
+                      controller: _controllerOne,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: ListView.builder(
+                            controller: _controllerOne,
+                            itemCount: snapshot2.data!.docs.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                child:
+                                    ItemCard(data: snapshot2.data!.docs[index]),
+                              );
+                            }),
                       ),
-                      Flexible(
-                        child: ItemCard(),
-                        flex: 1,
-                      ),
-                      //  Flexible(child: ItemCard(),
-                      //  flex: 1,),
-                    ]);
-                  },
-                ),
-                IconButton(
-                  onPressed: () => buttonCarouselController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear),
-                  icon: Icon(Icons.arrow_right_sharp),
-                  color: Color.fromARGB(255, 42, 67, 101),
-                  iconSize: 50,
-                ),
-              ],
-            ),
+                    );
+                  }
+                }),
           ),
         ],
       ),
@@ -153,18 +326,20 @@ class _NgoListState extends State<NgoList> {
 }
 
 class ItemCard extends StatelessWidget {
+  final QueryDocumentSnapshot<Object?> data;
   const ItemCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 186,
+      height: 200,
       width: 340,
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100],
+        color: teal,
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
         // image: DecorationImage(image: AssetImage('product.jpg'),
         // ),
@@ -177,28 +352,38 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'product.jpg',
-                  width: 121,
-                  height: 81,
+                SizedBox(
+                  height: 50,
+                  width: 110,
+                  child: Image(
+                    image: NetworkImage(
+                      data['imgUrl'],
+                    ),
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Product Name',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 45, 55, 72),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        data['product name'],
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 45, 55, 72),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
-                      '\$4.99',
+                      '₹' + data['product price'].toString(),
                       style: TextStyle(
                           color: Color.fromARGB(255, 45, 55, 72),
                           fontSize: 24,
@@ -211,11 +396,16 @@ class ItemCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(
-              'Product Description lorem ipsum',
-              style: TextStyle(
-                  fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
-            )
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                data['description'],
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
+              ),
+            ),
           ],
         ),
       ),

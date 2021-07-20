@@ -92,19 +92,13 @@ class _DollarForDollarState extends State<DollarForDollar> {
                           decoration: InputDecoration(
                             // labelText: "Search",
                             hintText: "Search",
-                            focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color.fromARGB(255, 113, 128, 150))
-                                ),
-                                hintStyle: TextStyle(
-                                color:Color.fromARGB(255, 204, 204, 204),),
                             focusColor: Color.fromARGB(255, 204, 204, 204),
                             fillColor: Color.fromARGB(255, 204, 204, 204),
                             prefixIcon: _searchText.isNotEmpty
                                 ? IconButton(
                                     icon: Icon(
                                       Icons.clear,
-                                      color:Color.fromARGB(
-                                              255, 113, 128, 150),
+                                      color: Color.fromARGB(255, 204, 204, 204),
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -115,13 +109,11 @@ class _DollarForDollarState extends State<DollarForDollar> {
                                 : IconButton(
                                     icon: Icon(
                                       Icons.search,
-                                      color: Color.fromARGB(
-                                              255, 113, 128, 150),
+                                      color: Color.fromARGB(255, 204, 204, 204),
                                     ),
                                     onPressed: () {
                                       setState(() {
-                                        Color.fromARGB(
-                                              255, 113, 128, 150);
+                                        Color.fromARGB(255, 204, 204, 204);
                                         // myController.search();
                                       });
                                     },
@@ -346,7 +338,7 @@ class ItemCard extends StatelessWidget {
       width: 340,
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255,237, 242, 247),
+        color: Colors.blueGrey[100],
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
         // image: DecorationImage(image: AssetImage('product.jpg'),
         // ),

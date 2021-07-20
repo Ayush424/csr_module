@@ -26,6 +26,7 @@ class _NgoPartnerState extends State<NgoPartner> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +64,8 @@ class _NgoPartnerState extends State<NgoPartner> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                        date = DateTime(date.year, date.month - 1, 15);
-                      });
+                              date = DateTime(date.year, date.month - 1, 15);
+                            });
                           },
                           icon: Icon(
                             Icons.arrow_left,
@@ -92,8 +93,8 @@ class _NgoPartnerState extends State<NgoPartner> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                        date = DateTime(date.year, date.month + 1, 15);
-                      });
+                              date = DateTime(date.year, date.month + 1, 15);
+                            });
                           },
                           icon: Icon(
                             Icons.arrow_right,
@@ -113,7 +114,8 @@ class _NgoPartnerState extends State<NgoPartner> {
                       PieChart(
                         dataMap: dataMap,
                         animationDuration: Duration(milliseconds: 800),
-                        chartLegendSpacing: 32,
+                        chartLegendSpacing:
+                            MediaQuery.of(context).size.width >= 990 ? 100 : 50,
                         // chartRadius: MediaQuery.of(context).size.width / 6,
                         // colorList: colorList,
                         chartRadius: 180,
@@ -122,7 +124,10 @@ class _NgoPartnerState extends State<NgoPartner> {
                         // centerText: "HYBRID",
                         legendOptions: LegendOptions(
                           showLegendsInRow: false,
-                          legendPosition: LegendPosition.right,
+                          legendPosition:
+                              MediaQuery.of(context).size.width >= 990
+                                  ? LegendPosition.right
+                                  : LegendPosition.bottom,
                           showLegends: true,
                           legendTextStyle: TextStyle(
                             fontSize: 20,
@@ -212,14 +217,15 @@ class _NgoPartnerState extends State<NgoPartner> {
                               DataCell(Text('abc')),
                               DataCell(Text('abc')),
                               DataCell(ElevatedButton(
-                                style: ElevatedButton.styleFrom(primary: Color.fromARGB(255, 45, 55, 72),),
-                                child:Text(
-                                    'View more',
-                                    style: TextStyle(color: Colors.white),
-                                  ) ,
-                                onPressed: (){},
-                                  
-                                  )),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(255, 45, 55, 72),
+                                ),
+                                child: Text(
+                                  'View more',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {},
+                              )),
                             ],
                           ),
                         ),
@@ -252,119 +258,100 @@ class _NgoPartnerState extends State<NgoPartner> {
     );
   }
 }
- class Form extends StatefulWidget {
-   const Form({ Key? key }) : super(key: key);
- 
-   @override
-   _FormState createState() => _FormState();
- }
- 
- class _FormState extends State<Form> {
-    TextEditingController textController = TextEditingController();
-   @override
-   Widget build(BuildContext context) {
-     return Container(
-       decoration: BoxDecoration(color: Color.fromARGB(255,237, 242, 247)),
-       child:Wrap(
-         spacing:200,
-         runSpacing: 20,
-         children: [
-           Column(
-             children: [
-               Text('Name',
-               style: TextStyle(
-                 color: Color.fromARGB(255,42, 67, 101),
-                 fontSize: 22,
-               ),),
+
+class Form extends StatefulWidget {
+  const Form({Key? key}) : super(key: key);
+
+  @override
+  _FormState createState() => _FormState();
+}
+
+class _FormState extends State<Form> {
+  TextEditingController textController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(color: Color.fromARGB(255, 237, 242, 247)),
+        child: Wrap(
+          spacing: 200,
+          runSpacing: 20,
+          children: [
+            Column(
+              children: [
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 42, 67, 101),
+                    fontSize: 22,
+                  ),
+                ),
                 SizedBox(height: 10),
-                    TextField(
-                      controller: textController,
-                      
-                      decoration: InputDecoration(
-                        hintText: 'Enter Name'
-                      )
-                    ),
-                    
-                  
-             ],
-           ),
-           Column(
-             children: [
-               Text('Contact person',
-               style: TextStyle(
-                 color: Color.fromARGB(255,42, 67, 101),
-                 fontSize: 22,
-               ),),
+                TextField(
+                    controller: textController,
+                    decoration: InputDecoration(hintText: 'Enter Name')),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'Contact person',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 42, 67, 101),
+                    fontSize: 22,
+                  ),
+                ),
                 SizedBox(height: 10),
-                    TextField(
-                      controller: textController,
-                      
-                      decoration: InputDecoration(
-                        hintText: 'Enter Name'
-                      )
-                    ),
-                    
-                  
-             ],
-           ),
-           Column(
-             children: [
-               Text('Category',
-               style: TextStyle(
-                 color: Color.fromARGB(255,42, 67, 101),
-                 fontSize: 22,
-               ),),
+                TextField(
+                    controller: textController,
+                    decoration: InputDecoration(hintText: 'Enter Name')),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'Category',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 42, 67, 101),
+                    fontSize: 22,
+                  ),
+                ),
                 SizedBox(height: 10),
-                    TextField(
-                      controller: textController,
-                      
-                      decoration: InputDecoration(
-                        hintText: 'Enter Name'
-                      )
-                    ),
-                    
-                  
-             ],
-           ),
-           Column(
-             children: [
-               Text('Contact number',
-               style: TextStyle(
-                 color: Color.fromARGB(255,42, 67, 101),
-                 fontSize: 22,
-               ),),
+                TextField(
+                    controller: textController,
+                    decoration: InputDecoration(hintText: 'Enter Name')),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'Contact number',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 42, 67, 101),
+                    fontSize: 22,
+                  ),
+                ),
                 SizedBox(height: 10),
-                    TextField(
-                      controller: textController,
-                      
-                      decoration: InputDecoration(
-                        hintText: 'Enter contat no.'
-                      )
-                    ),
-                    
-                  
-             ],
-           ),
-           Column(
-             children: [
-               Text('MoU Start Date',
-               style: TextStyle(
-                 color: Color.fromARGB(255,42, 67, 101),
-                 fontSize: 22,
-               ),),
+                TextField(
+                    controller: textController,
+                    decoration: InputDecoration(hintText: 'Enter contat no.')),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'MoU Start Date',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 42, 67, 101),
+                    fontSize: 22,
+                  ),
+                ),
                 SizedBox(height: 10),
-                    TextField(
-                      controller: textController,
-                      
-                      decoration: InputDecoration(
-                        hintText: 'Enter Name'
-                      )
-                    ),
-                    
-                  
-             ],
-           )
-       ],)
-     );
-   }
- }
+                TextField(
+                    controller: textController,
+                    decoration: InputDecoration(hintText: 'Enter Name')),
+              ],
+            )
+          ],
+        ));
+  }
+}

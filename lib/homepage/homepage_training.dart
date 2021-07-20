@@ -256,6 +256,7 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                                   color: Color.fromARGB(255, 44, 82, 130),
                                 )),
                           ),
+
                         ],
                         rows: List<DataRow>.generate(
                           snapshot.data!.docs.length,

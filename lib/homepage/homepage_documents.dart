@@ -18,6 +18,8 @@ class HomeDocuments extends StatefulWidget {
 }
 
 class _HomeDocumentsState extends State<HomeDocuments> {
+
+
   @override
   void dispose() {
     _textFieldController.dispose();
@@ -32,6 +34,7 @@ class _HomeDocumentsState extends State<HomeDocuments> {
   //UploadTask uploadedTask;
   void _launchUrl(String url) async =>
       await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+
   void _uploadDocuments() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -191,6 +194,8 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                         color: Color.fromARGB(255, 237, 242, 247),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
+
+
                       child: StreamBuilder<DocumentSnapshot>(
                           stream: _firebaseFirestore
                               .collection('Users')
@@ -278,6 +283,7 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                               );
                             }
                           }),
+
                     ),
                   ),
                 ],

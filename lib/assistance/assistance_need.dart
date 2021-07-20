@@ -15,9 +15,11 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
   TextEditingController textController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
   String dropdownvalue = "Select Category";
-static const int numItems = 6;
+
+  static const int numItems = 6;
+
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  Future<void> _showMyDialog() async {
+  Future<void> _showMyDialog(String id) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -27,7 +29,7 @@ static const int numItems = 6;
           content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Text('Do you want to delete the file?'),
+                Text('Do you want to delete this request?'),
               ],
             ),
           ),
@@ -35,7 +37,11 @@ static const int numItems = 6;
             TextButton(
               child: Text('Confirm'),
               onPressed: () {
-                print('Confirmed');
+                FirebaseFirestore.instance
+                    .collection('assistance')
+                    .doc(id)
+                    .delete();
+
                 Navigator.of(context).pop();
               },
             ),
@@ -97,24 +103,6 @@ static const int numItems = 6;
                         ),
                         height: 100,
                       ),
-                      // DropdownButton(
-                      //     focusColor: darkblue,
-                      //     value: dropdownvalue,
-                      //     onChanged: (String? newValue) {
-                      //       setState(() {
-                      //         dropdownvalue = newValue!;
-                      //       });
-                      //     },
-                      //     items: <String>["Select Category", "1", "2", "3"]
-                      //         .map<DropdownMenuItem<String>>((String value) {
-                      //       return DropdownMenuItem<String>(
-                      //         value: value,
-                      //         child: Padding(
-                      //           padding: const EdgeInsets.all(5),
-                      //           child: Text(value),
-                      //         ),
-                      //       );
-                      //     }).toList()),
                       Padding(
                         padding: EdgeInsets.only(top: 25),
                         child: Text(
@@ -271,46 +259,44 @@ static const int numItems = 6;
                                                 fontWeight: FontWeight.bold),
                                           )),
                                         ],
-                                        rows: 
-                                          List<DataRow>.generate(
-                                                          numItems,
-                                                          (int index) =>
-                                                              DataRow(
-                                                            color: MaterialStateProperty
-                                                                .resolveWith<
-                                                                    Color?>((Set<
-                                                                        MaterialState>
-                                                                    states) {
-                                                              if (states.contains(
-                                                                  MaterialState
-                                                                      .selected)) {
-                                                                return Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            237,
-                                                                            242,
-                                                                            247)
-                                                                    .withOpacity(
-                                                                        0.08);
-                                                              }
-                                                              if (index
-                                                                  .isEven) {
-                                                                return Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        237,
-                                                                        242,
-                                                                        247);
-                                                              }
-                                                              return null;
-                                                            }),
-                                        cells: <DataCell>[
-                                                              DataCell(Text('name',style: TextStyle(
-                                                              color: darkblue,
-                                                              fontSize: 20,
-                                                              fontWeight: FontWeight.bold),)),
-                                                              DataCell(Text('Updated')),
-                                                              DataCell(SizedBox(
+                                        rows: List<DataRow>.generate(
+                                          snapshot.data!.docs.length,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Text(
+                                                snapshot.data!.docs[index]
+                                                    ['category'],
+                                                style: TextStyle(
+                                                    color: darkblue,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                              DataCell(Text(DateTime.now()
+                                                      .difference(snapshot.data!
+                                                          .docs[index]['date']
+                                                          .toDate())
+                                                      .inDays
+                                                      .toString() +
+                                                  ' days')),
+                                              DataCell(
+                                                SizedBox(
                                                   width: 175,
                                                   child: ElevatedButton(
                                                     style: ButtonStyle(
@@ -323,42 +309,17 @@ static const int numItems = 6;
                                                       maxLines: 2,
                                                     ),
                                                     onPressed: () {
-                                                      _showMyDialog();
+                                                      _showMyDialog(snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                          .id);
                                                     },
                                                   ),
-                                                ),) ,
-              
-                                                            ],
-                                        // rows: [
-                                        //   DataRow(
-                                        //     cells: [
-                                        //       DataCell(
-                                        //           Text("zxdcfvgbhnjmkuyyyyuu")),
-                                        //       DataCell(Text('doc')),
-                                        //       DataCell(
-                                        //         SizedBox(
-                                        //           width: 175,
-                                        //           child: ElevatedButton(
-                                        //             style: ButtonStyle(
-                                        //                 backgroundColor:
-                                        //                     MaterialStateProperty
-                                        //                         .all(Colors
-                                        //                             .orange)),
-                                        //             child: Text(
-                                        //               'Mark as completed',
-                                        //               maxLines: 2,
-                                        //             ),
-                                        //             onPressed: () {
-                                        //               _showMyDialog();
-                                        //             },
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ],
-                                        //   ),
-                                                              ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                      
+                                        ),
                                       );
                                     }
                                   }),

@@ -1,4 +1,5 @@
 import 'package:csr_module/Admin/admin_page_struct.dart';
+import 'package:csr_module/dashboard/admin_dashboard.dart';
 
 import 'package:csr_module/main_page_struct/main_page_struct.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class AdminPageStructDesktop extends StatefulWidget {
 }
 
 class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
-  String _adminpage = "dashboard";
+  String _adminpage = "adminDashboard";
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +113,12 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Dashboard",
-                        bold: (_adminpage == 'dashboard'),
+                        bold: (_adminpage == 'adminDashboard'),
                       ),
                     ),
                     onTap: () {
                       setState(() {
-                        _adminpage = 'dashboard';
+                        _adminpage = 'adminDashboard';
                       });
                     },
                   ),
@@ -284,8 +285,8 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
           Flexible(
             flex: 4,
             child: Builder(builder: (context) {
-              if (_adminpage == 'dashboard') {
-                return Container();
+              if (_adminpage == 'adminDashboard') {
+                return AdminDashboard();
               } else {
                 return Container();
               }

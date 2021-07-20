@@ -92,19 +92,13 @@ class _DollarForDollarState extends State<DollarForDollar> {
                           decoration: InputDecoration(
                             // labelText: "Search",
                             hintText: "Search",
-                            focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color.fromARGB(255, 113, 128, 150))
-                                ),
-                                hintStyle: TextStyle(
-                                color:Color.fromARGB(255, 204, 204, 204),),
                             focusColor: Color.fromARGB(255, 204, 204, 204),
                             fillColor: Color.fromARGB(255, 204, 204, 204),
                             prefixIcon: _searchText.isNotEmpty
                                 ? IconButton(
                                     icon: Icon(
                                       Icons.clear,
-                                      color:Color.fromARGB(
-                                              255, 113, 128, 150),
+                                      color: Color.fromARGB(255, 204, 204, 204),
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -115,13 +109,11 @@ class _DollarForDollarState extends State<DollarForDollar> {
                                 : IconButton(
                                     icon: Icon(
                                       Icons.search,
-                                      color: Color.fromARGB(
-                                              255, 113, 128, 150),
+                                      color: Color.fromARGB(255, 204, 204, 204),
                                     ),
                                     onPressed: () {
                                       setState(() {
-                                        Color.fromARGB(
-                                              255, 113, 128, 150);
+                                        Color.fromARGB(255, 204, 204, 204);
                                         // myController.search();
                                       });
                                     },
@@ -276,6 +268,7 @@ class _NgoListState extends State<NgoList> {
   // static const int numItems = 6;
   // List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   final ScrollController _controllerOne = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -292,24 +285,24 @@ class _NgoListState extends State<NgoList> {
           ),
           SizedBox(
             height: 200,
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: _controllerOne,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('ngos')
-                        .doc(widget.id)
-                        .collection('Products')
-                        .snapshots(),
-                    builder: (context, snapshot2) {
-                      if (snapshot2.data == null) {
-                        return CircularProgressIndicator();
-                      } else if (snapshot2.data!.docs.length == 0) {
-                        return Text('no products to show');
-                      } else {
-                        return ListView.builder(
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('ngos')
+                    .doc(widget.id)
+                    .collection('Products')
+                    .snapshots(),
+                builder: (context, snapshot2) {
+                  if (snapshot2.data == null) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot2.data!.docs.isEmpty) {
+                    return Text('no products to show');
+                  } else {
+                    return Scrollbar(
+                      isAlwaysShown: true,
+                      controller: _controllerOne,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: ListView.builder(
                             controller: _controllerOne,
                             itemCount: snapshot2.data!.docs.length,
                             shrinkWrap: true,
@@ -319,11 +312,11 @@ class _NgoListState extends State<NgoList> {
                                 child:
                                     ItemCard(data: snapshot2.data!.docs[index]),
                               );
-                            });
-                      }
-                    }),
-              ),
-            ),
+                            }),
+                      ),
+                    );
+                  }
+                }),
           ),
         ],
       ),
@@ -345,7 +338,7 @@ class ItemCard extends StatelessWidget {
       width: 340,
       margin: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255,237, 242, 247),
+        color: Colors.blueGrey[100],
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
         // image: DecorationImage(image: AssetImage('product.jpg'),
         // ),
@@ -407,7 +400,7 @@ class ItemCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
-            )
+            ),
           ],
         ),
       ),

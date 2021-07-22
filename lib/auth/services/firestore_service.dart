@@ -1,15 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/auth/models/user.dart';
 
 class FirestoreService {
   final String? uId;
 
-  FirestoreService(this.uId);
+  FirestoreService({this.uId});
+  Future getUser(String uid) async {
+    try {
+      var userData =
+          await FirebaseFirestore.instance.collection("Users").doc(uid).get();
+      // print(userData.data()!["displayName"]);
+      var thisUser = MyUserData.fromData(userData.data()!);
+      return thisUser;
+    } catch (e) {
+      return null;
+    }
+  }
 
   Future<void> updateUserData(
+    String? role,
     int volunteeringHours,
     Map<String, String> documents,
     String imgUrl,
-    String? uid,
     String displayName,
     String firstName,
     String middleName,
@@ -54,6 +66,7 @@ class FirestoreService {
     String probationPeriod,
   ) async {
     return await FirebaseFirestore.instance.collection("Users").doc(uId).set({
+      'role': role,
       'imgUrl': imgUrl,
       'documents': documents,
       'volunteering hours': volunteeringHours,

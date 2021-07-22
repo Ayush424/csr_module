@@ -5,16 +5,27 @@ import 'firestore_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  // MyUserData? _currentUser;
+  // MyUserData get mycurrentUser {
+  //  return _currentUser!;
+//}
+
   //user to firebase user
   MyUser? _userFromFirebaseUser(User? user) {
     // return user != null
     //     ? MyUser(
     //         uid: user.uid, displayName: user.displayName, email: user.email)
     //     : null;
-    return user != null ? MyUser(user.uid, user.email) : null;
+    return user != null
+        ? MyUser(
+            user.uid,
+            user.email,
+          )
+        : null;
   }
 
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String role) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -34,11 +45,11 @@ class AuthService {
       //     "gender",
       //     "homeAddress",
       //     "maritalStatus");
-      await FirestoreService(user!.uid).updateUserData(
+      await FirestoreService(uId: user!.uid).updateUserData(
+          role,
           0,
           {},
           "",
-          "uid",
           "displayName",
           "firstName",
           "middleName",
@@ -95,11 +106,11 @@ class AuthService {
   //temporary loading data function
   Future<void> loadMyData() async {
     User? user = _auth.currentUser;
-    await FirestoreService(user!.uid).updateUserData(
+    await FirestoreService(uId: user!.uid).updateUserData(
+        "user",
         0,
         {},
         "",
-        "uid",
         "displayName",
         "firstName",
         "middleName",
@@ -154,6 +165,7 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
+      // await syncUser(user);
       return _userFromFirebaseUser(user);
     } catch (e) {
       // print(e.toString());
@@ -183,6 +195,12 @@ class AuthService {
       }
     }
   }
+
+  // Future syncUser(User? user) async {
+  //   if (user != null) {
+  //     _currentUser = await FirestoreService().getUser(user.uid);
+  //   }
+  // }
 
   //sign out
   Future signOut() async {

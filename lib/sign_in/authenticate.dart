@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Admin/admin_page_struct.dart';
 import 'package:csr_module/auth/models/user.dart';
 import 'package:csr_module/main_page_struct/main_page_struct.dart';
 
@@ -14,7 +16,18 @@ class Authenticate extends StatelessWidget {
     if (user == null) {
       return SignInPage();
     } else {
-      return MainPageStruct();
+      return StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(user.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) return CircularProgressIndicator();
+            if (snapshot.data!["role"] == "admin") {
+              return AdminPageStruct();
+            } else
+              return MainPageStruct();
+          });
     }
   }
 }

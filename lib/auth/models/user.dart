@@ -1,7 +1,17 @@
 class MyUser {
-  final Map<String, String>? documents;
-  final String? imgUrl;
   final String uid;
+  final String? email;
+
+  MyUser(
+    this.uid,
+    this.email,
+  );
+}
+
+class MyUserData {
+  final String? imgUrl;
+  final String? role;
+  final Map<String, dynamic>? documents;
   final String? displayName;
   final String? firstName;
   final String? middleName;
@@ -9,7 +19,6 @@ class MyUser {
   final String? reportingManagerEmail;
   final String? designation;
   final String? businessUnit;
-  final String? email;
   final String? empCode;
   final String? phoneNo;
   final String? dateOfJoining;
@@ -45,14 +54,26 @@ class MyUser {
   final String? confirmationDate;
   final String? probationPeriod;
   final int? volunteeringHours;
-  MyUser(this.uid, this.email,
-      {this.volunteeringHours,
+  final String? email;
+  MyUserData(
+      this.imgUrl,
+      this.role,
+      this.documents,
+      this.displayName,
       this.firstName,
       this.middleName,
       this.lastName,
       this.reportingManagerEmail,
       this.designation,
       this.businessUnit,
+      this.empCode,
+      this.phoneNo,
+      this.dateOfJoining,
+      this.skypeId,
+      this.department,
+      this.gender,
+      this.homeAddress,
+      this.maritalStatus,
       this.referedBy,
       this.sourceOfHire,
       this.exitDate,
@@ -79,15 +100,53 @@ class MyUser {
       this.noticePeriod,
       this.confirmationDate,
       this.probationPeriod,
-      this.imgUrl,
-      this.documents,
-      this.empCode,
-      this.phoneNo,
-      this.dateOfJoining,
-      this.skypeId,
-      this.department,
-      this.gender,
-      this.homeAddress,
-      this.maritalStatus,
-      this.displayName});
+      this.volunteeringHours,
+      this.email);
+  MyUserData.fromData(Map<String, dynamic> data)
+      : role = data["role"],
+        imgUrl = data["imgUrl"],
+        documents = data["documents"],
+        volunteeringHours = data["volunteeringHours"],
+        displayName = data["displayName"],
+        email = data["email"],
+        phoneNo = data["phoneNo"],
+        empCode = data["empCode"],
+        dateOfJoining = data["dateOfJoining"],
+        skypeId = data["skypeId"],
+        department = data["department"],
+        gender = data["gender"],
+        homeAddress = data["homeAddress"],
+        maritalStatus = data["maritalStatus"],
+        firstName = data["firstName"],
+        middleName = data["middleName"],
+        lastName = data["lastName"],
+        reportingManagerEmail = data["reportingManagerEmail"],
+        designation = data["designation"],
+        businessUnit = data["businessUnit"],
+        referedBy = data["referedBy"],
+        sourceOfHire = data["sourceOfHire"],
+        exitDate = data["exitDate"],
+        exitType = data["exitType"],
+        exitRemarks = data["exitRemarks"],
+        dateOfBirth = data["dateOfBirth"],
+        placeOfBirth = data["placeOfBirth"],
+        marriageDate = data["marriageDate"],
+        citizenship = data["citizenship"],
+        religion = data["religion"],
+        bloodGroup = data["bloodGroup"],
+        spouseName = data["spouseName"],
+        passportNumber = data["passportNumber"],
+        city = data["city"],
+        state = data["state"],
+        zipCode = data["zipCode"],
+        country = data["country"],
+        personalEmail = data["personalEmail"],
+        employmentType = data["employmentType"],
+        serviceStatus = data["serviceStatus"],
+        enrollmentNo = data["enrollmentNo"],
+        aadhaarNo = data["aadhaarNo"],
+        previousExp = data["previousExp"],
+        noticePeriod = data["noticePeriod"],
+        confirmationDate = data["confirmationDate"],
+        probationPeriod = data["probationPeriod"];
 }

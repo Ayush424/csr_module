@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/auth/models/user.dart';
+import 'package:csr_module/dollarfordollar/productdetails.dart';
 import 'package:csr_module/events_and_calendar/calendar.dart';
 
 import 'package:csr_module/Admin/admin_page_struct.dart';
@@ -25,7 +27,6 @@ class MainPageStructDesktop extends StatefulWidget {
 }
 
 class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
-  // String GlobalMainPage.mainpage = "dashboard";
   void _update(String mainpage) {
     setState(() {
       GlobalHomePage.homepage = "setgoals";
@@ -326,6 +327,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                 );
               } else if (GlobalMainPage.mainpage == 'Dollar') {
                 return DollarForDollar();
+              } else if (GlobalMainPage.mainpage == 'details') {
+                return ProductDetails();
               } else {
                 return Container();
               }

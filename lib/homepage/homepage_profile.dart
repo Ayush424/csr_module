@@ -24,7 +24,6 @@ class _HomeProfileState extends State<HomeProfile> {
 
   final collection = FirebaseFirestore.instance.collection("Users");
 
-
   final TextEditingController _textFieldController = TextEditingController();
 
   void _uploadImg() async {
@@ -39,12 +38,11 @@ class _HomeProfileState extends State<HomeProfile> {
       UploadTask task =
           _firebaseStorage.ref('$id/profile/$fileName').putData(fileBytes);
       String url = await (await task).ref.getDownloadURL();
-      FirestoreService(_authService.returnCurrentUserid()).updateImg(url);
+      FirestoreService(uId: _authService.returnCurrentUserid()).updateImg(url);
     }
   }
 
   _displayDialog(BuildContext context, String details, String field) async {
-
     return showDialog(
         context: context,
         builder: (context) {
@@ -52,9 +50,7 @@ class _HomeProfileState extends State<HomeProfile> {
             title: Text("Enter" + details),
             content: TextField(
               controller: _textFieldController,
-
               decoration: InputDecoration(hintText: "Changed Value"),
-
             ),
             actions: <Widget>[
               ElevatedButton(
@@ -64,25 +60,24 @@ class _HomeProfileState extends State<HomeProfile> {
                       const Color.fromRGBO(45, 55, 72, 1)),
                 ),
                 onPressed: () {
-
                   if (field == "phoneNo") {
-                    FirestoreService(_authService.returnCurrentUserid())
+                    FirestoreService(uId: _authService.returnCurrentUserid())
                         .updatePhone(_textFieldController.text);
                   }
                   if (field == "skypeId") {
-                    FirestoreService(_authService.returnCurrentUserid())
+                    FirestoreService(uId: _authService.returnCurrentUserid())
                         .updateSkype(_textFieldController.text);
                   }
                   if (field == "homeAddress") {
-                    FirestoreService(_authService.returnCurrentUserid())
+                    FirestoreService(uId: _authService.returnCurrentUserid())
                         .updateHome(_textFieldController.text);
                   }
                   if (field == "currentAddress") {
-                    FirestoreService(_authService.returnCurrentUserid())
+                    FirestoreService(uId: _authService.returnCurrentUserid())
                         .updateCurrent(_textFieldController.text);
                   }
                   if (field == "maritalStatus") {
-                    FirestoreService(_authService.returnCurrentUserid())
+                    FirestoreService(uId: _authService.returnCurrentUserid())
                         .updateMarital(_textFieldController.text);
                   }
 

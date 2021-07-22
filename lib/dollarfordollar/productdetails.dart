@@ -20,9 +20,11 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20),
       child: ListView(
+        controller: ScrollController(),
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

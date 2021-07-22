@@ -18,17 +18,603 @@ class _NgoPartnerState extends State<NgoPartner> {
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   bool add = false;
   late DateTime date;
-
+  TextEditingController _textFieldController1 = TextEditingController();
+  final _textFieldController2 = TextEditingController();
+  final _textFieldController3 = TextEditingController();
+  final _textFieldController4 = TextEditingController();
+  final _textFieldController7 = TextEditingController();
+  final _textFieldController8 = TextEditingController();
+  final _textFieldController9 = TextEditingController();
+  final _textFieldController10 = TextEditingController();
+  final _textFieldController11 = TextEditingController();
   DateFormat format = DateFormat('MMM, y');
+  late String dateTime;
+  late double _height;
+  late double _width;
+  bool details = false;
+
+  DateTime selectedDate = DateTime.now();
+
+  TextEditingController _dateController1 = TextEditingController();
+  TextEditingController _dateController2 = TextEditingController();
+
+  Future<Null> _selectDate1(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2101));
+    setState(() {
+      selectedDate = picked!;
+      _dateController1.text = DateFormat.yMd().format(selectedDate);
+    });
+  }
+
+  Future<Null> _selectDate2(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2101));
+    setState(() {
+      selectedDate = picked!;
+
+      _dateController2.text = DateFormat.yMd().format(selectedDate);
+    });
+  }
+
   @override
   void initState() {
+    _dateController1.text = DateFormat.yMd().format(DateTime.now());
+    _dateController2.text = DateFormat.yMd().format(DateTime.now());
     date = DateTime.now();
-
     super.initState();
+  }
+
+  final _formKey = GlobalKey<FormState>();
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Container(
+              width: 900,
+              height: 1000,
+
+              // decoration: BoxDecoration(color: Color.fromARGB(255,237, 242, 247)) ,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Form(
+                  key: _formKey,
+                  child: SizedBox(
+                    width: 900,
+                    height: 1000,
+                    child: ListView(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Name',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                      // obscureText: true,
+                                      controller: _textFieldController1,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter name",
+                                        border: OutlineInputBorder(),
+                                        //  contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Contact Person',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      controller: _textFieldController2,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter name",
+                                        border: OutlineInputBorder(),
+                                        // contentPadding: EdgeInsets.all(10)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Category',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      // obscureText: true,
+                                      controller: _textFieldController3,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                          hintText: "Enter category",
+                                          border: OutlineInputBorder(),
+                                          contentPadding: EdgeInsets.all(10)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Contact number',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      controller: _textFieldController4,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter number",
+                                        border: OutlineInputBorder(),
+                                        //  contentPadding: EdgeInsets.all(10)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'MoU Start Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        _selectDate1(context);
+                                      },
+                                      child: Container(
+                                        width: _width / 1.7,
+                                        height: _height / 15,
+                                        margin: EdgeInsets.only(top: 10),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey)),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.start,
+                                          enabled: false,
+                                          keyboardType: TextInputType.text,
+                                          controller: _dateController1,
+                                          decoration: InputDecoration(
+                                              disabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              // labelText: 'Time',
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 0.0)),
+                                        ),
+                                      ),
+                                      // TextFormField(
+                                      //   style: TextStyle(
+                                      //       fontSize: 16,
+                                      //     ),
+                                      //     // obscureText: true,
+                                      //   controller: _textFieldController1,
+                                      //   validator:(value){
+                                      //     return value!.isNotEmpty ? null: "invalid field";
+                                      //   },
+                                      //   decoration: InputDecoration(hintText: "Enter date",
+                                      //   border: OutlineInputBorder(),
+                                      //   // contentPadding: EdgeInsets.all(10)
+                                      //   ),
+
+                                      // ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'MoU End Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        _selectDate2(context);
+                                      },
+                                      child: Container(
+                                        width: _width / 1.7,
+                                        height: _height / 15,
+                                        margin: EdgeInsets.only(top: 10),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey)),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.start,
+                                          enabled: false,
+                                          keyboardType: TextInputType.text,
+                                          controller: _dateController2,
+                                          decoration: InputDecoration(
+                                              disabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              // labelText: 'Time',
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 0.0)),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Address',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      // obscureText: true,
+                                      controller: _textFieldController7,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter address",
+                                        border: OutlineInputBorder(),
+                                        // contentPadding: EdgeInsets.all(10)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Funds Committed',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      controller: _textFieldController8,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter amount",
+                                        border: OutlineInputBorder(),
+                                        //contentPadding: EdgeInsets.all(10)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Email id',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      // obscureText: true,
+                                      controller: _textFieldController9,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter email id",
+                                        border: OutlineInputBorder(),
+                                        //  contentPadding: EdgeInsets.all(10)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Website URL',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      controller: _textFieldController10,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter URL",
+                                        border: OutlineInputBorder(),
+                                        //  contentPadding: EdgeInsets.all(10)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 137),
+                          child: Container(
+                            width: 500,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Notes',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 42, 67, 101),
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                TextFormField(
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                  // obscureText: true,
+                                  controller: _textFieldController11,
+                                  validator: (value) {
+                                    return value!.isNotEmpty
+                                        ? null
+                                        : "invalid field";
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: "Enter notes",
+                                    border: OutlineInputBorder(),
+                                    //  contentPadding: EdgeInsets.all(10),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: new Text('Add'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Processing Data')));
+                  }
+                  // Navigator.of(context).pop();
+                },
+              ),
+              ElevatedButton(
+                child: new Text('Cancel'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  _textFieldController1.clear();
+                  _textFieldController2.clear();
+                  _textFieldController3.clear();
+                  _textFieldController4.clear();
+                  _textFieldController7.clear();
+                  _textFieldController8.clear();
+                  _textFieldController9.clear();
+                  _textFieldController10.clear();
+                  _textFieldController11.clear();
+                  _dateController1.text =
+                      DateFormat.yMd().format(DateTime.now());
+                  _dateController2.text =
+                      DateFormat.yMd().format(DateTime.now());
+
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+
+    dateTime = DateFormat.yMd().format(DateTime.now());
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),
@@ -246,7 +832,7 @@ class _NgoPartnerState extends State<NgoPartner> {
                     ),
                     label: Text('Add New'),
                     onPressed: () {
-                      Form();
+                      _displayDialog(context);
                     },
                   ),
                 ),
@@ -256,102 +842,5 @@ class _NgoPartnerState extends State<NgoPartner> {
         ),
       ),
     );
-  }
-}
-
-class Form extends StatefulWidget {
-  const Form({Key? key}) : super(key: key);
-
-  @override
-  _FormState createState() => _FormState();
-}
-
-class _FormState extends State<Form> {
-  TextEditingController textController = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(color: Color.fromARGB(255, 237, 242, 247)),
-        child: Wrap(
-          spacing: 200,
-          runSpacing: 20,
-          children: [
-            Column(
-              children: [
-                Text(
-                  'Name',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 42, 67, 101),
-                    fontSize: 22,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                    controller: textController,
-                    decoration: InputDecoration(hintText: 'Enter Name')),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  'Contact person',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 42, 67, 101),
-                    fontSize: 22,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                    controller: textController,
-                    decoration: InputDecoration(hintText: 'Enter Name')),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  'Category',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 42, 67, 101),
-                    fontSize: 22,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                    controller: textController,
-                    decoration: InputDecoration(hintText: 'Enter Name')),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  'Contact number',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 42, 67, 101),
-                    fontSize: 22,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                    controller: textController,
-                    decoration: InputDecoration(hintText: 'Enter contat no.')),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  'MoU Start Date',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 42, 67, 101),
-                    fontSize: 22,
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                    controller: textController,
-                    decoration: InputDecoration(hintText: 'Enter Name')),
-              ],
-            )
-          ],
-        ));
   }
 }

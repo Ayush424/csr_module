@@ -142,15 +142,14 @@ class _ActivitiesState extends State<Activities> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10),
-                            child: TextField(
+                            child: TextFormField(
                               style: TextStyle(
-                                fontSize: 10,
+                                fontSize: 16,
                               ),
-                              obscureText: true,
                               decoration: InputDecoration(
+                                hintText: "Enter Name",
                                 border: OutlineInputBorder(),
-                                labelText: 'Name of activity',
-                                hintText: 'Enter activity',
+                                // contentPadding: EdgeInsets.all(10)
                               ),
                             ),
                           ),

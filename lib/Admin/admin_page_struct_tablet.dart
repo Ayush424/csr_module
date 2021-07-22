@@ -1,5 +1,8 @@
 import 'package:csr_module/Admin/admin_page_struct.dart';
-import 'package:csr_module/dashboard/admin_dashboard.dart';
+import 'package:csr_module/Admin/expense.dart';
+import 'package:csr_module/Admin/static_admin_page.dart';
+import 'package:csr_module/analytics/payroll_giving_collection.dart';
+import 'package:csr_module/Admin/admin_dashboard.dart';
 import 'package:csr_module/main_page_struct/main_page_struct.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +14,6 @@ class AdminPageStructTablet extends StatefulWidget {
 }
 
 class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
-  String _adminpage = 'adminDashboard';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,12 +139,12 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Dashboard",
-                          bold: (_adminpage == 'adminDashboard'),
+                          bold: (GlobalAdminPage.adminpage == 'adminDashboard'),
                         ),
                       ),
                       onTap: () {
                         setState(() {
-                          _adminpage = 'adminDashboard';
+                          GlobalAdminPage.adminpage = 'adminDashboard';
                         });
                       },
                     ),
@@ -155,7 +157,7 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Analytics",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == ''),
                         ),
                       ),
                       trailing: const MyIcon(icon: Icons.arrow_right),
@@ -163,63 +165,61 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         ListTile(
                           title: MyText(
                             text: "NGO Partner",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
                         ListTile(
                           title: MyText(
                             text: "Beneficiary",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
                         ListTile(
                           title: MyText(
                             text: "CSR Categories",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
                         ListTile(
                           title: MyText(
                             text: "CSR Activities",
-                            bold: (_adminpage == ''),
-                          ),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          title: MyText(
-                            text: "CSR Events",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
                         ListTile(
                           title: MyText(
                             text: "CSR Trainings",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
                         ListTile(
                           title: MyText(
                             text: "Payroll giving collection",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage ==
+                                'payrollCollection'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'payrollCollection';
+                            });
+                          },
                         ),
                         ListTile(
                           title: MyText(
                             text: "Products Sale",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
                         ListTile(
                           title: MyText(
                             text: "Volunteering Hours",
-                            bold: (_adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == ''),
                           ),
                           onTap: () {},
                         ),
@@ -231,7 +231,7 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Volunteer",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == ''),
                         ),
                       ),
                       onTap: () {},
@@ -242,10 +242,14 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Expense",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == 'expense'),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          GlobalAdminPage.adminpage = 'expense';
+                        });
+                      },
                     ),
                     ListTile(
                       leading: const MyIcon(icon: Icons.shopping_cart),
@@ -253,18 +257,7 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Seller Cart",
-                          bold: (_adminpage == ''),
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: const MyIcon(icon: Icons.library_books),
-                      title: Transform(
-                        transform: Matrix4.translationValues(-16, 0, 0),
-                        child: MyText(
-                          text: "Forms",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == ''),
                         ),
                       ),
                       onTap: () {},
@@ -275,32 +268,64 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Events and Calendar",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == ''),
                         ),
                       ),
                       onTap: () {},
                     ),
-                    ListTile(
+                    ExpansionTile(
+                      childrenPadding: const EdgeInsets.only(left: 40),
                       leading: const MyIcon(icon: Icons.record_voice_over),
                       title: Transform(
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "News and Broadcast",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == ''),
                         ),
                       ),
-                      onTap: () {},
+                      children: [
+                        ListTile(
+                          title: MyText(
+                            text: "Publish News",
+                            bold: (GlobalAdminPage.adminpage == ''),
+                          ),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Broadcast Notification",
+                            bold: (GlobalAdminPage.adminpage == ''),
+                          ),
+                          onTap: () {},
+                        ),
+                      ],
                     ),
-                    ListTile(
+                    ExpansionTile(
+                      childrenPadding: const EdgeInsets.only(left: 40),
                       leading: const MyIcon(icon: Icons.settings),
                       title: Transform(
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Settings",
-                          bold: (_adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == ''),
                         ),
                       ),
-                      onTap: () {},
+                      children: [
+                        ListTile(
+                          title: MyText(
+                            text: "General",
+                            bold: (GlobalAdminPage.adminpage == ''),
+                          ),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Security",
+                            bold: (GlobalAdminPage.adminpage == ''),
+                          ),
+                          onTap: () {},
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -309,8 +334,12 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
           ),
         ),
         body: Builder(builder: (context) {
-          if (_adminpage == 'adminDashboard') {
+          if (GlobalAdminPage.adminpage == 'adminDashboard') {
             return AdminDashboard();
+          } else if (GlobalAdminPage.adminpage == 'payrollCollection') {
+            return PayrollCollection();
+          } else if (GlobalAdminPage.adminpage == 'expense') {
+            return Expense();
           } else {
             return Container();
           }

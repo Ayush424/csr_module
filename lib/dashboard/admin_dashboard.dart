@@ -57,9 +57,10 @@ class _AdminDashboardState extends State<AdminDashboard>
           SizedBox(
             height: 5,
           ),
-          Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+          Align(
+            alignment: Alignment.center,
+            child: Wrap(
+              spacing: 5,
               children: [
                 IconButton(
                     onPressed: () {
@@ -68,18 +69,24 @@ class _AdminDashboardState extends State<AdminDashboard>
                       });
                     },
                     icon: Icon(
-                      Icons.arrow_left_outlined,
-                      size: 28,
-                      color: Color.fromRGBO(44, 82, 130, 1),
+                      Icons.arrow_left,
+                      size: 30,
+                      color: Color.fromARGB(255, 44, 82, 130),
                     )),
-                Icon(Icons.event, color: Color.fromRGBO(44, 82, 130, 1)),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  format.format(date),
-                  style: TextStyle(
-                      color: Color.fromRGBO(44, 82, 130, 1), fontSize: 24),
+                Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Icon(
+                      Icons.event,
+                      color: Color.fromARGB(255, 44, 82, 130),
+                      size: 23,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(format.format(date),
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: Color.fromARGB(255, 44, 82, 130),
+                      )),
                 ),
                 IconButton(
                     onPressed: () {
@@ -88,14 +95,9 @@ class _AdminDashboardState extends State<AdminDashboard>
                       });
                     },
                     icon: Icon(
-                      Icons.arrow_right_outlined,
-                      size: 28,
-                      color: Color.fromRGBO(
-                        44,
-                        82,
-                        130,
-                        1,
-                      ),
+                      Icons.arrow_right,
+                      size: 30,
+                      color: Color.fromARGB(255, 44, 82, 130),
                     )),
               ],
             ),
@@ -290,59 +292,19 @@ class _AdminDashboardState extends State<AdminDashboard>
                 SizedBox(
                   height: 5,
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      side: BorderSide(color: Color.fromRGBO(128, 29, 255, 1))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: SizedBox(
-                      height: 70,
-                      width: 300,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: CircleAvatar(
-                                maxRadius: 25,
-                                backgroundColor:
-                                    Color.fromRGBO(128, 29, 255, 1),
-                                child: Icon(
-                                  Icons.work,
-                                  color: Colors.white,
-                                  size: 35,
-                                )),
-                          ),
-                          SizedBox(
-                            width: 6,
-                          ),
-                          Flexible(
-                            child: ListView(
-                              physics: ClampingScrollPhysics(),
-                              shrinkWrap: true,
-                              controller: ScrollController(),
-                              children: [
-                                Text(
-                                  ' Technical ',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(128, 29, 255, 1),
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w900,
-                                      fontFamily: 'Rubik'),
-                                ),
-                                MyText(text: 'Department of month'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 60,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Wrap(
+              runSpacing: 10,
+              spacing: 10,
+              direction: Axis.horizontal,
+              children: [
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(

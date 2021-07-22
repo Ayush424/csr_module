@@ -89,6 +89,12 @@ class _CalendarState extends State<Calendar> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        'Recurring Events',
+                        style: TextStyle(
+                            color: Color.fromRGBO(44, 82, 130, 1),
+                            fontSize: 20),
+                      ),
                       Padding(
                         padding:
                             const EdgeInsets.only(left: 30, top: 2, bottom: 50),
@@ -100,7 +106,7 @@ class _CalendarState extends State<Calendar> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
-                                return EventsList(
+                                return RecurringEventsList(
                                     numItems: numItems, index: index);
                               }),
                         ),
@@ -110,7 +116,15 @@ class _CalendarState extends State<Calendar> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 15,
+            ),
             ListTile(
+              leading: Text(
+                '\$ for \$',
+                style: TextStyle(
+                    fontSize: 30, color: Color.fromARGB(255, 42, 67, 101)),
+              ),
               trailing: TextButton(
                   onPressed: () {
                     widget.update!('Dollar');
@@ -163,26 +177,46 @@ List<Appointment> getAppointments() {
   List<Appointment> meetings = <Appointment>[];
   DateTime today = DateTime.now();
   DateTime startTime = DateTime(today.year, today.month, today.day, 9, 0, 0);
-  DateTime endTime = startTime.add(const Duration(hours: 2));
+  DateTime endTime = startTime.add(const Duration(hours: 3));
   meetings.add(Appointment(
-    subject: 'Drawing Competition',
+    subject: 'Plantation Drive',
     startTime: startTime.add(Duration(days: 6)),
     endTime: endTime.add(Duration(days: 6)),
-    color: Colors.green,
+    color: Colors.blue,
+  ));
+  meetings.add(Appointment(
+    subject: 'Village Visit',
+    startTime: startTime.subtract(Duration(days: 6)),
+    endTime: endTime.subtract(Duration(days: 6)),
+    color: Colors.orange,
+  ));
+  meetings.add(Appointment(
+    subject: 'School Visit',
+    startTime: startTime,
+    endTime: endTime,
+    color: Colors.teal,
   ));
 
   meetings.add(Appointment(
-    subject: 'Sports Day',
-    startTime: startTime,
-    endTime: endTime,
-    color: Colors.red,
-  ));
+      subject: 'Drawing Competition',
+      startTime: startTime.add(Duration(days: 6)),
+      endTime: endTime.add(Duration(days: 6)),
+      color: Colors.green,
+      recurrenceRule: ' FREQ=MONTHLY;BYMONTHDAY=22;INTERVAL=1;COUNT=12'));
+
   meetings.add(Appointment(
-    subject: 'Yoga Event',
-    startTime: startTime.add(Duration(days: -5)),
-    endTime: endTime.add(Duration(days: -5)),
-    color: Colors.deepPurple,
-  ));
+      subject: 'Sports Day',
+      startTime: startTime,
+      endTime: endTime,
+      color: Colors.red,
+      recurrenceRule: ' FREQ=MONTHLY;BYMONTHDAY=15;INTERVAL=1;COUNT=12'));
+
+  meetings.add(Appointment(
+      subject: 'Yoga Event',
+      startTime: startTime.subtract(Duration(days: 5)),
+      endTime: endTime.subtract(Duration(days: 5)),
+      color: Colors.deepPurple,
+      recurrenceRule: ' FREQ=MONTHLY;BYMONTHDAY=9;INTERVAL=1;COUNT=12'));
 
   return meetings;
 }
@@ -253,23 +287,6 @@ class ItemCard extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    // Row(
-                    //   children: [
-                    //     Text(
-                    //       'Comp. shares: 30%',
-                    //       style: TextStyle(
-                    //           fontSize: 10,
-                    //           color: Color.fromARGB(255, 113, 128, 150)),
-                    //     ),
-                    //     SizedBox(width: 10),
-                    //     Text(
-                    //       'Buys: 2000 units',
-                    //       style: TextStyle(
-                    //           fontSize: 10,
-                    //           color: Color.fromARGB(255, 113, 128, 150)),
-                    //     )
-                    //   ],
-                    // ),
                   ],
                 )
               ],
@@ -305,11 +322,12 @@ class MeetingDataSource extends CalendarDataSource {
   }
 }
 
-List events = ['Sports Day', "Drawing Competition", "Yoga event"];
-List colors = [Colors.red, Colors.green, Colors.purple];
+List recurringevents = ['Sports Day', "Drawing Competition", "Yoga event"];
+List recurringcolors = [Colors.red, Colors.green, Colors.purple];
 
-class EventsList extends StatelessWidget {
-  const EventsList({Key? key, required this.numItems, required this.index})
+class RecurringEventsList extends StatelessWidget {
+  const RecurringEventsList(
+      {Key? key, required this.numItems, required this.index})
       : super(key: key);
   final int index;
   final int numItems;
@@ -319,13 +337,50 @@ class EventsList extends StatelessWidget {
       padding: const EdgeInsets.only(left: 30, top: 10),
       child: Container(
         height: 20,
-        child: Row(
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          controller: ScrollController(),
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           children: [
-            Icon(Icons.crop_square, color: colors[index]),
+            Icon(Icons.crop_square, color: recurringcolors[index]),
             SizedBox(
               width: 10,
             ),
-            Text(events[index]),
+            Text(recurringevents[index]),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+List organisedevents = ['Plantation Drive', "Village Visit", "School Visit"];
+List organisedcolors = [Colors.blue, Colors.orange, Colors.teal];
+
+class OrganisedEventsList extends StatelessWidget {
+  const OrganisedEventsList(
+      {Key? key, required this.numItems, required this.index})
+      : super(key: key);
+  final int index;
+  final int numItems;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30, top: 10),
+      child: Container(
+        height: 20,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          controller: ScrollController(),
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
+          children: [
+            Icon(Icons.crop_square, color: organisedcolors[index]),
+            SizedBox(
+              width: 10,
+            ),
+            Text(organisedevents[index]),
           ],
         ),
       ),

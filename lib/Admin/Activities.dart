@@ -142,16 +142,55 @@ class _ActivitiesState extends State<Activities> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10),
-                            child: TextField(
+                            child: TextFormField(
                               style: TextStyle(
-                                fontSize: 10,
+                                fontSize: 16,
                               ),
-                              obscureText: true,
                               decoration: InputDecoration(
+                                hintText: "Enter Name",
                                 border: OutlineInputBorder(),
-                                labelText: 'Name of activity',
-                                hintText: 'Enter activity',
+                                // contentPadding: EdgeInsets.all(10)
                               ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Text(
+                            "CSR Category",
+                            style: TextStyle(
+                              color: Color.fromRGBO(45, 55, 72, 1),
+                              decoration: TextDecoration.none,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                            ),
+                            child: DropdownButton<String>(
+                              value: value,
+                              items: items
+                                  .map((item) => DropdownMenuItem<String>(
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                        value: item,
+                                      ))
+                                  .toList(),
+                              onChanged: (value) => setState(() {
+                                this.value = value!;
+                              }),
                             ),
                           ),
                         ],

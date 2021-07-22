@@ -119,15 +119,14 @@ class _TrainingsState extends State<Trainings> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10),
-                            child: TextField(
+                            child: TextFormField(
                               style: TextStyle(
-                                fontSize: 10,
+                                fontSize: 16,
                               ),
-                              obscureText: true,
                               decoration: InputDecoration(
+                                hintText: "Enter Name",
                                 border: OutlineInputBorder(),
-                                labelText: 'Name ',
-                                hintText: 'Enter Name',
+                                // contentPadding: EdgeInsets.all(10)
                               ),
                             ),
                           ),
@@ -190,15 +189,14 @@ class _TrainingsState extends State<Trainings> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10),
-                            child: TextField(
+                            child: TextFormField(
                               style: TextStyle(
-                                fontSize: 10,
+                                fontSize: 16,
                               ),
-                              obscureText: true,
                               decoration: InputDecoration(
+                                hintText: "Enter Duration",
                                 border: OutlineInputBorder(),
-                                labelText: 'Duration',
-                                hintText: 'Enter Duration',
+                                // contentPadding: EdgeInsets.all(10)
                               ),
                             ),
                           ),

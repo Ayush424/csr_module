@@ -87,15 +87,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Name",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Name ',
-                                    hintText: 'Enter Name',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -116,15 +115,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Category",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Category ',
-                                    hintText: 'Enter Category',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -145,15 +143,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Email Id",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Email ',
-                                    hintText: 'Enter Email Id',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -178,15 +175,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Name",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Name ',
-                                    hintText: 'Enter Name',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -207,15 +203,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Number",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Number ',
-                                    hintText: 'Enter Number',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -236,15 +231,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Address",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Address ',
-                                    hintText: 'Enter Address',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -269,15 +263,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Date",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Date ',
-                                    hintText: 'Enter Date',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -298,15 +291,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Date",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Date ',
-                                    hintText: 'Enter Date',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -358,15 +350,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Offer",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Offered',
-                                    hintText: 'Enter Product Offered',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -387,15 +378,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter URL",
                                     border: OutlineInputBorder(),
-                                    labelText: 'URL',
-                                    hintText: 'Enter URL',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -416,15 +406,14 @@ class _partnersState extends State<partners> {
                               Container(
                                 height: 40,
                                 width: 150,
-                                child: TextField(
+                                child: TextFormField(
                                   style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 16,
                                   ),
-                                  obscureText: true,
                                   decoration: InputDecoration(
+                                    hintText: "Enter Funds",
                                     border: OutlineInputBorder(),
-                                    labelText: 'Funds ',
-                                    hintText: 'Enter Funds',
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -553,15 +542,14 @@ class _partnersState extends State<partners> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Container(
                                         height: 40,
-                                        child: TextField(
+                                        child: TextFormField(
                                           style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 16,
                                           ),
-                                          obscureText: true,
                                           decoration: InputDecoration(
+                                            hintText: "Enter Name",
                                             border: OutlineInputBorder(),
-                                            labelText: 'Name ',
-                                            hintText: 'Enter Name',
+                                            // contentPadding: EdgeInsets.all(10)
                                           ),
                                         ),
                                       ),
@@ -624,15 +612,14 @@ class _partnersState extends State<partners> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Container(
                                         height: 40,
-                                        child: TextField(
+                                        child: TextFormField(
                                           style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 16,
                                           ),
-                                          obscureText: true,
                                           decoration: InputDecoration(
+                                            hintText: "Enter Amount",
                                             border: OutlineInputBorder(),
-                                            labelText: 'Amount ',
-                                            hintText: 'INR',
+                                            // contentPadding: EdgeInsets.all(10)
                                           ),
                                         ),
                                       ),
@@ -695,15 +682,14 @@ class _partnersState extends State<partners> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Container(
                                         height: 40,
-                                        child: TextField(
+                                        child: TextFormField(
                                           style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 16,
                                           ),
-                                          obscureText: true,
                                           decoration: InputDecoration(
+                                            hintText: "Enter Description",
                                             border: OutlineInputBorder(),
-                                            labelText: 'Description ',
-                                            hintText: 'Description',
+                                            // contentPadding: EdgeInsets.all(10)
                                           ),
                                         ),
                                       ),
@@ -726,15 +712,14 @@ class _partnersState extends State<partners> {
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Container(
                                         height: 40,
-                                        child: TextField(
+                                        child: TextFormField(
                                           style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 16,
                                           ),
-                                          obscureText: true,
                                           decoration: InputDecoration(
+                                            hintText: "Enter Units",
                                             border: OutlineInputBorder(),
-                                            labelText: 'Enter Units available ',
-                                            hintText: 'Units',
+                                            // contentPadding: EdgeInsets.all(10)
                                           ),
                                         ),
                                       ),

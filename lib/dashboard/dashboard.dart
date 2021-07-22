@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:marquee/marquee.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:csr_module/Theme/colors.dart';
 // import 'package:csr_module/auth/services/firestore_service.dart';
 import 'package:intl/intl.dart';
@@ -25,10 +27,16 @@ class _HomeDashboardState extends State<HomeDashboard> {
   late List<Days> _chartData;
   late TooltipBehavior _tooltipBehavior;
 
+  late DateTime date;
+
+  DateFormat format = DateFormat('MMM, y');
+
   @override
   void initState() {
     _chartData = getChartData();
     _tooltipBehavior = TooltipBehavior(enable: true);
+
+    date = DateTime.now();
     super.initState();
   }
 
@@ -54,6 +62,54 @@ class _HomeDashboardState extends State<HomeDashboard> {
             thickness: 3,
             color: Color.fromARGB(255, 237, 242, 247),
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Wrap(
+              spacing: 5,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        date = DateTime(date.year, date.month - 1, 15);
+                      });
+                    },
+                    icon: Icon(
+                      Icons.arrow_left,
+                      size: 30,
+                      color: Color.fromARGB(255, 44, 82, 130),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Icon(
+                      Icons.event,
+                      color: Color.fromARGB(255, 44, 82, 130),
+                      size: 23,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(format.format(date),
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: Color.fromARGB(255, 44, 82, 130),
+                      )),
+                ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        date = DateTime(date.year, date.month + 1, 15);
+                      });
+                    },
+                    icon: Icon(
+                      Icons.arrow_right,
+                      size: 30,
+                      color: Color.fromARGB(255, 44, 82, 130),
+                    )),
+                SizedBox(
+                  width: 120,
+                ),
+              ],
+            ),
+          ),
           Row(
             children: [
               Flexible(
@@ -71,7 +127,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                           tooltipBehavior: _tooltipBehavior,
                           plotAreaBorderColor: Colors.green,
                           series: <ChartSeries>[
-                            ColumnSeries<Days, DateTime>(
+                            ColumnSeries<Days, String>(
                               width: 0.5,
                               spacing: 0.3,
                               enableTooltip: true,
@@ -81,11 +137,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                                   day.volunteeringHours,
                             )
                           ],
-                          primaryXAxis: DateTimeCategoryAxis(
-                              intervalType: DateTimeIntervalType.days,
-                              isVisible: true,
-                              interval: 7,
-                              dateFormat: DateFormat.MMMd())),
+                          primaryXAxis: CategoryAxis()),
                     ),
                   ],
                 ),
@@ -93,35 +145,34 @@ class _HomeDashboardState extends State<HomeDashboard> {
               Flexible(
                 flex: 2,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                  width: screensize.width * 0.2,
-                  margin: EdgeInsets.only(left: 20),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(237, 242, 247, 1),
+                      border:
+                          Border.all(color: Color.fromRGBO(204, 204, 204, 1))),
+                  padding: const EdgeInsets.all(8.0),
                   child: ListView(
                     physics: ClampingScrollPhysics(),
                     shrinkWrap: true,
                     controller: ScrollController(),
                     children: [
-                      ListTile(
-                        title: Text(
-                          'Goals',
-                          style: TextStyle(
-                              fontSize: 32,
-                              color: Color.fromARGB(255, 42, 67, 101)),
-                        ),
+                      Text(
+                        'News and Events',
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontStyle: FontStyle.italic,
+                            color: Color.fromARGB(255, 42, 67, 101)),
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                        width: screensize.width * 0.2,
-                        margin: EdgeInsets.only(left: 20),
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(237, 242, 247, 1),
-                            border: Border.all(
-                                color: Color.fromRGBO(204, 204, 204, 1))),
-                        child: GoalSection(
-                          update: widget.update,
-                        ),
-                      ),
+                      // Marquee(
+                      //   text: 'Plantation Drive on 21st july,2021'
+                      //       'consectetur adipiscing elit'
+                      //       ' Facilisis nam arcu tristique'
+                      //       ' Volutpat at sit laoreet ornare'
+                      //       ' Suspendisse dictum nibh vitae fusce'
+                      //       ' netus Ut ut sit at in lobortis leo.',
+                      //   scrollAxis: Axis.vertical,
+                      //   blankSpace: 20,
+                      //   velocity: 20,
+                      // ),
                     ],
                   ),
                 ),
@@ -181,11 +232,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
 List<Days> getChartData() {
   final List<Days> chartData = [
-    Days(DateTime(2021, 1, 7), 7),
-    Days(DateTime(2022, 1, 14), 10),
-    Days(DateTime(2021, 15, 7), 5),
-    Days(DateTime(2021, 22, 7), 6),
-    Days(DateTime(2021, 29, 7), 7),
+    Days('1', 7),
+    Days('7', 7),
+    Days('14', 10),
+    Days('21', 5),
+    Days('28', 6),
   ];
   return chartData;
 }
@@ -231,20 +282,6 @@ class ItemCard extends StatelessWidget {
                       ' days ago',
                   style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 50),
-            //   child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           primary: Colors.pink,
-            //           shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(50),
-            //           )),
-            //       onPressed: () {},
-            //       child: Text(
-            //         'Ongoing',
-            //         style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-            //       )),
-            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: ElevatedButton(
@@ -318,11 +355,6 @@ class ItemCard extends StatelessWidget {
                     style: TextStyle(color: Color.fromRGBO(255, 252, 254, 1)),
                   )),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 50),
-            //   child: Text('5 hours',
-            //       style: TextStyle(color: Color.fromRGBO(42, 67, 101, 1))),
-            // ),
           ],
         ),
       ),
@@ -331,184 +363,8 @@ class ItemCard extends StatelessWidget {
 }
 
 class Days {
-  final DateTime month;
+  final String month;
   final double volunteeringHours;
 
   Days(this.month, this.volunteeringHours);
-}
-
-class GoalSection extends StatefulWidget {
-  final ValueChanged<String>? update;
-  const GoalSection({Key? key, this.update}) : super(key: key);
-
-  @override
-  _GoalSectionState createState() => _GoalSectionState();
-}
-
-class _GoalSectionState extends State<GoalSection> {
-  int index = 0;
-  final AuthService _authService = AuthService();
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('goals')
-            .doc(_authService.returnCurrentUserid())
-            .collection('user_goals')
-            .where("completed", isEqualTo: false)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.data == null)
-            return Center(child: CircularProgressIndicator());
-          else if (snapshot.data!.docs.length > 0) {
-            return Column(
-              children: [
-                // Text(
-                //   'Current GOAL -',
-                //   style: TextStyle(
-                //       color: Color.fromRGBO(45, 55, 72, 1),
-                //       fontFamily: 'Rubik',
-                //       fontSize: 24,
-                //       fontStyle: FontStyle.italic,
-                //       fontWeight: FontWeight.w700),
-                // ),
-                Text(
-                  snapshot.data!.docs[index]['goal'],
-                  style: TextStyle(
-                      color: Color.fromRGBO(45, 55, 72, 1),
-                      fontFamily: 'Rubik',
-                      fontSize: 24,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w700),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: snapshot.data!.docs[index]['days'],
-                      style: TextStyle(
-                          color: Color.fromRGBO(45, 55, 72, 1),
-                          fontFamily: 'Rubik',
-                          fontSize: 48,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    WidgetSpan(
-                        child: Transform.translate(
-                      offset: const Offset(2, 4),
-                      child: Text(
-                        'Days left',
-                        textScaleFactor: 0.9,
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ))
-                  ])),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Text(snapshot.data!.docs[index]['others']),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final id = snapshot.data!.docs[index].id;
-                          if (index == snapshot.data!.docs.length)
-                            index = 0;
-                          else {
-                            if (index != 0) {
-                              index = index - 1;
-                            }
-                          }
-                          FirebaseFirestore.instance
-                              .collection('goals')
-                              .doc(_authService.returnCurrentUserid())
-                              .collection('user_goals')
-                              .doc(id)
-                              .update({'completed': true});
-                        },
-                        child: Text(
-                          'Set as Complete',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(44, 82, 130, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (index == snapshot.data!.docs.length - 1)
-                              index = 0;
-                            else
-                              index = index + 1;
-                          });
-                        },
-                        child: Text(
-                          'Change',
-                          style: TextStyle(fontSize: 10),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(44, 82, 130, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          } else {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: Text(
-                    'No goals set!',
-                    style: TextStyle(
-                        color: Color.fromRGBO(45, 55, 72, 1),
-                        fontFamily: 'Rubik',
-                        fontSize: 24,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () => widget.update!('myhome'),
-                    // {
-                    //   widget.
-                    //   // setState(() {
-                    //   //   GlobalValues.mainpage = 'myhome';
-                    //   // });
-                    // },
-                    child: Text(
-                      'Set goals now',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(44, 82, 130, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-        });
-  }
 }

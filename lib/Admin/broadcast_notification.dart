@@ -8,6 +8,8 @@ class BroadcastNotification extends StatefulWidget {
 }
 
 class _BroadcastNotification extends State<BroadcastNotification> {
+  TextEditingController controller1= TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +48,7 @@ class _BroadcastNotification extends State<BroadcastNotification> {
                         SizedBox(
                           height: 150,
                           child: TextField(
+                            controller: controller1,
                             minLines: 5,
                               maxLines: 10,
                             decoration: InputDecoration(hintText: 'Enter Details',

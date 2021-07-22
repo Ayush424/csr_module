@@ -8,6 +8,7 @@ class NewsBroadcast extends StatefulWidget {
 }
 
 class _NewsBroadcastState extends State<NewsBroadcast> {
+   TextEditingController controller1= TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +47,7 @@ class _NewsBroadcastState extends State<NewsBroadcast> {
                         SizedBox(
                           height: 150,
                           child: TextField(
+                            controller: controller1,
                             minLines: 5,
                               maxLines: 10,
                             decoration: InputDecoration(hintText: 'Enter Details',

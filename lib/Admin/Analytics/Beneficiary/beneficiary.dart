@@ -1,24 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:intl/intl.dart';
+// import 'themes/Colors.dart';
 
-class NgoPartner extends StatefulWidget {
-  const NgoPartner({Key? key}) : super(key: key);
+class Beneficiary extends StatefulWidget {
+  const Beneficiary({Key? key}) : super(key: key);
 
   @override
-  _NgoPartnerState createState() => _NgoPartnerState();
+  _BeneficiaryState createState() => _BeneficiaryState();
 }
 
-class _NgoPartnerState extends State<NgoPartner> {
-  Map<String, double> dataMap = {
-    "NGO’s Whose MoU period is running": 70,
-    "NGO’s whose MoU is ending this month": 30,
-  };
-  static const int numItems = 4;
+class Item {
+  Item({
+    required this.expandedValue,
+    required this.headerValue,
+    this.isExpanded = false,
+  });
+
+  String expandedValue;
+  String headerValue;
+  bool isExpanded;
+}
+
+List<Item> generateItems(int numberOfItems) {
+  return List<Item>.generate(numberOfItems, (int index) {
+    return Item(
+      headerValue: 'Panel $index',
+      expandedValue: 'This is item number $index',
+    );
+  });
+}
+
+class _BeneficiaryState extends State<Beneficiary> {
+  final List<Item> _data = generateItems(8);
+  static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  bool add = false;
-  late DateTime date;
-  TextEditingController _textFieldController1 = TextEditingController();
+TextEditingController _textFieldController1 = TextEditingController();
+
+late DateTime date;
   final _textFieldController2 = TextEditingController();
   final _textFieldController3 = TextEditingController();
   final _textFieldController4 = TextEditingController();
@@ -83,7 +101,6 @@ class _NgoPartnerState extends State<NgoPartner> {
   }
 
   final _formKey = GlobalKey<FormState>();
-
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -603,218 +620,392 @@ class _NgoPartnerState extends State<NgoPartner> {
           );
         });
   }
-
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
-    dateTime = DateFormat.yMd().format(DateTime.now());
-    return Scaffold(
-      body: Container(
-        constraints: BoxConstraints.expand(),
+    return Container(
         color: Colors.white,
+        constraints: BoxConstraints.expand(),
         child: Padding(
-          padding: const EdgeInsets.all(40.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Analytics - NGO Partners',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 42, 67, 101),
-                      fontSize: 36,
-                      decoration: TextDecoration.none),
-                ),
-                Divider(
-                  color: Color.fromARGB(255, 226, 232, 240),
-                  thickness: 2,
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Wrap(
-                    spacing: 15,
-                    children: [
-                      SizedBox(
-                        width: 60,
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              date = DateTime(date.year, date.month - 1, 15);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.arrow_left,
-                            size: 30,
-                            color: Color.fromARGB(255, 44, 82, 130),
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: RichText(
-                            text: TextSpan(children: [
-                          WidgetSpan(
-                              child: Icon(
-                            Icons.event,
-                            color: Color.fromARGB(255, 44, 82, 130),
-                            size: 23,
-                          )),
-                          TextSpan(
-                              text: format.format(date),
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              ))
-                        ])),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              date = DateTime(date.year, date.month + 1, 15);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.arrow_right,
-                            size: 30,
-                            color: Color.fromARGB(255, 44, 82, 130),
-                          )),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 70),
-                  child: Wrap(
-                    children: [
-                      PieChart(
-                        dataMap: dataMap,
-                        animationDuration: Duration(milliseconds: 800),
-                        chartLegendSpacing:
-                            MediaQuery.of(context).size.width >= 990 ? 100 : 50,
-                        // chartRadius: MediaQuery.of(context).size.width / 6,
-                        // colorList: colorList,
-                        chartRadius: 180,
-                        initialAngleInDegree: 0,
-                        // ringStrokeWidth: 10,
-                        // centerText: "HYBRID",
-                        legendOptions: LegendOptions(
-                          showLegendsInRow: false,
-                          legendPosition:
-                              MediaQuery.of(context).size.width >= 990
-                                  ? LegendPosition.right
-                                  : LegendPosition.bottom,
-                          showLegends: true,
-                          legendTextStyle: TextStyle(
-                            fontSize: 20,
-                            decoration: TextDecoration.none,
-                            color: Color.fromARGB(255, 42, 67, 101),
-                          ),
-                        ),
-                        chartValuesOptions: ChartValuesOptions(
-                          showChartValueBackground: true,
-                          showChartValues: false,
-                          showChartValuesInPercentage: false,
-                          showChartValuesOutside: false,
-                          decimalPlaces: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  height: 200,
-                  width: 1200,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    color: Color.fromARGB(255, 204, 204, 204),
-                    width: 1,
-                  )),
-                  child: SingleChildScrollView(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      controller: ScrollController(),
-                      child: DataTable(
-                        columnSpacing: 231,
-                        columns: const <DataColumn>[
-                          DataColumn(
-                            label: Text(
-                              'NGO Name',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
+            padding: EdgeInsets.all(40),
+            child: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Analytics - Beneficiary',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 42, 67, 101),
+                          fontSize: 36,
+                          decoration: TextDecoration.none),
+                    ),
+                    Divider(
+                      color: Color.fromARGB(255, 226, 232, 240),
+                      thickness: 2,
+                    ),
+                    SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        direction: Axis.horizontal,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.only(left: 10),
+                                primary: Colors.white,
+                                side: BorderSide(
+                                    color: Color.fromRGBO(255, 183, 75, 1))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SizedBox(
+                                height: 70,
+                                width: 290,
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: CircleAvatar(
+                                          radius: 25,
+                                          backgroundColor:
+                                              Color.fromRGBO(255, 183, 75, 1),
+                                          child: Icon(
+                                            Icons.how_to_reg,
+                                            color: Colors.white,
+                                            size: 40,
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      width: 6,
+                                    ),
+                                    Flexible(
+                                      child: ListView(
+                                        physics: ClampingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        controller: ScrollController(),
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '   209 ',
+                                                style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        255, 183, 75, 1),
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontFamily: 'Rubik'),
+                                              ),
+                                              Flexible(
+                                                  flex: 1,
+                                                  child:
+                                                      MyText(text: 'People')),
+                                            ],
+                                          ),
+                                          MyText(text: 'Benefitted so far'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          DataColumn(
-                            label: Text('Category',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 82, 130),
-                                )),
+                          SizedBox(
+                            height: 5,
                           ),
-                          DataColumn(
-                            label: Text('MoU Start Date',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 82, 130),
-                                )),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.only(left: 10),
+                                primary: Colors.white,
+                                side: BorderSide(
+                                    color: Color.fromRGBO(255, 75, 162, 1))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SizedBox(
+                                height: 70,
+                                width: 290,
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: CircleAvatar(
+                                          maxRadius: 25,
+                                          backgroundColor:
+                                              Color.fromRGBO(255, 75, 162, 1),
+                                          child: Icon(
+                                            Icons.attach_money,
+                                            color: Colors.white,
+                                            size: 50,
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      width: 6,
+                                    ),
+                                    Flexible(
+                                      child: ListView(
+                                        physics: ClampingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        controller: ScrollController(),
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: Text(
+                                                    '255.5k ',
+                                                    style: TextStyle(
+                                                        color: Color.fromRGBO(
+                                                            255, 75, 162, 1),
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                        fontFamily: 'Rubik'),
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                    flex: 1,
+                                                    child: MyText(text: 'INR')),
+                                              ],
+                                            ),
+                                          ),
+                                          MyText(
+                                            text: 'Total fund collected',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          DataColumn(
-                            label: Text('MoU End Date',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 82, 130),
-                                )),
+                          SizedBox(
+                            height: 5,
                           ),
-                          DataColumn(
-                            label: Text('View More',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 44, 82, 130),
-                                )),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.only(left: 10),
+                                primary: Colors.white,
+                                side: BorderSide(
+                                    color: Color.fromRGBO(186, 18, 18, 1))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: SizedBox(
+                                height: 70,
+                                width: 290,
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: CircleAvatar(
+                                          radius: 25,
+                                          backgroundColor:
+                                              Color.fromRGBO(186, 18, 18, 1),
+                                          child: Icon(
+                                            Icons.people_outlined,
+                                            color: Colors.white,
+                                            size: 40,
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      width: 6,
+                                    ),
+                                    Flexible(
+                                      child: ListView(
+                                        physics: ClampingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        controller: ScrollController(),
+                                        children: [
+                                          Text(
+                                            '   25 ',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    186, 18, 18, 1),
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.w900,
+                                                fontFamily: 'Rubik'),
+                                          ),
+                                          MyText(text: 'NGO Benefitted'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ],
-                        rows: List<DataRow>.generate(
-                          numItems,
-                          (int index) => DataRow(
-                            color: MaterialStateProperty.resolveWith<Color?>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return Color.fromARGB(255, 237, 242, 247)
-                                    .withOpacity(0.08);
-                              }
-                              if (index.isEven) {
-                                return Color.fromARGB(255, 237, 242, 247);
-                              }
-                              return Color.fromARGB(255, 237, 242, 247);
-                            }),
-                            cells: <DataCell>[
-                              DataCell(Text('abc')),
-                              DataCell(Text('xyz')),
-                              DataCell(Text('abc')),
-                              DataCell(Text('abc')),
-                              DataCell(ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(255, 45, 55, 72),
-                                ),
-                                child: Text(
-                                  'View more',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: () {},
-                              )),
-                            ],
-                          ),
-                        ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 50),
+                    SizedBox(height: 100),
+                    Text(
+                      'Beneficiary',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 42, 67, 101),
+                          fontSize: 30,
+                          decoration: TextDecoration.none),
+                    ),
+                    Divider(
+                      color: Color.fromARGB(255, 226, 232, 240),
+                      thickness: 2,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                        height: 400,
+                        width: 1200,
+                        color: Color.fromARGB(25, 237, 242, 247),
+                        // decoration: BoxDecoration(
+                        //     color: Color.fromARGB(25, 237, 242, 247),
+                            
+                        //     border: Border.all(
+                        //       color: Color.fromARGB(25, 237, 242, 247),
+                        //     )),
+                        child: ListView(
+                          children: [
+                            Container(
+                              child: Theme(
+            data: Theme.of(context).copyWith(cardColor: Color.fromARGB(255, 237, 242, 247),),
+                              child: ExpansionPanelList(
+                                dividerColor: Color.fromARGB(25,237, 242, 247),
+                                expansionCallback: (int index, bool isExpanded) {
+                                  setState(() {
+                                    _data[index].isExpanded = !isExpanded;
+                                  });
+                                },
+                                children: _data.map<ExpansionPanel>((Item item) {
+                                  return ExpansionPanel(
+                                    headerBuilder:
+                                        (BuildContext context, bool isExpanded) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(left:15),
+                                        child: Wrap(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        spacing: 120,
+                                        runSpacing: 5,
+                                        children: [
+                                        Text('Beneficiary Name',
+                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),),
+                                        Text('Beneficiary Code',
+                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24),),
+                                        Text('NGO Name',
+                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24),),
+                                        Text('Funds Allocated',
+                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24),),
+                                    ],),
+                                      );
+                                    },
+                                    body: Padding(
+                                      padding: const EdgeInsets.only(bottom: 20, ),
+                                      child: Wrap(
+                                      // alignment: WrapAlignment.start,
+                                        spacing: 50,
+                                        runSpacing: 10,
+                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                        Column(
+                                          children: [
+                                            Text('Gender',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                            ),
+                                           Text('Male',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        
+                                        ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text('Address',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                            ),
+                                           Text('Address',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,),
+                                           )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text('Support Start Date',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                            ),
+                                           Text('Date',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,),
+                                           )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text('Support End Date',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                            ),
+                                           Text('Date',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,),
+                                           )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text('Aadhar Number',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                            ),
+                                           Text('Number',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,),
+                                           )
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text('Others',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                            ),
+                                           Text('Other Notes',
+                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
+                                        fontSize: 24,),
+                                           )
+                                          ],
+                                        ),
+ 
+                                      ],),
+                                    ),
+                                   
+                                    isExpanded: item.isExpanded,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            )
+                          ],
+                        )),
+                        SizedBox(height: 50),
                 Center(
                   child: ElevatedButton.icon(
                     icon: Icon(
@@ -831,10 +1022,29 @@ class _NgoPartnerState extends State<NgoPartner> {
                     },
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+                  ]),
+            )));
+  }
+}
+
+class MyText extends StatefulWidget {
+  final String text;
+  const MyText({Key? key, required this.text}) : super(key: key);
+
+  @override
+  State<MyText> createState() => _MyTextState();
+}
+
+class _MyTextState extends State<MyText> {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      widget.text,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        fontFamily: 'Rubik',
+        color: const Color.fromRGBO(44, 82, 130, 1),
       ),
     );
   }

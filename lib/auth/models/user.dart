@@ -1,4 +1,5 @@
 class MyUser {
+  final String? role;
   final Map<String, String>? documents;
   final String? imgUrl;
   final String uid;
@@ -46,7 +47,8 @@ class MyUser {
   final String? probationPeriod;
   final int? volunteeringHours;
   MyUser(this.uid, this.email,
-      {this.volunteeringHours,
+      {this.role,
+      this.volunteeringHours,
       this.firstName,
       this.middleName,
       this.lastName,

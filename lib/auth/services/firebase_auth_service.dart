@@ -35,6 +35,7 @@ class AuthService {
       //     "homeAddress",
       //     "maritalStatus");
       await FirestoreService(user!.uid).updateUserData(
+          "user",
           0,
           {},
           "",
@@ -96,6 +97,7 @@ class AuthService {
   Future<void> loadMyData() async {
     User? user = _auth.currentUser;
     await FirestoreService(user!.uid).updateUserData(
+        "user",
         0,
         {},
         "",

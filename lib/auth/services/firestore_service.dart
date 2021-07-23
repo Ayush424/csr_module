@@ -6,6 +6,7 @@ class FirestoreService {
   FirestoreService(this.uId);
 
   Future<void> updateUserData(
+    String role,
     int volunteeringHours,
     Map<String, String> documents,
     String imgUrl,
@@ -54,6 +55,7 @@ class FirestoreService {
     String probationPeriod,
   ) async {
     return await FirebaseFirestore.instance.collection("Users").doc(uId).set({
+      'role': role,
       'imgUrl': imgUrl,
       'documents': documents,
       'volunteering hours': volunteeringHours,

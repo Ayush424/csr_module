@@ -94,7 +94,8 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MainPageStruct()),
+                                    builder: (context) =>
+                                        MainPageStruct(role: "admin")),
                               );
                             },
                             style: ElevatedButton.styleFrom(

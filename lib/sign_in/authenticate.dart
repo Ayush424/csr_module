@@ -26,7 +26,7 @@ class Authenticate extends StatelessWidget {
             if (snapshot.data!["role"] == "admin") {
               return AdminPageStruct();
             } else
-              return MainPageStruct();
+              return MainPageStruct(role: "user");
           });
     }
   }

@@ -1,4 +1,5 @@
 import 'package:csr_module/Admin/admin_page_struct.dart';
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:csr_module/dashboard/admin_dashboard.dart';
 
 import 'package:csr_module/main_page_struct/main_page_struct.dart';
@@ -12,6 +13,7 @@ class AdminPageStructDesktop extends StatefulWidget {
 }
 
 class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
+  final AuthService _auth = AuthService();
   String _adminpage = "adminDashboard";
 
   @override
@@ -31,9 +33,8 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
 
           IconButton(
             padding: const EdgeInsets.only(right: 50),
-            onPressed: () //async
-                {
-              // await _auth.signOut();
+            onPressed: () async {
+              await _auth.signOut();
             },
             tooltip: 'Logout',
             icon: const Icon(Icons.account_circle,
@@ -70,7 +71,9 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainPageStruct()),
+                                  builder: (context) => MainPageStruct(
+                                        role: "admin",
+                                      )),
                             );
                           },
                           style: ElevatedButton.styleFrom(

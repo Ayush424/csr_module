@@ -269,7 +269,9 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       ),
                     ),
                     onTap: () {
-                      GlobalAdminPage.adminpage = 'sellerCart';
+                      setState(() {
+                        GlobalAdminPage.adminpage = 'sellerCart';
+                      });
                     },
                   ),
                   ListTile(

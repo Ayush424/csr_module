@@ -294,7 +294,9 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         ),
                       ),
                       onTap: () {
-                        GlobalAdminPage.adminpage = 'sellerCart';
+                        setState(() {
+                          GlobalAdminPage.adminpage = 'sellerCart';
+                        });
                       },
                     ),
                     ListTile(

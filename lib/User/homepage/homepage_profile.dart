@@ -24,7 +24,6 @@ class _HomeProfileState extends State<HomeProfile> {
 
   final collection = FirebaseFirestore.instance.collection("Users");
 
-
   final TextEditingController _textFieldController = TextEditingController();
 
   void _uploadImg() async {
@@ -44,7 +43,6 @@ class _HomeProfileState extends State<HomeProfile> {
   }
 
   _displayDialog(BuildContext context, String details, String field) async {
-
     return showDialog(
         context: context,
         builder: (context) {
@@ -52,9 +50,7 @@ class _HomeProfileState extends State<HomeProfile> {
             title: Text("Enter" + details),
             content: TextField(
               controller: _textFieldController,
-
               decoration: InputDecoration(hintText: "Changed Value"),
-
             ),
             actions: <Widget>[
               ElevatedButton(
@@ -64,7 +60,6 @@ class _HomeProfileState extends State<HomeProfile> {
                       const Color.fromRGBO(45, 55, 72, 1)),
                 ),
                 onPressed: () {
-
                   if (field == "phoneNo") {
                     FirestoreService(_authService.returnCurrentUserid())
                         .updatePhone(_textFieldController.text);

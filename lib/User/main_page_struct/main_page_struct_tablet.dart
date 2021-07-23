@@ -1,31 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/events_and_calendar/calendar.dart';
-
-import 'package:csr_module/Admin/admin_page_struct.dart';
-
+import 'package:csr_module/Admin/admin_page_struct/admin_page_struct_tablet.dart';
+import 'package:csr_module/User/events_and_calendar/calendar.dart';
+import 'package:csr_module/User/organization/dollar_for_dollar.dart';
 import '../homepage/static_homepage.dart';
-
 import 'static_mainpage.dart';
-import 'package:csr_module/organization/dollar_for_dollar.dart';
 import 'package:flutter/material.dart';
-import 'package:csr_module/organization/organization.dart';
-import 'package:csr_module/organization/registration.dart';
-import 'package:csr_module/activity/activity.dart';
+import 'package:csr_module/User/organization/organization.dart';
+import 'package:csr_module/User/organization/registration.dart';
+import 'package:csr_module/User/activity/activity.dart';
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
-import 'package:csr_module/assistance/assistance_give.dart';
-import 'package:csr_module/assistance/assistance_need.dart';
-import 'package:csr_module/dashboard/dashboard.dart';
+import 'package:csr_module/User/assistance/assistance_give.dart';
+import 'package:csr_module/User/assistance/assistance_need.dart';
+import 'package:csr_module/User/dashboard/dashboard.dart';
 import '../homepage/homepage_structure.dart';
 
-class MainPageStructDesktop extends StatefulWidget {
-  const MainPageStructDesktop({Key? key}) : super(key: key);
+class MainPageStructTablet extends StatefulWidget {
+  const MainPageStructTablet({Key? key}) : super(key: key);
 
   @override
-  _MainPageStructDesktopState createState() => _MainPageStructDesktopState();
+  _MainPageStructTabletState createState() => _MainPageStructTabletState();
 }
 
-class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
-  // String GlobalMainPage.mainpage = "dashboard";
+class _MainPageStructTabletState extends State<MainPageStructTablet> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  //String GlobalMainPage.mainpage = "dashboard";
   void _update(String mainpage) {
     setState(() {
       GlobalHomePage.homepage = "setgoals";
@@ -38,100 +36,28 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: Container(
-        width: 350,
-        height: 100,
-        color: Color.fromARGB(255, 45, 55, 72),
-        margin: EdgeInsets.only(bottom: 430),
-        child: StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('Users')
-                .doc(_auth.returnCurrentUserid())
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return DrawerHeader(
-                child: Wrap(
-                  children: [
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image.network(snapshot.data!['imgUrl'])),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          snapshot.data!['displayName'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Text(
-                          snapshot.data!['department'],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          snapshot.data!['empcode'],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          snapshot.data!['email'],
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                          ),
-                          onPressed: () async {
-                            await _auth.signOut();
-                          },
-                          tooltip: 'Logout',
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }),
-      ),
       appBar: AppBar(
         actions: [
-          Transform(
-            transform: Matrix4.translationValues(-20, 0, 0),
+          Flexible(
+            flex: 2,
             child: IconButton(
-              tooltip: 'Notification',
-              onPressed: () {},
+              onPressed: () {
+                _auth.loadMyData();
+              },
+              tooltip: 'Notifications',
               icon: const Icon(Icons.notifications_active,
-                  color: Colors.white, size: 30),
+                  color: Colors.white, size: 25),
             ),
           ),
-          Builder(
-            builder: (context) => Transform(
-              transform: Matrix4.translationValues(-20, 0, 0),
-              child: IconButton(
-                tooltip: 'User',
-                icon: const Icon(Icons.account_circle,
-                    color: Colors.white, size: 50),
+          Flexible(
+            flex: 1,
+            child: Builder(
+              builder: (context) => IconButton(
                 onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
+                  Scaffold.of(context).openDrawer();
                 },
+                tooltip: 'Menu',
+                icon: const Icon(Icons.menu, size: 30.0, color: Colors.white),
               ),
             ),
           ),
@@ -142,7 +68,7 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AdminPageStruct()),
+              MaterialPageRoute(builder: (context) => AdminPageStructTablet()),
             );
           },
         ),
@@ -152,17 +78,46 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
         ),
         backgroundColor: const Color.fromARGB(255, 45, 55, 72),
       ),
-      body: Flex(
-        direction: Axis.horizontal,
-        children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              color: const Color.fromARGB(255, 237, 242, 247),
+      drawer: Drawer(
+        child: Row(
+          children: [
+            Expanded(
               child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 100, horizontal: 0),
-                children: [
+                controller: ScrollController(),
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  StreamBuilder<DocumentSnapshot>(
+                      stream: _firebaseFirestore
+                          .collection('Users')
+                          .doc(_auth.returnCurrentUserid())
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return CircularProgressIndicator();
+                        }
+                        return UserAccountsDrawerHeader(
+                          accountName: Text(
+                            snapshot.data!['displayName'],
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          accountEmail: Text(snapshot.data!['department']),
+                          currentAccountPicture:
+                              Image.network(snapshot.data!['imgUrl']),
+                          otherAccountsPictures: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.logout,
+                                color: Colors.white70,
+                              ),
+                              onPressed: () async {
+                                await _auth.signOut();
+                              },
+                              tooltip: 'Logout',
+                            ),
+                          ],
+                        );
+                      }),
                   ListTile(
                     leading: const MyIcon(icon: Icons.assessment_outlined),
                     title: Transform(
@@ -300,39 +255,36 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                 ],
               ),
             ),
-          ),
-          Flexible(
-            flex: 4,
-            child: Builder(builder: (context) {
-              if (GlobalMainPage.mainpage == 'cangive') {
-                return AssistanceCanGive();
-              } else if (GlobalMainPage.mainpage == 'ineed') {
-                return AssistanceNeed();
-              } else if (GlobalMainPage.mainpage == 'coreteam') {
-                return Organization();
-              } else if (GlobalMainPage.mainpage == 'myhome') {
-                return HomePageStruct();
-              } else if (GlobalMainPage.mainpage == 'activity') {
-                return Activity();
-              } else if (GlobalMainPage.mainpage == 'registrationform') {
-                return RegistrationForm();
-              } else if (GlobalMainPage.mainpage == 'dashboard') {
-                return HomeDashboard(
-                  update: _update,
-                );
-              } else if (GlobalMainPage.mainpage == 'calendar') {
-                return Calendar(
-                  update: _update,
-                );
-              } else if (GlobalMainPage.mainpage == 'Dollar') {
-                return DollarForDollar();
-              } else {
-                return Container();
-              }
-            }),
-          ),
-        ],
+          ],
+        ),
       ),
+      body: Builder(builder: (context) {
+        if (GlobalMainPage.mainpage == 'cangive') {
+          return AssistanceCanGive();
+        } else if (GlobalMainPage.mainpage == 'ineed') {
+          return AssistanceNeed();
+        } else if (GlobalMainPage.mainpage == 'coreteam') {
+          return Organization();
+        } else if (GlobalMainPage.mainpage == 'myhome') {
+          return HomePageStruct();
+        } else if (GlobalMainPage.mainpage == 'activity') {
+          return Activity();
+        } else if (GlobalMainPage.mainpage == 'registrationform') {
+          return RegistrationForm();
+        } else if (GlobalMainPage.mainpage == 'dashboard') {
+          return HomeDashboard(
+            update: _update,
+          );
+        } else if (GlobalMainPage.mainpage == 'calendar') {
+          return Calendar(
+            update: _update,
+          );
+        } else if (GlobalMainPage.mainpage == 'Dollar') {
+          return DollarForDollar();
+        } else {
+          return Container();
+        }
+      }),
     );
   }
 }
@@ -358,7 +310,7 @@ class _MyTextState extends State<MyText> {
       text: TextSpan(
         style: TextStyle(
           fontSize: 16,
-          color: const Color.fromARGB(255, 44, 82, 130),
+          color: Colors.grey[800],
           fontWeight: widget.bold ? FontWeight.w800 : null,
           decoration: hover ? TextDecoration.underline : null,
         ),
@@ -383,7 +335,7 @@ class MyIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       icon,
-      color: const Color.fromARGB(255, 44, 82, 130),
+      color: Colors.grey[800],
       size: 27,
     );
   }

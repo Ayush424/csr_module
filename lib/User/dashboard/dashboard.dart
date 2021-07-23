@@ -1,6 +1,5 @@
 import 'dart:ui';
-import 'package:marquee/marquee.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:csr_module/Theme/colors.dart';
 // import 'package:csr_module/auth/services/firestore_service.dart';
 import 'package:intl/intl.dart';

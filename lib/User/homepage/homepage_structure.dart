@@ -1,4 +1,4 @@
-import 'package:csr_module/homepage/homepage_setgoals.dart';
+import 'package:csr_module/User/homepage/homepage_setgoals.dart';
 import 'static_homepage.dart';
 import 'package:flutter/material.dart';
 import 'homepage_documents.dart';

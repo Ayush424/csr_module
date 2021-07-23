@@ -1,9 +1,19 @@
-import 'package:csr_module/Admin/admin_page_struct.dart';
-import 'package:csr_module/Admin/expense.dart';
-import 'package:csr_module/Admin/static_admin_page.dart';
-import 'package:csr_module/analytics/payroll_giving_collection.dart';
-import 'package:csr_module/Admin/admin_dashboard.dart';
-import 'package:csr_module/main_page_struct/main_page_struct.dart';
+import 'package:csr_module/Admin/Analytics/CSR_Activities/Activities.dart';
+import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
+import 'package:csr_module/Admin/Analytics/CSR_Trainings/Trainings.dart';
+import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_partners1.dart';
+import 'package:csr_module/Admin/Analytics/Payroll_giving_collection/Payroll.dart';
+import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteering_hours.dart';
+import 'package:csr_module/Admin/News&Broadcast/broadcast_notification.dart';
+import 'package:csr_module/Admin/News&Broadcast/broadcast_publish.dart';
+import 'package:csr_module/Admin/Seller_Cart/seller_cart.dart';
+import 'package:csr_module/Admin/admin_page_struct/admin_page_struct.dart';
+import 'package:csr_module/Admin/Expense/expense.dart';
+import 'package:csr_module/Admin/admin_page_struct/static_admin_page.dart';
+import 'package:csr_module/User/main_page_struct/main_page_struct.dart';
+
+import 'package:csr_module/Admin/AdminDashboard/admin_dashboard.dart';
+
 import 'package:flutter/material.dart';
 
 class AdminPageStructTablet extends StatefulWidget {
@@ -165,9 +175,13 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         ListTile(
                           title: MyText(
                             text: "NGO Partner",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == 'ngoPartner'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'ngoPartner';
+                            });
+                          },
                         ),
                         ListTile(
                           title: MyText(
@@ -179,23 +193,31 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         ListTile(
                           title: MyText(
                             text: "CSR Categories",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == 'categories'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'categories';
+                            });
+                          },
                         ),
                         ListTile(
                           title: MyText(
                             text: "CSR Activities",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == 'activities'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            GlobalAdminPage.adminpage = 'activities';
+                          },
                         ),
                         ListTile(
                           title: MyText(
                             text: "CSR Trainings",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == 'trainings'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            GlobalAdminPage.adminpage = 'trainings';
+                          },
                         ),
                         ListTile(
                           title: MyText(
@@ -219,9 +241,14 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         ListTile(
                           title: MyText(
                             text: "Volunteering Hours",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage ==
+                                'volunteeringHours'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'volunteeringHours';
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -257,10 +284,12 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "Seller Cart",
-                          bold: (GlobalAdminPage.adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == 'sellerCart'),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        GlobalAdminPage.adminpage = 'sellerCart';
+                      },
                     ),
                     ListTile(
                       leading: const MyIcon(icon: Icons.event_note),
@@ -280,23 +309,32 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                         transform: Matrix4.translationValues(-16, 0, 0),
                         child: MyText(
                           text: "News and Broadcast",
-                          bold: (GlobalAdminPage.adminpage == ''),
+                          bold:
+                              (GlobalAdminPage.adminpage == 'newsAndBroadcast'),
                         ),
                       ),
                       children: [
                         ListTile(
                           title: MyText(
                             text: "Publish News",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == 'publish'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'publish';
+                            });
+                          },
                         ),
                         ListTile(
                           title: MyText(
                             text: "Broadcast Notification",
-                            bold: (GlobalAdminPage.adminpage == ''),
+                            bold: (GlobalAdminPage.adminpage == 'notification'),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'notification';
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -336,6 +374,22 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
         body: Builder(builder: (context) {
           if (GlobalAdminPage.adminpage == 'adminDashboard') {
             return AdminDashboard();
+          } else if (GlobalAdminPage.adminpage == 'ngoPartner') {
+            return NgoPartner();
+          } else if (GlobalAdminPage.adminpage == 'categories') {
+            return Categories();
+          } else if (GlobalAdminPage.adminpage == 'activities') {
+            return Activities();
+          } else if (GlobalAdminPage.adminpage == 'trainings') {
+            return Trainings();
+          } else if (GlobalAdminPage.adminpage == 'volunteeringHours') {
+            return VolunteeringHours();
+          } else if (GlobalAdminPage.adminpage == 'sellerCart') {
+            return SellerCart();
+          } else if (GlobalAdminPage.adminpage == 'publish') {
+            return NewsBroadcast();
+          } else if (GlobalAdminPage.adminpage == 'notification') {
+            return BroadcastNotification();
           } else if (GlobalAdminPage.adminpage == 'payrollCollection') {
             return PayrollCollection();
           } else if (GlobalAdminPage.adminpage == 'expense') {

@@ -1,6 +1,5 @@
-import 'package:csr_module/main_page_struct/main_page_struct_desktop.dart';
-import 'package:csr_module/main_page_struct/main_page_struct_tablet.dart';
-
+import 'package:csr_module/User/main_page_struct/main_page_struct_desktop.dart';
+import 'package:csr_module/User/main_page_struct/main_page_struct_tablet.dart';
 import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors

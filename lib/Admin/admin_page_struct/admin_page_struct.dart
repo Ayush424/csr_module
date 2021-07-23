@@ -1,5 +1,5 @@
-import 'package:csr_module/Admin/admin_page_struct_desktop.dart';
-import 'package:csr_module/Admin/admin_page_struct_tablet.dart';
+import 'package:csr_module/Admin/admin_page_struct/admin_page_struct_desktop.dart';
+import 'package:csr_module/Admin/admin_page_struct/admin_page_struct_tablet.dart';
 
 import 'package:flutter/material.dart';
 

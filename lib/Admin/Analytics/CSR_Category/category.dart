@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'Intermediate.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'Newbie.dart';
-import 'Intermediate.dart';
+
 import 'Mature.dart';
 import 'Expert.dart';
 
@@ -56,7 +56,7 @@ class _CategoriesState extends State<Categories>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Analytics - CSr Categories',
+                  'Analytics - CSR Categories',
                   style: TextStyle(
                     fontSize: 36,
                     color: Color.fromARGB(255, 42, 67, 101),

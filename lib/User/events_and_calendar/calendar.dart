@@ -89,27 +89,57 @@ class _CalendarState extends State<Calendar> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'Recurring Events',
-                        style: TextStyle(
-                            color: Color.fromRGBO(44, 82, 130, 1),
-                            fontSize: 20),
+                      Column(
+                        children: [
+                          Text(
+                            'Organised Events',
+                            style: TextStyle(
+                                color: Color.fromRGBO(44, 82, 130, 1),
+                                fontSize: 20),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 30, top: 2, bottom: 50),
+                            child: SizedBox(
+                              height: 90,
+                              child: ListView.builder(
+                                  controller: ScrollController(),
+                                  itemCount: numItems,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (context, index) {
+                                    return OrganisedEventsList(
+                                        numItems: numItems, index: index);
+                                  }),
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 30, top: 2, bottom: 50),
-                        child: SizedBox(
-                          height: 90,
-                          child: ListView.builder(
-                              controller: ScrollController(),
-                              itemCount: numItems,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                return RecurringEventsList(
-                                    numItems: numItems, index: index);
-                              }),
-                        ),
+                      Column(
+                        children: [
+                          Text(
+                            'Recurring Events',
+                            style: TextStyle(
+                                color: Color.fromRGBO(44, 82, 130, 1),
+                                fontSize: 20),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 30, top: 2, bottom: 50),
+                            child: SizedBox(
+                              height: 90,
+                              child: ListView.builder(
+                                  controller: ScrollController(),
+                                  itemCount: numItems,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (context, index) {
+                                    return RecurringEventsList(
+                                        numItems: numItems, index: index);
+                                  }),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -1,5 +1,5 @@
-import 'package:csr_module/dashboard/csr_events.dart';
-import 'package:csr_module/dashboard/ngo_partners.dart';
+import 'package:csr_module/User/dashboard/dashboard_csr_events.dart';
+import 'package:csr_module/User/dashboard/dashboard_ngo_partners.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

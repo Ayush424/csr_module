@@ -5,6 +5,7 @@ import 'package:csr_module/User/activity/activity.dart';
 import 'package:csr_module/User/assistance/assistance_give.dart';
 import 'package:csr_module/User/assistance/assistance_need.dart';
 import 'package:csr_module/User/dashboard/dashboard.dart';
+import 'package:csr_module/User/dollarFordollar/productdetails.dart';
 import 'package:csr_module/User/events_and_calendar/calendar.dart';
 import 'package:csr_module/User/organization/dollar_for_dollar.dart';
 import 'package:csr_module/User/organization/organization.dart';
@@ -309,6 +310,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
             child: Builder(builder: (context) {
               if (GlobalMainPage.mainpage == 'cangive') {
                 return AssistanceCanGive();
+              } else if (GlobalMainPage.mainpage == 'details') {
+                return ProductDetails();
               } else if (GlobalMainPage.mainpage == 'ineed') {
                 return AssistanceNeed();
               } else if (GlobalMainPage.mainpage == 'coreteam') {

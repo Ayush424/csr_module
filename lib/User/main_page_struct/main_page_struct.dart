@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
 class MainPageStruct extends StatefulWidget {
+  final String role;
+
+  const MainPageStruct({Key? key, required this.role}) : super(key: key);
   @override
   State<MainPageStruct> createState() => _HomePageStructState();
 }

@@ -1,6 +1,5 @@
-import 'package:csr_module/Admin/Analytics/CSR_Activities/Activities.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
-import 'package:csr_module/Admin/Analytics/CSR_Trainings/Trainings.dart';
+import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
 import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_partners1.dart';
 import 'package:csr_module/Admin/Analytics/Payroll_giving_collection/Payroll.dart';
 import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteering_hours.dart';
@@ -10,6 +9,7 @@ import 'package:csr_module/Admin/Seller_Cart/seller_cart.dart';
 import 'package:csr_module/Admin/admin_page_struct/admin_page_struct.dart';
 import 'package:csr_module/Admin/Expense/expense.dart';
 import 'package:csr_module/Admin/admin_page_struct/static_admin_page.dart';
+import 'package:csr_module/User/activity/activity.dart';
 import 'package:csr_module/User/main_page_struct/main_page_struct.dart';
 
 import 'package:csr_module/Admin/AdminDashboard/admin_dashboard.dart';
@@ -209,7 +209,9 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                             bold: (GlobalAdminPage.adminpage == 'activities'),
                           ),
                           onTap: () {
-                            GlobalAdminPage.adminpage = 'activities';
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'activities';
+                            });
                           },
                         ),
                         ListTile(
@@ -218,7 +220,9 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                             bold: (GlobalAdminPage.adminpage == 'trainings'),
                           ),
                           onTap: () {
-                            GlobalAdminPage.adminpage = 'trainings';
+                            setState(() {
+                              GlobalAdminPage.adminpage = 'trainings';
+                            });
                           },
                         ),
                         ListTile(
@@ -381,7 +385,7 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
           } else if (GlobalAdminPage.adminpage == 'categories') {
             return Categories();
           } else if (GlobalAdminPage.adminpage == 'activities') {
-            return Activities();
+            return Activity();
           } else if (GlobalAdminPage.adminpage == 'trainings') {
             return Trainings();
           } else if (GlobalAdminPage.adminpage == 'volunteeringHours') {

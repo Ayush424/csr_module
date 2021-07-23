@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Trainings extends StatefulWidget {
-  Trainings({Key? key}) : super(key: key);
+  const Trainings({Key? key}) : super(key: key);
 
   @override
   _TrainingsState createState() => _TrainingsState();
@@ -251,7 +251,7 @@ class _TrainingsState extends State<Trainings> {
                     scrollDirection: Axis.horizontal,
                     controller: ScrollController(),
                     child: DataTable(
-                      columnSpacing: 180,
+                      columnSpacing: 165,
                       columns: const <DataColumn>[
                         DataColumn(
                           label: Text('Trainings Name',

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class NgoPartners extends StatefulWidget {
@@ -18,14 +20,34 @@ class _NgoPartnersState extends State<NgoPartners> {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade300, width: 2)),
       height: 400,
-      child: ListView.builder(
-          controller: ScrollController(),
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          itemCount: numItems2,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return ItemCard2(numItems2: 10);
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("ngos").snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return CircularProgressIndicator();
+            } else if (snapshot.data!.docs.isEmpty) {
+              return Center(
+                child: Text("No ngo partners",
+                    style: TextStyle(
+                        color: lightblue,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              );
+            } else {
+              return ListView.builder(
+                  controller: ScrollController(),
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: snapshot.data!.docs.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return ItemCard2(
+                      snapshot: snapshot,
+                      numItems2: 10,
+                      index: index,
+                    );
+                  });
+            }
           }),
     );
   }
@@ -35,8 +57,12 @@ class ItemCard2 extends StatelessWidget {
   const ItemCard2({
     Key? key,
     required this.numItems2,
+    required this.snapshot,
+    required this.index,
   }) : super(key: key);
+  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   final int numItems2;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +76,7 @@ class ItemCard2 extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              'Employee Name',
+              snapshot.data!.docs[index]["name"],
               style: TextStyle(
                   color: Color.fromRGBO(45, 55, 72, 1),
                   fontWeight: FontWeight.w700,
@@ -59,7 +85,7 @@ class ItemCard2 extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              'June 28, 2021',
+              snapshot.data!.docs[index]["ngoYear"],
               style: TextStyle(
                 color: Color.fromRGBO(45, 55, 72, 1),
               ),

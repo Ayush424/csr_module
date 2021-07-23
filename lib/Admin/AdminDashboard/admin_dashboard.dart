@@ -1,7 +1,8 @@
-import 'package:csr_module/User/dashboard/dashboard_csr_events.dart';
-import 'package:csr_module/User/dashboard/dashboard_ngo_partners.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'dashboard_csr_events.dart';
+import 'dashboard_ngo_partners.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);

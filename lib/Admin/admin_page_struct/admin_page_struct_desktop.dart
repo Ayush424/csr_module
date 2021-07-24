@@ -18,7 +18,8 @@ import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 
 class AdminPageStructDesktop extends StatefulWidget {
-  const AdminPageStructDesktop({Key? key}) : super(key: key);
+  final ValueChanged<String>? update;
+  const AdminPageStructDesktop({Key? key, this.update}) : super(key: key);
 
   @override
   _AdminPageStructDesktopState createState() => _AdminPageStructDesktopState();
@@ -79,13 +80,15 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainPageStruct(
-                                        role: "admin",
-                                      )),
-                            );
+                            widget.update!("user");
+                            //GlobalAdminPage.userAdmin = "user";
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => MainPageStruct(
+                            //             role: "admin",
+                            //           )),
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(45, 55, 72, 1),
@@ -99,11 +102,13 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AdminPageStruct()),
-                            );
+                            widget.update!("admin");
+                            //GlobalAdminPage.userAdmin = "admin";
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => AdminPageStruct()),
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(255, 75, 162, 1),

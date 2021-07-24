@@ -3,10 +3,18 @@ import 'package:csr_module/sign_in/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Admin/Settings/Setting1.dart';
 import 'auth/models/user.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<SingleNotifier>(
+        create: (_) => SingleNotifier(),
+      )
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

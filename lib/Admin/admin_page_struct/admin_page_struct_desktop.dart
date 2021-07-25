@@ -1,3 +1,4 @@
+import 'package:csr_module/Admin/Analytics/Beneficiary/beneficiary.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Activities/admin_activity.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
@@ -166,9 +167,13 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       ListTile(
                         title: MyText(
                           text: "Beneficiary",
-                          bold: (GlobalAdminPage.adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == 'beneficiary'),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            GlobalAdminPage.adminpage = 'beneficiary';
+                          });
+                        },
                       ),
                       ListTile(
                         title: MyText(
@@ -405,6 +410,8 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                 return Volunteer();
               } else if (GlobalAdminPage.adminpage == 'eventsandcalendar') {
                 return Calender(update: _update);
+              } else if (GlobalAdminPage.adminpage == 'beneficiary') {
+                return Beneficiary();
               } else {
                 return Container();
               }

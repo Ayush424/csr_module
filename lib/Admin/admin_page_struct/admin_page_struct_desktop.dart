@@ -4,6 +4,7 @@ import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
 import 'package:csr_module/Admin/Analytics/Events/events.dart';
 import 'package:csr_module/Admin/Analytics/Events/events_and_calender.dart';
+import 'package:csr_module/Admin/Analytics/NGO_Partner/NGO_details.dart';
 import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_partners1.dart';
 import 'package:csr_module/Admin/Analytics/Payroll_giving_collection/Payroll.dart';
 import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteer.dart';
@@ -33,9 +34,9 @@ class AdminPageStructDesktop extends StatefulWidget {
 }
 
 class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
-  void _update(String mainpage) {
+  void _update(String adminpage) {
     setState(() {
-      GlobalAdminPage.adminpage = mainpage;
+      GlobalAdminPage.adminpage = adminpage;
     });
   }
 
@@ -381,7 +382,7 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
               if (GlobalAdminPage.adminpage == 'adminDashboard') {
                 return AdminDashboard();
               } else if (GlobalAdminPage.adminpage == 'ngoPartner') {
-                return NgoPartner();
+                return NgoPartner(update: _update);
               } else if (GlobalAdminPage.adminpage == 'categories') {
                 return Categories();
               } else if (GlobalAdminPage.adminpage == 'activities') {
@@ -412,6 +413,8 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                 return Calender(update: _update);
               } else if (GlobalAdminPage.adminpage == 'beneficiary') {
                 return Beneficiary();
+              } else if (GlobalAdminPage.adminpage == 'ngoDetails') {
+                return partners(update: _update);
               } else {
                 return Container();
               }

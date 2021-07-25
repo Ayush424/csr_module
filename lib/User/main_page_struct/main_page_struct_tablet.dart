@@ -15,7 +15,10 @@ import 'package:csr_module/User/dashboard/dashboard.dart';
 import '../homepage/homepage_structure.dart';
 
 class MainPageStructTablet extends StatefulWidget {
-  const MainPageStructTablet({Key? key}) : super(key: key);
+  final ValueChanged<String>? update;
+  final String role;
+  const MainPageStructTablet({Key? key, this.update, required this.role})
+      : super(key: key);
 
   @override
   _MainPageStructTabletState createState() => _MainPageStructTabletState();
@@ -63,14 +66,8 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
           ),
         ],
         leading: IconButton(
-          tooltip: 'Admin portal for now',
           icon: Icon(Icons.air_rounded),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AdminPageStructTablet()),
-            );
-          },
+          onPressed: () {},
         ),
         title: const Text(
           "CSR Management",
@@ -118,6 +115,48 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                           ],
                         );
                       }),
+                  widget.role == "admin"
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: 18.0),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Wrap(
+                              runSpacing: 10,
+                              spacing: 20,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    widget.update!("user");
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(45, 55, 72, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      )),
+                                  child: Text(
+                                    "Main Panel",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    widget.update!("admin");
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(255, 75, 162, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      )),
+                                  child: Text(
+                                    "Control Panel",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container(),
                   ListTile(
                     leading: const MyIcon(icon: Icons.assessment_outlined),
                     title: Transform(

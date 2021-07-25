@@ -22,7 +22,10 @@ class _UserAdminState extends State<UserAdmin> {
     if (GlobalAdminPage.userAdmin == "admin") {
       return AdminPageStruct(update: _update);
     } else {
-      return MainPageStruct(role: "admin");
+      return MainPageStruct(
+        role: "admin",
+        updateAdmin: _update,
+      );
     }
   }
 }

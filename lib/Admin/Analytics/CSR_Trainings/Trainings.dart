@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -109,7 +110,7 @@ class _TrainingsState extends State<Trainings> {
                       child: Column(
                         children: [
                           Text(
-                            "Training Names",
+                            "Training Name",
                             style: TextStyle(
                               color: Color.fromRGBO(45, 55, 72, 1),
                               decoration: TextDecoration.none,
@@ -203,8 +204,38 @@ class _TrainingsState extends State<Trainings> {
                         ],
                       ),
                     ),
+                    Container(
+                      width: 200,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Training id",
+                            style: TextStyle(
+                              color: Color.fromRGBO(45, 55, 72, 1),
+                              decoration: TextDecoration.none,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: "Enter Unique id",
+                                border: OutlineInputBorder(),
+                                // contentPadding: EdgeInsets.all(10)
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 20),
                       child: ElevatedButton.icon(
                         icon: Icon(
                           Icons.add,
@@ -250,77 +281,112 @@ class _TrainingsState extends State<Trainings> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     controller: ScrollController(),
-                    child: DataTable(
-                      columnSpacing: 165,
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text('Trainings Name',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                        DataColumn(
-                          label: Text('Duration',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                        DataColumn(
-                          label: Text('Starting Date',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                        DataColumn(
-                          label: Text('Employee Count',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                        DataColumn(
-                          label: Text('Action',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                              )),
-                        ),
-                      ],
-                      rows: List<DataRow>.generate(
-                        numItems,
-                        (int index) => DataRow(
-                          color: MaterialStateProperty.resolveWith<Color?>(
-                              (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.selected)) {
-                              return Color.fromARGB(255, 237, 242, 247)
-                                  .withOpacity(0.08);
-                            }
-                            if (index.isEven) {
-                              return Color.fromARGB(255, 237, 242, 247);
-                            }
-                            return null;
-                          }),
-                          cells: <DataCell>[
-                            DataCell(Text('abc')),
-                            DataCell(Text('xyz')),
-                            DataCell(Text('xyz')),
-                            DataCell(Text('xyz')),
-                            DataCell(
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      const Color.fromRGBO(45, 55, 72, 1)),
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("trainings")
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.data!.docs.length == 0) {
+                            return Text("no trainings added");
+                          } else {
+                            return DataTable(
+                              columnSpacing: 165,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text('Trainings Name',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
                                 ),
-                                child: Text('View more'),
-                                onPressed: () {
-                                  setState(() {
-                                    details = true;
-                                  });
-                                },
+                                DataColumn(
+                                  label: Text('Duration',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Starting Date',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Training id',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Action',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                              ],
+                              rows: List<DataRow>.generate(
+                                snapshot.data!.docs.length,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Text(
+                                        snapshot.data!.docs[index]["name"])),
+                                    DataCell(Text(snapshot
+                                            .data!.docs[index]["duration"]
+                                            .toString() +
+                                        " hours")),
+                                    DataCell(Text(snapshot
+                                            .data!.docs[index]["startDate"]
+                                            .toDate()
+                                            .day
+                                            .toString() +
+                                        "/" +
+                                        snapshot.data!.docs[index]["startDate"]
+                                            .toDate()
+                                            .month
+                                            .toString() +
+                                        "/" +
+                                        snapshot.data!.docs[index]["startDate"]
+                                            .toDate()
+                                            .year
+                                            .toString())),
+                                    DataCell(
+                                        Text(snapshot.data!.docs[index]["id"])),
+                                    DataCell(
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  const Color.fromRGBO(
+                                                      45, 55, 72, 1)),
+                                        ),
+                                        child: Text('View more'),
+                                        onPressed: () {
+                                          setState(() {
+                                            details = true;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                            );
+                          }
+                        }),
                   ),
                 ),
               ),

@@ -95,7 +95,13 @@ class _HomeProfileState extends State<HomeProfile> {
         stream: collection.doc(_authService.returnCurrentUserid()).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null)
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SizedBox(
+                height: 50,
+                width: 50,
+                child: CircularProgressIndicator(),
+              ),
+            );
           return Padding(
             padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
             child: SizedBox(

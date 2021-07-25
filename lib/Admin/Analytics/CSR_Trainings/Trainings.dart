@@ -287,7 +287,13 @@ class _TrainingsState extends State<Trainings> {
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (snapshot.data == null) {
-                            return CircularProgressIndicator();
+                            return Center(
+                              child: SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
                           } else if (snapshot.data!.docs.length == 0) {
                             return Text("no trainings added");
                           } else {

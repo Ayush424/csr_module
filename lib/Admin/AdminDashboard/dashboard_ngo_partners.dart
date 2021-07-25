@@ -24,7 +24,13 @@ class _NgoPartnersState extends State<NgoPartners> {
           stream: FirebaseFirestore.instance.collection("ngos").snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
-              return CircularProgressIndicator();
+              return Center(
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: CircularProgressIndicator(),
+                ),
+              );
             } else if (snapshot.data!.docs.isEmpty) {
               return Center(
                 child: Text("No ngo partners",

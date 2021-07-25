@@ -23,7 +23,14 @@ class Authenticate extends StatelessWidget {
               .doc(user.uid)
               .snapshots(),
           builder: (context, snapshot) {
-            if (snapshot.data == null) return CircularProgressIndicator();
+            if (snapshot.data == null)
+              return Center(
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: CircularProgressIndicator(),
+                ),
+              );
             if (snapshot.data!["role"] == "admin") {
               return UserAdmin();
             } else {

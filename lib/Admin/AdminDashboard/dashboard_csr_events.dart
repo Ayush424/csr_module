@@ -24,7 +24,14 @@ class _CsrEventsState extends State<CsrEvents> {
           stream: FirebaseFirestore.instance.collection('events').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
-              return CircularProgressIndicator();
+              return Center(
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+              ;
             } else if (snapshot.data!.docs.isEmpty) {
               return Center(
                 child: Text(

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Admin/admin_page_struct/admin_page_struct.dart';
+import 'package:csr_module/Admin/admin_page_struct/admin_user_manager.dart';
 import 'package:csr_module/User/main_page_struct/main_page_struct.dart';
 import 'package:csr_module/auth/models/user.dart';
 
@@ -24,7 +25,7 @@ class Authenticate extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.data == null) return CircularProgressIndicator();
             if (snapshot.data!["role"] == "admin") {
-              return AdminPageStruct();
+              return UserAdmin();
             } else {
               return MainPageStruct(role: "user");
             }

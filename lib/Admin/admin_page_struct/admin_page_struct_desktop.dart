@@ -1,3 +1,4 @@
+import 'package:csr_module/Admin/Analytics/CSR_Activities/admin_activity.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
 import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_partners1.dart';
@@ -81,14 +82,6 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                         ElevatedButton(
                           onPressed: () {
                             widget.update!("user");
-                            //GlobalAdminPage.userAdmin = "user";
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => MainPageStruct(
-                            //             role: "admin",
-                            //           )),
-                            // );
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(45, 55, 72, 1),
@@ -103,12 +96,6 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                         ElevatedButton(
                           onPressed: () {
                             widget.update!("admin");
-                            //GlobalAdminPage.userAdmin = "admin";
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => AdminPageStruct()),
-                            // );
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(255, 75, 162, 1),
@@ -366,7 +353,7 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
               } else if (GlobalAdminPage.adminpage == 'categories') {
                 return Categories();
               } else if (GlobalAdminPage.adminpage == 'activities') {
-                return Activity();
+                return ActivityAdmin();
               } else if (GlobalAdminPage.adminpage == 'trainings') {
                 return Trainings();
               } else if (GlobalAdminPage.adminpage == 'volunteeringHours') {

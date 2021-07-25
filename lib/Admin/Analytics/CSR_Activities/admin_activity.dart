@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Activity extends StatefulWidget {
-  const Activity({Key? key}) : super(key: key);
+class ActivityAdmin extends StatefulWidget {
+  const ActivityAdmin({Key? key}) : super(key: key);
 
   @override
-  _ActivityState createState() => _ActivityState();
+  _ActivityAdminState createState() => _ActivityAdminState();
 }
 
-class _ActivityState extends State<Activity> {
+class _ActivityAdminState extends State<ActivityAdmin> {
   static const int numItems = 20;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
 

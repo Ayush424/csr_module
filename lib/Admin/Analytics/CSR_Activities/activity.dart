@@ -19,6 +19,14 @@ class _ActivityState extends State<Activity> {
     '5',
   ];
   String value = items.first;
+  static final List<String> items1 = <String>[
+    'Dropdown',
+    '2',
+    '3',
+    '4',
+    '5',
+  ];
+  String value1 = items1.first;
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -174,21 +182,21 @@ class _ActivityState extends State<Activity> {
                             color: Colors.white,
                           ),
                           child: DropdownButton<String>(
-                            value: value,
-                            items: items
-                                .map((item) => DropdownMenuItem<String>(
+                            value: value1,
+                            items: items1
+                                .map((item1) => DropdownMenuItem<String>(
                                       child: Text(
-                                        item,
+                                        item1,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 10,
                                         ),
                                       ),
-                                      value: item,
+                                      value: item1,
                                     ))
                                 .toList(),
-                            onChanged: (value) => setState(() {
-                              this.value = value!;
+                            onChanged: (value1) => setState(() {
+                              this.value1 = value1!;
                             }),
                           ),
                         ),

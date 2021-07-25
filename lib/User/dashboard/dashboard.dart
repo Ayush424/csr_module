@@ -143,37 +143,99 @@ class _HomeDashboardState extends State<HomeDashboard> {
               ),
               Flexible(
                 flex: 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(237, 242, 247, 1),
-                      border:
-                          Border.all(color: Color.fromRGBO(204, 204, 204, 1))),
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    controller: ScrollController(),
-                    children: [
-                      Text(
-                        'News and Events',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontStyle: FontStyle.italic,
-                            color: Color.fromARGB(255, 42, 67, 101)),
+                child: Column(
+                  children: [
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                      margin: EdgeInsets.only(left: 20),
+                      child: ListView(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        controller: ScrollController(),
+                        children: [
+                          ListTile(
+                            title: Text(
+                              'Goals',
+                              style: TextStyle(
+                                  fontSize: 32,
+                                  color: Color.fromARGB(255, 42, 67, 101)),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 10),
+                            width: screensize.width * 0.2,
+                            margin: EdgeInsets.only(left: 20),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(237, 242, 247, 1),
+                                border: Border.all(
+                                    color: Color.fromRGBO(204, 204, 204, 1))),
+                            child: GoalSection(
+                              update: widget.update,
+                            ),
+                          ),
+                        ],
                       ),
-                      // Marquee(
-                      //   text: 'Plantation Drive on 21st july,2021'
-                      //       'consectetur adipiscing elit'
-                      //       ' Facilisis nam arcu tristique'
-                      //       ' Volutpat at sit laoreet ornare'
-                      //       ' Suspendisse dictum nibh vitae fusce'
-                      //       ' netus Ut ut sit at in lobortis leo.',
-                      //   scrollAxis: Axis.vertical,
-                      //   blankSpace: 20,
-                      //   velocity: 20,
-                      // ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 200,
+                      margin: EdgeInsets.only(left: 56, right: 18),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(237, 242, 247, 1),
+                          border: Border.all(
+                              color: Color.fromRGBO(204, 204, 204, 1))),
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListView(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        controller: ScrollController(),
+                        children: [
+                          Center(
+                            child: Text(
+                              'News and Events',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                  fontStyle: FontStyle.italic,
+                                  color: Color.fromARGB(255, 42, 67, 101)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ListTile(
+                              leading: Icon(Icons.arrow_left),
+                              title:
+                                  Text('Plantation Drive on 21st july,2021')),
+                          ListTile(
+                              leading: Icon(Icons.arrow_left),
+                              title: Text('consectetur adipiscing elit')),
+                          ListTile(
+                              leading: Icon(Icons.arrow_left),
+                              title: Text(' Facilisis nam arcu tristique')),
+                          ListTile(
+                              leading: Icon(Icons.arrow_left),
+                              title: Text(' Volutpat at sit laoreet ornare')),
+
+                          // Marquee(
+                          //   text: 'Plantation Drive on 21st july,2021'
+                          //       'consectetur adipiscing elit'
+                          //       ' Facilisis nam arcu tristique'
+                          //       ' Volutpat at sit laoreet ornare'
+                          //       ' Suspendisse dictum nibh vitae fusce'
+                          //       ' netus Ut ut sit at in lobortis leo.',
+                          //   scrollAxis: Axis.vertical,
+                          //   blankSpace: 20,
+                          //   velocity: 20,
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -366,4 +428,169 @@ class Days {
   final double volunteeringHours;
 
   Days(this.month, this.volunteeringHours);
+}
+
+class GoalSection extends StatefulWidget {
+  final ValueChanged<String>? update;
+  const GoalSection({Key? key, this.update}) : super(key: key);
+
+  @override
+  _GoalSectionState createState() => _GoalSectionState();
+}
+
+class _GoalSectionState extends State<GoalSection> {
+  int index = 0;
+  final AuthService _authService = AuthService();
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('goals')
+            .doc(_authService.returnCurrentUserid())
+            .collection('user_goals')
+            .where("completed", isEqualTo: false)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.data == null)
+            return Center(child: CircularProgressIndicator());
+          else if (snapshot.data!.docs.length > 0) {
+            return Column(
+              children: [
+                Text(
+                  snapshot.data!.docs[index]['goal'],
+                  style: TextStyle(
+                      color: Color.fromRGBO(45, 55, 72, 1),
+                      fontFamily: 'Rubik',
+                      fontSize: 24,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: snapshot.data!.docs[index]['days'],
+                      style: TextStyle(
+                          color: Color.fromRGBO(45, 55, 72, 1),
+                          fontFamily: 'Rubik',
+                          fontSize: 48,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    WidgetSpan(
+                        child: Transform.translate(
+                      offset: const Offset(2, 4),
+                      child: Text(
+                        'Days left',
+                        textScaleFactor: 0.9,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ))
+                  ])),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(snapshot.data!.docs[index]['others']),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          final id = snapshot.data!.docs[index].id;
+                          if (index == snapshot.data!.docs.length)
+                            index = 0;
+                          else
+                            index = index - 1;
+
+                          FirebaseFirestore.instance
+                              .collection('goals')
+                              .doc(_authService.returnCurrentUserid())
+                              .collection('user_goals')
+                              .doc(id)
+                              .update({'completed': true});
+                        },
+                        child: Text(
+                          'Set as Complete',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(44, 82, 130, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            if (index == snapshot.data!.docs.length - 1)
+                              index = 0;
+                            else
+                              index = index + 1;
+                          });
+                        },
+                        child: Text(
+                          'Change',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(44, 82, 130, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          } else {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: Text(
+                    'No goals set!',
+                    style: TextStyle(
+                        color: Color.fromRGBO(45, 55, 72, 1),
+                        fontFamily: 'Rubik',
+                        fontSize: 24,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () => widget.update!('myhome'),
+                    // {
+                    //   widget.
+                    //   // setState(() {
+                    //   //   GlobalValues.mainpage = 'myhome';
+                    //   // });
+                    // },
+                    child: Text(
+                      'Set goals now',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(44, 82, 130, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        });
+  }
 }

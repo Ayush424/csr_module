@@ -2,7 +2,8 @@ import 'package:csr_module/Admin/Analytics/Events/events.dart';
 import 'package:flutter/material.dart';
 
 class Calender extends StatefulWidget {
-  Calender({Key? key}) : super(key: key);
+  final ValueChanged<String>? update;
+  Calender({Key? key, this.update}) : super(key: key);
 
   @override
   _CalenderState createState() => _CalenderState();
@@ -52,12 +53,7 @@ class _CalenderState extends State<Calender> {
                       ),
                       child: Text('Back'),
                       onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Events()),
-                          );
-                        });
+                        widget.update!("calender");
                       },
                     ),
                   ],

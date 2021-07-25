@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'data.dart';
 
-class Setting1 extends StatefulWidget {
-  Setting1({Key? key}) : super(key: key);
+class SettingSecurity extends StatefulWidget {
+  SettingSecurity({Key? key}) : super(key: key);
 
   @override
-  _Setting1State createState() => _Setting1State();
+  _SettingSecurityState createState() => _SettingSecurityState();
 }
 
-class _Setting1State extends State<Setting1> {
+class _SettingSecurityState extends State<SettingSecurity> {
   static const int numItems = 20;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   static final List<String> items = <String>[

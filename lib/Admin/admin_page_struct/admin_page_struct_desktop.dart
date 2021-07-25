@@ -1,12 +1,17 @@
 import 'package:csr_module/Admin/Analytics/CSR_Activities/admin_activity.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
+import 'package:csr_module/Admin/Analytics/Events/events.dart';
+import 'package:csr_module/Admin/Analytics/Events/events_and_calender.dart';
 import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_partners1.dart';
 import 'package:csr_module/Admin/Analytics/Payroll_giving_collection/Payroll.dart';
+import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteer.dart';
 import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteering_hours.dart';
 import 'package:csr_module/Admin/News&Broadcast/broadcast_notification.dart';
 import 'package:csr_module/Admin/News&Broadcast/broadcast_publish.dart';
 import 'package:csr_module/Admin/Seller_Cart/seller_cart.dart';
+import 'package:csr_module/Admin/Settings/setting_general.dart';
+import 'package:csr_module/Admin/Settings/setting_security.dart';
 import 'package:csr_module/Admin/admin_page_struct/admin_page_struct.dart';
 import 'package:csr_module/Admin/Expense/expense.dart';
 import 'package:csr_module/Admin/admin_page_struct/static_admin_page.dart';
@@ -27,6 +32,12 @@ class AdminPageStructDesktop extends StatefulWidget {
 }
 
 class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
+  void _update(String mainpage) {
+    setState(() {
+      GlobalAdminPage.adminpage = mainpage;
+    });
+  }
+
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -231,10 +242,14 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Volunteer",
-                        bold: (GlobalAdminPage.adminpage == ''),
+                        bold: (GlobalAdminPage.adminpage == 'volunteer'),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        GlobalAdminPage.adminpage = 'volunteer';
+                      });
+                    },
                   ),
                   ListTile(
                     leading: MyIcon(icon: Icons.payment_outlined),
@@ -272,10 +287,14 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Events and Calendar",
-                        bold: (GlobalAdminPage.adminpage == ''),
+                        bold: (GlobalAdminPage.adminpage == 'calender'),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        GlobalAdminPage.adminpage = 'calender';
+                      });
+                    },
                   ),
                   ExpansionTile(
                     childrenPadding: const EdgeInsets.only(left: 40),
@@ -326,16 +345,24 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       ListTile(
                         title: MyText(
                           text: "General",
-                          bold: (GlobalAdminPage.adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == 'general'),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            GlobalAdminPage.adminpage = 'general';
+                          });
+                        },
                       ),
                       ListTile(
                         title: MyText(
                           text: "Security",
-                          bold: (GlobalAdminPage.adminpage == ''),
+                          bold: (GlobalAdminPage.adminpage == 'security'),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            GlobalAdminPage.adminpage = 'security';
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -368,6 +395,16 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                 return PayrollCollection();
               } else if (GlobalAdminPage.adminpage == 'expense') {
                 return Expense();
+              } else if (GlobalAdminPage.adminpage == 'general') {
+                return Setting();
+              } else if (GlobalAdminPage.adminpage == 'security') {
+                return SettingSecurity();
+              } else if (GlobalAdminPage.adminpage == 'calender') {
+                return EventsAdmin(update: _update);
+              } else if (GlobalAdminPage.adminpage == 'volunteer') {
+                return Volunteer();
+              } else if (GlobalAdminPage.adminpage == 'eventsandcalendar') {
+                return Calender(update: _update);
               } else {
                 return Container();
               }

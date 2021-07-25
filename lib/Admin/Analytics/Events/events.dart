@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'events_and_calender.dart';
 import 'package:intl/intl.dart';
 
-class Events extends StatefulWidget {
-  Events({Key? key}) : super(key: key);
+class EventsAdmin extends StatefulWidget {
+  final ValueChanged<String>? update;
+  EventsAdmin({Key? key, this.update}) : super(key: key);
 
   @override
-  _EventsState createState() => _EventsState();
+  _EventsAdminState createState() => _EventsAdminState();
 }
 
-class _EventsState extends State<Events> {
+class _EventsAdminState extends State<EventsAdmin> {
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   static const int numItems = 20;
   static const int Items = 3;
@@ -318,6 +319,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Event Names",
@@ -359,6 +361,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Event Date",
@@ -401,6 +404,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "NGO Partner",
@@ -442,6 +446,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Duration",
@@ -453,7 +458,8 @@ class _EventsState extends State<Events> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
                                 child: TextFormField(
                                   style: TextStyle(
                                     fontSize: 16,
@@ -471,6 +477,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Attendees Count",
@@ -482,7 +489,8 @@ class _EventsState extends State<Events> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
                                 child: TextFormField(
                                   style: TextStyle(
                                     fontSize: 16,
@@ -500,6 +508,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Event Budget",
@@ -511,7 +520,8 @@ class _EventsState extends State<Events> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
                                 child: TextFormField(
                                   style: TextStyle(
                                     fontSize: 16,
@@ -529,6 +539,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Department Incharge",
@@ -570,6 +581,7 @@ class _EventsState extends State<Events> {
                         Container(
                           width: 200,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Event Type",
@@ -659,7 +671,7 @@ class _EventsState extends State<Events> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                            columnSpacing: 170,
+                            columnSpacing: 112,
                             columns: const <DataColumn>[
                               DataColumn(
                                 label: Padding(
@@ -747,14 +759,7 @@ class _EventsState extends State<Events> {
                                       ),
                                       child: Text('View more'),
                                       onPressed: () {
-                                        setState(() {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Calender()),
-                                          );
-                                        });
+                                        widget.update!("eventsandcalendar");
                                       },
                                     ),
                                   ),

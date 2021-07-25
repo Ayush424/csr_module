@@ -3,7 +3,7 @@ import 'package:csr_module/sign_in/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Admin/Settings/Setting1.dart';
+import 'Admin/Settings/setting_security.dart';
 import 'auth/models/user.dart';
 
 void main() {

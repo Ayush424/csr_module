@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_global_count.dart';
 import 'package:flutter/material.dart';
 
 class partners extends StatefulWidget {
-  partners({Key? key}) : super(key: key);
+  final ValueChanged<String>? update;
+  partners({Key? key, this.update}) : super(key: key);
 
   @override
   _partnersState createState() => _partnersState();
@@ -27,6 +30,7 @@ class _partnersState extends State<partners> {
           child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
         child: SingleChildScrollView(
+          controller: ScrollController(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,6 +57,17 @@ class _partnersState extends State<partners> {
                   ),
                 ],
               ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                child: Text('Back'),
+                onPressed: () {
+                  widget.update!("ngoPartner");
+                  //  print(NgoGlobalCount.index);
+                },
+              ),
               Divider(
                 color: Color.fromARGB(255, 226, 232, 240),
                 thickness: 2,
@@ -63,371 +78,381 @@ class _partnersState extends State<partners> {
               Container(
                 color: Color.fromARGB(255, 237, 242, 247),
                 width: 1500,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Wrap(
-                        spacing: 300,
-                        runSpacing: 20,
-                        children: [
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Name:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("ngos")
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Wrap(
+                                spacing: 90,
+                                runSpacing: 20,
+                                children: [
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Name:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 50,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["name"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Name",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Category:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["category"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Category:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  Wrap(
+                                    spacing: 20,
+                                    children: [
+                                      Text(
+                                        "Email Id:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["Email"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Category",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Divider(
+                                    color: Colors.black26,
+                                    thickness: .5,
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 20,
-                            children: [
-                              Text(
-                                "Email Id:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Name of Contact Person:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["ngoPrimaryPerson"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Email Id",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Contact No.:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["contactNo"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.black26,
-                            thickness: .5,
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Name of Contact Person:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Address:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["Address"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Name",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Divider(
+                                    color: Colors.black26,
+                                    thickness: .5,
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Contact No.:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "MoU Start Date:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot
+                                                  .data!
+                                                  .docs[NgoGlobalCount.index]
+                                                      ["MouStartDate"]
+                                                  .toDate()
+                                                  .day
+                                                  .toString() +
+                                              "/" +
+                                              snapshot
+                                                  .data!
+                                                  .docs[NgoGlobalCount.index]
+                                                      ["MouStartDate"]
+                                                  .toDate()
+                                                  .month
+                                                  .toString() +
+                                              "/" +
+                                              snapshot
+                                                  .data!
+                                                  .docs[NgoGlobalCount.index]
+                                                      ["MouStartDate"]
+                                                  .toDate()
+                                                  .year
+                                                  .toString(),
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Number",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        " MoU End Date:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot
+                                                  .data!
+                                                  .docs[NgoGlobalCount.index]
+                                                      ["MouEndDate"]
+                                                  .toDate()
+                                                  .day
+                                                  .toString() +
+                                              "/" +
+                                              snapshot
+                                                  .data!
+                                                  .docs[NgoGlobalCount.index]
+                                                      ["MouEndDate"]
+                                                  .toDate()
+                                                  .month
+                                                  .toString() +
+                                              "/" +
+                                              snapshot
+                                                  .data!
+                                                  .docs[NgoGlobalCount.index]
+                                                      ["MouEndDate"]
+                                                  .toDate()
+                                                  .year
+                                                  .toString(),
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Address:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        " MoU File:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          //_uploadDocuments();
+                                        },
+                                        label: Text('Upload'),
+                                        icon: Icon(Icons.upload_sharp),
+                                        style: ButtonStyle(
+                                          fixedSize: MaterialStateProperty.all(
+                                              Size(150, 40)),
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color.fromRGBO(
+                                                      45, 55, 72, 1)),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Address",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Divider(
+                                    color: Colors.black26,
+                                    thickness: .5,
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.black26,
-                            thickness: .5,
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "MoU Start Date:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                  // Wrap(
+                                  //   spacing: 10,
+                                  //   children: [
+                                  //     Text(
+                                  //       "Products Offered:",
+                                  //       style: TextStyle(
+                                  //         color: Color.fromRGBO(45, 55, 72, 1),
+                                  //         decoration: TextDecoration.none,
+                                  //         fontSize: 15,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ),
+                                  //     Container(
+                                  //       height: 40,
+                                  //       width: 150,
+                                  //       child: Text(
+                                  //         "3",
+                                  //         style: TextStyle(fontSize: 15),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Website URL:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot.data!
+                                                  .docs[NgoGlobalCount.index]
+                                              ["URL"],
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Date",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                                  Wrap(
+                                    spacing: 10,
+                                    children: [
+                                      Text(
+                                        "Funds Committed:",
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(45, 55, 72, 1),
+                                          decoration: TextDecoration.none,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 150,
+                                        child: Text(
+                                          snapshot
+                                              .data!
+                                              .docs[NgoGlobalCount.index]
+                                                  ["Funds"]
+                                              .toString(),
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                " MoU End Date:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Date",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                " MoU File:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  //_uploadDocuments();
-                                },
-                                label: Text('Upload'),
-                                icon: Icon(Icons.upload_sharp),
-                                style: ButtonStyle(
-                                  fixedSize:
-                                      MaterialStateProperty.all(Size(150, 40)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Color.fromRGBO(45, 55, 72, 1)),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.black26,
-                            thickness: .5,
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Products Offered:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Offer",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Website URL:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter URL",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 10,
-                            children: [
-                              Text(
-                                "Funds Committed:",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(45, 55, 72, 1),
-                                  decoration: TextDecoration.none,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                width: 150,
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Funds",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      color: Colors.black26,
-                      thickness: .5,
-                    ),
-                  ],
-                ),
+                            ),
+                            Divider(
+                              color: Colors.black26,
+                              thickness: .5,
+                            ),
+                          ],
+                        );
+                      }
+                    }),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),

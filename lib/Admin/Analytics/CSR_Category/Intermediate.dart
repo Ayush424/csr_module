@@ -15,6 +15,7 @@ class _IntermediateState extends State<Intermediate> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 15),
       decoration: BoxDecoration(
           border: Border.all(
         color: Color.fromARGB(255, 204, 204, 204),

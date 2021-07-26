@@ -119,9 +119,15 @@ class _CategoriesState extends State<Categories>
                           child: TabBar(
                             controller: _tabController,
                             indicatorSize: TabBarIndicatorSize.label,
+                            indicatorColor: Colors.grey,
+                            labelColor: Colors.black,
+                            //onTap: ,
+
+                            unselectedLabelColor: Colors.grey,
                             indicatorWeight: 0.1,
                             isScrollable: true,
-                            labelColor: Color.fromRGBO(44, 82, 130, 1),
+
+                            //labelColor: Color.fromRGBO(44, 82, 130, 1),
                             labelStyle: TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.w400),
                             unselectedLabelStyle: TextStyle(

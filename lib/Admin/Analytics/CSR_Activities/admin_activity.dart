@@ -106,29 +106,36 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white,
-                          ),
-                          child: DropdownButton<String>(
-                            value: value,
-                            items: items
-                                .map((item) => DropdownMenuItem<String>(
-                                      child: Text(
-                                        item,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                      value: item,
-                                    ))
-                                .toList(),
-                            onChanged: (value) => setState(() {
-                              this.value = value!;
-                            }),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Container(
+                            width: 150,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.grey.shade600,
+                                )),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: value,
+                                items: items
+                                    .map((item) => DropdownMenuItem<String>(
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          value: item,
+                                        ))
+                                    .toList(),
+                                onChanged: (value) => setState(() {
+                                  this.value = value!;
+                                }),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -149,14 +156,17 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10),
-                          child: TextFormField(
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: "Enter Name",
-                              border: OutlineInputBorder(),
-                              // contentPadding: EdgeInsets.all(10)
+                          child: Container(
+                            height: 40,
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: "Enter Name",
+                                border: OutlineInputBorder(),
+                                // contentPadding: EdgeInsets.all(10)
+                              ),
                             ),
                           ),
                         ),
@@ -175,47 +185,57 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.white,
-                          ),
-                          child: DropdownButton<String>(
-                            value: value1,
-                            items: items1
-                                .map((item1) => DropdownMenuItem<String>(
-                                      child: Text(
-                                        item1,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                      value: item1,
-                                    ))
-                                .toList(),
-                            onChanged: (value1) => setState(() {
-                              this.value1 = value1!;
-                            }),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Container(
+                            width: 150,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.grey.shade400,
+                                )),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: value1,
+                                items: items1
+                                    .map((item1) => DropdownMenuItem<String>(
+                                          child: Text(
+                                            item1,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          value: item1,
+                                        ))
+                                    .toList(),
+                                onChanged: (value1) => setState(() {
+                                  this.value1 = value1!;
+                                }),
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  ElevatedButton.icon(
-                    icon: Icon(
-                      Icons.add,
-                      size: 24.0,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton.icon(
+                      icon: Icon(
+                        Icons.add,
+                        size: 24.0,
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            const Color.fromRGBO(45, 55, 72, 1)),
+                      ),
+                      label: Text('Add'),
+                      onPressed: () {
+                        setState(() {});
+                      },
                     ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          const Color.fromRGBO(45, 55, 72, 1)),
-                    ),
-                    label: Text('Add'),
-                    onPressed: () {
-                      setState(() {});
-                    },
                   ),
                 ],
               ),

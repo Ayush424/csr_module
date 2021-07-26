@@ -159,7 +159,7 @@ class _TrainingsState extends State<Trainings> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey)),
                               child: TextFormField(
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 15),
                                 textAlign: TextAlign.center,
                                 enabled: false,
                                 keyboardType: TextInputType.text,
@@ -233,22 +233,25 @@ class _TrainingsState extends State<Trainings> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 20),
-                      child: ElevatedButton.icon(
-                        icon: Icon(
-                          Icons.add,
-                          size: 24.0,
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 20),
+                        child: ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.add,
+                            size: 24.0,
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color.fromRGBO(45, 55, 72, 1)),
+                          ),
+                          label: Text('Add'),
+                          onPressed: () {
+                            setState(() {});
+                          },
                         ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(45, 55, 72, 1)),
-                        ),
-                        label: Text('Add'),
-                        onPressed: () {
-                          setState(() {});
-                        },
                       ),
                     ),
                   ],

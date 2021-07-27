@@ -130,27 +130,30 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                   child: PieChart(
                     dataMap: dataMap,
                     animationDuration: Duration(milliseconds: 800),
-                    chartLegendSpacing: 32,
-                    // chartRadius: MediaQuery.of(context).size.width / 6,
-                    // colorList: colorList,
-                    chartRadius: 180,
+                    chartLegendSpacing:
+                                    MediaQuery.of(context).size.width >= 990
+                                        ? 180
+                                        : 50,
+                    chartRadius: 190,
                     initialAngleInDegree: 0,
                     // ringStrokeWidth: 10,
                     // centerText: "HYBRID",
                     legendOptions: LegendOptions(
                       showLegendsInRow: false,
-                      legendPosition: LegendPosition.right,
+                      legendPosition: MediaQuery.of(context).size.width >= 990
+                                          ? LegendPosition.right
+                                          : LegendPosition.bottom,
                       showLegends: true,
                       legendTextStyle: TextStyle(
-                        fontSize: 20,
+                        fontSize: 24,
                         decoration: TextDecoration.none,
                         color: Color.fromARGB(255, 42, 67, 101),
                       ),
                     ),
                     chartValuesOptions: ChartValuesOptions(
-                      showChartValueBackground: true,
+                      showChartValueBackground: false,
                       showChartValues: true,
-                      showChartValuesInPercentage: false,
+                      showChartValuesInPercentage: true,
                       showChartValuesOutside: false,
                       decimalPlaces: 1,
                     ),
@@ -161,7 +164,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                 ),
                 Wrap(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    spacing: 322,
+                    spacing: 280,
                     runSpacing: 10,
                     children: [
                       Padding(
@@ -291,7 +294,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                     ? Container()
                     : Container(
                         height: 200,
-                        width: 1200,
+                        width: 1150,
                         decoration: BoxDecoration(
                             border: Border.all(
                           color: Color.fromARGB(255, 204, 204, 204),
@@ -302,7 +305,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                             scrollDirection: Axis.horizontal,
                             controller: ScrollController(),
                             child: DataTable(
-                              columnSpacing: 231,
+                              columnSpacing: 218,
                               columns: const <DataColumn>[
                                 DataColumn(
                                   label: Text('Emp code',

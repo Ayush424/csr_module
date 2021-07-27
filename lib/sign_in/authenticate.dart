@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/Admin/admin_page_struct/admin_page_struct.dart';
+
 import 'package:csr_module/Admin/admin_page_struct/admin_user_manager.dart';
 import 'package:csr_module/User/main_page_struct/main_page_struct.dart';
 import 'package:csr_module/auth/models/user.dart';

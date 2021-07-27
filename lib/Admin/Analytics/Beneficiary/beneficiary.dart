@@ -9,29 +9,9 @@ class Beneficiary extends StatefulWidget {
   _BeneficiaryState createState() => _BeneficiaryState();
 }
 
-class Item {
-  Item({
-    required this.expandedValue,
-    required this.headerValue,
-    this.isExpanded = false,
-  });
-
-  String expandedValue;
-  String headerValue;
-  bool isExpanded;
-}
-
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: 'Panel $index',
-      expandedValue: 'This is item number $index',
-    );
-  });
-}
 
 class _BeneficiaryState extends State<Beneficiary> {
-  final List<Item> _data = generateItems(8);
+  
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   TextEditingController _textFieldController1 = TextEditingController();
@@ -622,476 +602,465 @@ class _BeneficiaryState extends State<Beneficiary> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
-    return Container(
-        color: Colors.white,
-        constraints: BoxConstraints.expand(),
-        child: Padding(
-            padding: EdgeInsets.all(40),
-            child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Analytics - Beneficiary',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 42, 67, 101),
-                          fontSize: 36,
-                          decoration: TextDecoration.none),
-                    ),
-                    Divider(
-                      color: Color.fromARGB(255, 226, 232, 240),
-                      thickness: 2,
-                    ),
-                    SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        runSpacing: 10,
-                        spacing: 10,
-                        direction: Axis.horizontal,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(left: 10),
-                                primary: Colors.white,
-                                side: BorderSide(
-                                    color: Color.fromRGBO(255, 183, 75, 1))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 290,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor:
-                                              Color.fromRGBO(255, 183, 75, 1),
-                                          child: Icon(
-                                            Icons.how_to_reg,
-                                            color: Colors.white,
-                                            size: 40,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Flexible(
-                                      child: ListView(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        controller: ScrollController(),
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '   209 ',
-                                                style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        255, 183, 75, 1),
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.w900,
-                                                    fontFamily: 'Rubik'),
-                                              ),
-                                              Flexible(
-                                                  flex: 1,
-                                                  child:
-                                                      MyText(text: 'People')),
-                                            ],
-                                          ),
-                                          MyText(text: 'Benefitted so far'),
-                                        ],
+    return Scaffold(
+      body: Container(
+          color: Colors.white,
+          constraints: BoxConstraints.expand(),
+          child: Padding(
+              padding: EdgeInsets.all(40),
+              child: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Analytics - Beneficiary',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 42, 67, 101),
+                            fontSize: 36,
+                            decoration: TextDecoration.none),
+                      ),
+                      Divider(
+                        color: Color.fromARGB(255, 226, 232, 240),
+                        thickness: 2,
+                      ),
+                      SizedBox(height: 30),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Wrap(
+                          runSpacing: 10,
+                          spacing: 10,
+                          direction: Axis.horizontal,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.only(left: 10),
+                                  primary: Colors.white,
+                                  side: BorderSide(
+                                      color: Color.fromRGBO(255, 183, 75, 1))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: SizedBox(
+                                  height: 70,
+                                  width: 290,
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: CircleAvatar(
+                                            radius: 25,
+                                            backgroundColor:
+                                                Color.fromRGBO(255, 183, 75, 1),
+                                            child: Icon(
+                                              Icons.how_to_reg,
+                                              color: Colors.white,
+                                              size: 40,
+                                            )),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(left: 10),
-                                primary: Colors.white,
-                                side: BorderSide(
-                                    color: Color.fromRGBO(255, 75, 162, 1))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 290,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: CircleAvatar(
-                                          maxRadius: 25,
-                                          backgroundColor:
-                                              Color.fromRGBO(255, 75, 162, 1),
-                                          child: Icon(
-                                            Icons.attach_money,
-                                            color: Colors.white,
-                                            size: 50,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Flexible(
-                                      child: ListView(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        controller: ScrollController(),
-                                        children: [
-                                          Container(
-                                            child: Row(
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Flexible(
+                                        child: ListView(
+                                          physics: ClampingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          controller: ScrollController(),
+                                          children: [
+                                            Row(
                                               children: [
-                                                Flexible(
-                                                  flex: 2,
-                                                  child: Text(
-                                                    '255.5k ',
-                                                    style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            255, 75, 162, 1),
-                                                        fontSize: 24,
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        fontFamily: 'Rubik'),
-                                                  ),
+                                                Text(
+                                                  '   209 ',
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          255, 183, 75, 1),
+                                                      fontSize: 24,
+                                                      fontWeight: FontWeight.w900,
+                                                      fontFamily: 'Rubik'),
                                                 ),
                                                 Flexible(
                                                     flex: 1,
-                                                    child: MyText(text: 'INR')),
+                                                    child:
+                                                        MyText(text: 'People')),
                                               ],
                                             ),
-                                          ),
-                                          MyText(
-                                            text: 'Total fund collected',
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(left: 10),
-                                primary: Colors.white,
-                                side: BorderSide(
-                                    color: Color.fromRGBO(186, 18, 18, 1))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 290,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor:
-                                              Color.fromRGBO(186, 18, 18, 1),
-                                          child: Icon(
-                                            Icons.people_outlined,
-                                            color: Colors.white,
-                                            size: 40,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Flexible(
-                                      child: ListView(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        controller: ScrollController(),
-                                        children: [
-                                          Text(
-                                            '   25 ',
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    186, 18, 18, 1),
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.w900,
-                                                fontFamily: 'Rubik'),
-                                          ),
-                                          MyText(text: 'NGO Benefitted'),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 100),
-                    Text(
-                      'Beneficiary',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 42, 67, 101),
-                          fontSize: 30,
-                          decoration: TextDecoration.none),
-                    ),
-                    Divider(
-                      color: Color.fromARGB(255, 226, 232, 240),
-                      thickness: 2,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        height: 400,
-                        width: 1200,
-                        color: Color.fromARGB(25, 237, 242, 247),
-                        // decoration: BoxDecoration(
-                        //     color: Color.fromARGB(25, 237, 242, 247),
-
-                        //     border: Border.all(
-                        //       color: Color.fromARGB(25, 237, 242, 247),
-                        //     )),
-                        child: ListView(
-                          children: [
-                            Container(
-                              child: Theme(
-                                data: Theme.of(context).copyWith(
-                                  cardColor: Color.fromARGB(255, 237, 242, 247),
-                                ),
-                                child: ExpansionPanelList(
-                                  dividerColor:
-                                      Color.fromARGB(25, 237, 242, 247),
-                                  expansionCallback:
-                                      (int index, bool isExpanded) {
-                                    setState(() {
-                                      _data[index].isExpanded = !isExpanded;
-                                    });
-                                  },
-                                  children:
-                                      _data.map<ExpansionPanel>((Item item) {
-                                    return ExpansionPanel(
-                                      headerBuilder: (BuildContext context,
-                                          bool isExpanded) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15),
-                                          child: Wrap(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            spacing: 120,
-                                            runSpacing: 5,
-                                            children: [
-                                              Text(
-                                                'Beneficiary Name',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Text(
-                                                'Beneficiary Code',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24),
-                                              ),
-                                              Text(
-                                                'NGO Name',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24),
-                                              ),
-                                              Text(
-                                                'Funds Allocated',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      body: Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 20,
+                                            MyText(text: 'Benefitted so far'),
+                                          ],
                                         ),
-                                        child: Wrap(
-                                          // alignment: WrapAlignment.start,
-                                          spacing: 50,
-                                          runSpacing: 10,
-                                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.only(left: 10),
+                                  primary: Colors.white,
+                                  side: BorderSide(
+                                      color: Color.fromRGBO(255, 75, 162, 1))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: SizedBox(
+                                  height: 70,
+                                  width: 290,
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: CircleAvatar(
+                                            maxRadius: 25,
+                                            backgroundColor:
+                                                Color.fromRGBO(255, 75, 162, 1),
+                                            child: Icon(
+                                              Icons.attach_money,
+                                              color: Colors.white,
+                                              size: 50,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Flexible(
+                                        child: ListView(
+                                          physics: ClampingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          controller: ScrollController(),
                                           children: [
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Gender',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Male',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
+                                            Container(
+                                              child: Row(
+                                                children: [
+                                                  Flexible(
+                                                    flex: 2,
+                                                    child: Text(
+                                                      '255.5k ',
+                                                      style: TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              255, 75, 162, 1),
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontFamily: 'Rubik'),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                  Flexible(
+                                                      flex: 1,
+                                                      child: MyText(text: 'INR')),
+                                                ],
+                                              ),
                                             ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Address',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Address',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Support Start Date',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Date',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Support End Date',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Date',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Aadhar Number',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Number',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Others',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Other Notes',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
+                                            MyText(
+                                              text: 'Total fund collected',
                                             ),
                                           ],
                                         ),
                                       ),
-                                      isExpanded: item.isExpanded,
-                                    );
-                                  }).toList(),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            )
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.only(left: 10),
+                                  primary: Colors.white,
+                                  side: BorderSide(
+                                      color: Color.fromRGBO(186, 18, 18, 1))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: SizedBox(
+                                  height: 70,
+                                  width: 290,
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: CircleAvatar(
+                                            radius: 25,
+                                            backgroundColor:
+                                                Color.fromRGBO(186, 18, 18, 1),
+                                            child: Icon(
+                                              Icons.people_outlined,
+                                              color: Colors.white,
+                                              size: 40,
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Flexible(
+                                        child: ListView(
+                                          physics: ClampingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          controller: ScrollController(),
+                                          children: [
+                                            Text(
+                                              '   25 ',
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      186, 18, 18, 1),
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.w900,
+                                                  fontFamily: 'Rubik'),
+                                            ),
+                                            MyText(text: 'NGO Benefitted'),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
-                        )),
-                    SizedBox(height: 50),
-                    Center(
-                      child: ElevatedButton.icon(
-                        icon: Icon(
-                          Icons.add,
-                          size: 24.0,
                         ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(45, 55, 72, 1)),
-                        ),
-                        label: Text('Add New'),
-                        onPressed: () {
-                          _displayDialog(context);
-                        },
                       ),
-                    ),
-                  ]),
-            )));
+                      SizedBox(height: 100),
+                      Text(
+                        'Beneficiary',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 42, 67, 101),
+                            fontSize: 30,
+                            decoration: TextDecoration.none),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(
+                        color: Color.fromARGB(255, 226, 232, 240),
+                        thickness: 2,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                          height: 400,
+                          width: 1150,
+                          color: Color.fromARGB(25, 237, 242, 247),
+                          child: ListView.builder(
+                            itemCount: numItems,
+                            itemBuilder: (context, index){
+                            return ExpansionTile(
+                              childrenPadding: EdgeInsetsDirectional.only(bottom: 5, top:10),
+                              tilePadding:EdgeInsetsDirectional.only(bottom: 15),
+                              title:
+                            Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: Wrap(
+                                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              spacing: 120,
+                                              runSpacing: 9,
+                                              children: [
+                                                Text(
+                                                  'Beneficiary Name',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Beneficiary Code',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24),
+                                                ),
+                                                Text(
+                                                  'NGO Name',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24),
+                                                ),
+                                                Text(
+                                                  'Funds Allocated',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          children:[
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 15),
+                                              child: Wrap(
+                                          // alignment: WrapAlignment.start,
+                                          spacing: 270,
+                                          runSpacing: 10,
+                                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    'Gender',
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 42, 67, 101),
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    'Male',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    'Address',
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 42, 67, 101),
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    'Address',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    'Support Start Date',
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 42, 67, 101),
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    'Date',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                          ]
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 15),
+                                              child: Wrap(
+                                                 spacing: 270,
+                                          runSpacing: 10,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Support End Date',
+                                                        style: TextStyle(
+                                                            color: Color.fromARGB(
+                                                                255, 42, 67, 101),
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight.bold),
+                                                      ),
+                                                      Text(
+                                                        'Date',
+                                                        style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 42, 67, 101),
+                                                          fontSize: 24,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                               
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    'Aadhar Number',
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 42, 67, 101),
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    'Number',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    'Others',
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 42, 67, 101),
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    'Other Notes',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                               ],
+                                              ),
+                                            ),
+                                          ]
+                            );
+                          }),
+                          ),
+                      SizedBox(height: 50),
+                      Center(
+                        child: ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.add,
+                            size: 24.0,
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color.fromRGBO(45, 55, 72, 1)),
+                          ),
+                          label: Text('Add New'),
+                          onPressed: () {
+                            _displayDialog(context);
+                          },
+                        ),
+                      ),
+                    ]),
+              ))),
+    );
   }
 }
 

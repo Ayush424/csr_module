@@ -70,7 +70,7 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
           onPressed: () {},
         ),
         title: const Text(
-          "CSR Management",
+          "CSR Management System",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color.fromARGB(255, 45, 55, 72),

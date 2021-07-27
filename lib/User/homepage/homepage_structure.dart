@@ -98,7 +98,7 @@ class _MyHomeState extends State<HomePageStruct> {
                         SizedBox(height: 5),
                         ElevatedButton(
                           style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(Size(100, 40)),
+                            fixedSize: MaterialStateProperty.all(Size(160, 40)),
                             backgroundColor:
                                 GlobalHomePage.homepage == 'payroll'
                                     ? MaterialStateProperty.all(Colors.white)
@@ -111,7 +111,7 @@ class _MyHomeState extends State<HomePageStruct> {
                             });
                           },
                           child: const Text(
-                            'Payroll',
+                            'Payroll Giving',
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ), //Payroll

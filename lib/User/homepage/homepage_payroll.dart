@@ -87,7 +87,7 @@ class _HomePayrollState extends State<HomePayroll> {
                                       DataTable(
                                         columns: const <DataColumn>[
                                           DataColumn(
-                                            label: Text('Ngo Name',
+                                            label: Text('NGO name',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Color.fromARGB(

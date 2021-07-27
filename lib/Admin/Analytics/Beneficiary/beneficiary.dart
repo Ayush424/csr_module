@@ -34,9 +34,9 @@ class _BeneficiaryState extends State<Beneficiary> {
   final List<Item> _data = generateItems(8);
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-TextEditingController _textFieldController1 = TextEditingController();
+  TextEditingController _textFieldController1 = TextEditingController();
 
-late DateTime date;
+  late DateTime date;
   final _textFieldController2 = TextEditingController();
   final _textFieldController3 = TextEditingController();
   final _textFieldController4 = TextEditingController();
@@ -64,12 +64,10 @@ late DateTime date;
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
     setState(() {
-      if(picked==null){
-        selectedDate=DateTime.now();
-      
-      }
-      else 
-      selectedDate=picked;
+      if (picked == null) {
+        selectedDate = DateTime.now();
+      } else
+        selectedDate = picked;
       _dateController1.text = DateFormat.yMd().format(selectedDate);
     });
   }
@@ -82,12 +80,10 @@ late DateTime date;
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
     setState(() {
-      if(picked==null){
-        selectedDate=DateTime.now();
-      
-      }
-      else 
-      selectedDate=picked;
+      if (picked == null) {
+        selectedDate = DateTime.now();
+      } else
+        selectedDate = picked;
       _dateController2.text = DateFormat.yMd().format(selectedDate);
     });
   }
@@ -112,6 +108,7 @@ late DateTime date;
 
               // decoration: BoxDecoration(color: Color.fromARGB(255,237, 242, 247)) ,
               child: SingleChildScrollView(
+                controller: ScrollController(),
                 scrollDirection: Axis.horizontal,
                 child: Form(
                   key: _formKey,
@@ -322,7 +319,6 @@ late DateTime date;
                                                   EdgeInsets.only(top: 0.0)),
                                         ),
                                       ),
-                                     
                                     )
                                   ],
                                 ),
@@ -620,6 +616,7 @@ late DateTime date;
           );
         });
   }
+
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -862,7 +859,7 @@ late DateTime date;
                         color: Color.fromARGB(25, 237, 242, 247),
                         // decoration: BoxDecoration(
                         //     color: Color.fromARGB(25, 237, 242, 247),
-                            
+
                         //     border: Border.all(
                         //       color: Color.fromARGB(25, 237, 242, 247),
                         //     )),
@@ -870,158 +867,229 @@ late DateTime date;
                           children: [
                             Container(
                               child: Theme(
-            data: Theme.of(context).copyWith(cardColor: Color.fromARGB(255, 237, 242, 247),),
-                              child: ExpansionPanelList(
-                                dividerColor: Color.fromARGB(25,237, 242, 247),
-                                expansionCallback: (int index, bool isExpanded) {
-                                  setState(() {
-                                    _data[index].isExpanded = !isExpanded;
-                                  });
-                                },
-                                children: _data.map<ExpansionPanel>((Item item) {
-                                  return ExpansionPanel(
-                                    headerBuilder:
-                                        (BuildContext context, bool isExpanded) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(left:15),
+                                data: Theme.of(context).copyWith(
+                                  cardColor: Color.fromARGB(255, 237, 242, 247),
+                                ),
+                                child: ExpansionPanelList(
+                                  dividerColor:
+                                      Color.fromARGB(25, 237, 242, 247),
+                                  expansionCallback:
+                                      (int index, bool isExpanded) {
+                                    setState(() {
+                                      _data[index].isExpanded = !isExpanded;
+                                    });
+                                  },
+                                  children:
+                                      _data.map<ExpansionPanel>((Item item) {
+                                    return ExpansionPanel(
+                                      headerBuilder: (BuildContext context,
+                                          bool isExpanded) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Wrap(
+                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            spacing: 120,
+                                            runSpacing: 5,
+                                            children: [
+                                              Text(
+                                                'Beneficiary Name',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                'Beneficiary Code',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                'NGO Name',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24),
+                                              ),
+                                              Text(
+                                                'Funds Allocated',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      body: Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 20,
+                                        ),
                                         child: Wrap(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        spacing: 120,
-                                        runSpacing: 5,
-                                        children: [
-                                        Text('Beneficiary Name',
-                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),),
-                                        Text('Beneficiary Code',
-                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24),),
-                                        Text('NGO Name',
-                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24),),
-                                        Text('Funds Allocated',
-                                        style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24),),
-                                    ],),
-                                      );
-                                    },
-                                    body: Padding(
-                                      padding: const EdgeInsets.only(bottom: 20, ),
-                                      child: Wrap(
-                                      // alignment: WrapAlignment.start,
-                                        spacing: 50,
-                                        runSpacing: 10,
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                        Column(
+                                          // alignment: WrapAlignment.start,
+                                          spacing: 50,
+                                          runSpacing: 10,
+                                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('Gender',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Gender',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Male',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                           Text('Male',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        
-                                        ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Address',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Address',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Support Start Date',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Date',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Support End Date',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Date',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Aadhar Number',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Number',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  'Others',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  'Other Notes',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 42, 67, 101),
+                                                    fontSize: 24,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        Column(
-                                          children: [
-                                            Text('Address',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                            ),
-                                           Text('Address',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,),
-                                           )
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text('Support Start Date',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                            ),
-                                           Text('Date',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,),
-                                           )
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text('Support End Date',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                            ),
-                                           Text('Date',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,),
-                                           )
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text('Aadhar Number',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                            ),
-                                           Text('Number',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,),
-                                           )
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text('Others',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                            ),
-                                           Text('Other Notes',
-                                            style: TextStyle(color: Color.fromARGB(255,42, 67, 101),
-                                        fontSize: 24,),
-                                           )
-                                          ],
-                                        ),
- 
-                                      ],),
-                                    ),
-                                   
-                                    isExpanded: item.isExpanded,
-                                  );
-                                }).toList(),
+                                      ),
+                                      isExpanded: item.isExpanded,
+                                    );
+                                  }).toList(),
+                                ),
                               ),
-                            ),
                             )
                           ],
                         )),
-                        SizedBox(height: 50),
-                Center(
-                  child: ElevatedButton.icon(
-                    icon: Icon(
-                      Icons.add,
-                      size: 24.0,
+                    SizedBox(height: 50),
+                    Center(
+                      child: ElevatedButton.icon(
+                        icon: Icon(
+                          Icons.add,
+                          size: 24.0,
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color.fromRGBO(45, 55, 72, 1)),
+                        ),
+                        label: Text('Add New'),
+                        onPressed: () {
+                          _displayDialog(context);
+                        },
+                      ),
                     ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          const Color.fromRGBO(45, 55, 72, 1)),
-                    ),
-                    label: Text('Add New'),
-                    onPressed: () {
-                      _displayDialog(context);
-                    },
-                  ),
-                ),
                   ]),
             )));
   }

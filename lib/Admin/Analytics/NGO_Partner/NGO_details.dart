@@ -1,16 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_global_count.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class partners extends StatefulWidget {
+class Partners extends StatefulWidget {
   final ValueChanged<String>? update;
-  partners({Key? key, this.update}) : super(key: key);
+  const Partners({Key? key, this.update}) : super(key: key);
 
   @override
-  _partnersState createState() => _partnersState();
+  _PartnersState createState() => _PartnersState();
 }
 
-class _partnersState extends State<partners> {
+class _PartnersState extends State<Partners> {
+  int ngoNumber = NgoGlobalCount.index;
   bool add = false;
   static const int numItems = 6;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
@@ -113,8 +115,7 @@ class _partnersState extends State<partners> {
                                         height: 50,
                                         width: 150,
                                         child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
+                                          snapshot.data!.docs[ngoNumber]
                                               ["name"],
                                           style: TextStyle(fontSize: 15),
                                         ),
@@ -464,23 +465,40 @@ class _partnersState extends State<partners> {
                     decoration: TextDecoration.none,
                   )),
               SizedBox(
-                height: 200,
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                  controller: _controllerOne,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ListView.builder(
-                        controller: _controllerOne,
-                        itemCount: numItems,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                              onTap: () {}, child: ItemCard());
-                        }),
-                  ),
-                ),
+                height: 250,
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("ngos")
+                        .doc(NgoGlobalCount.docId)
+                        .collection("Products")
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.data!.docs.isEmpty) {
+                        return Text(
+                          'no products to show',
+                          style: TextStyle(fontSize: 20, color: lightblue),
+                        );
+                      } else {
+                        return Scrollbar(
+                          isAlwaysShown: true,
+                          controller: _controllerOne,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ListView.builder(
+                                controller: _controllerOne,
+                                itemCount: snapshot.data!.docs.length,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return ItemCard(
+                                      data: snapshot.data!.docs[index]);
+                                }),
+                          ),
+                        );
+                      }
+                    }),
               ),
               Center(
                 child: Padding(
@@ -508,7 +526,7 @@ class _partnersState extends State<partners> {
                   ? Center(
                       child: Container(
                         height: 250,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Color.fromARGB(255, 237, 242, 247),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
@@ -783,18 +801,20 @@ class _partnersState extends State<partners> {
 }
 
 class ItemCard extends StatelessWidget {
+  final QueryDocumentSnapshot<Object?> data;
   const ItemCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 186,
-      width: 340,
+      height: 250,
+      width: 400,
       margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100],
+        color: teal,
         border: Border.all(color: Color.fromARGB(255, 204, 204, 204), width: 1),
         // image: DecorationImage(image: AssetImage('product.jpg'),
         // ),
@@ -807,48 +827,60 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'product.jpg',
-                  width: 121,
-                  height: 81,
+                SizedBox(
+                  height: 70,
+                  width: 140,
+                  child: Image(
+                    image: NetworkImage(
+                      data['imgUrl'],
+                    ),
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Column(
                   children: [
-                    Text(
-                      'Product Name',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 45, 55, 72),
-                          fontSize: 24,
-                          decoration: TextDecoration.none,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 230,
+                      child: Center(
+                        child: Text(
+                          data['product name'],
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 45, 55, 72),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text(
-                      '\$4.99',
+                      '₹' + data['product price'].toString(),
                       style: TextStyle(
                           color: Color.fromARGB(255, 45, 55, 72),
                           fontSize: 24,
-                          decoration: TextDecoration.none,
                           fontWeight: FontWeight.bold),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                   ],
-                )
+                ),
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Text(
-              'Product Description lorem ipsum',
+              data['description'],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  fontSize: 18,
-                  decoration: TextDecoration.none,
-                  color: Color.fromARGB(255, 113, 128, 150)),
+                  fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
             ),
           ],
         ),

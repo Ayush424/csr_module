@@ -1,4 +1,5 @@
 import 'package:csr_module/Admin/Analytics/Beneficiary/beneficiary.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Activities/admin_activity.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
@@ -16,9 +17,7 @@ import 'package:csr_module/Admin/Settings/setting_security.dart';
 import 'package:csr_module/Admin/admin_page_struct/admin_page_struct.dart';
 import 'package:csr_module/Admin/Expense/expense.dart';
 import 'package:csr_module/Admin/admin_page_struct/static_admin_page.dart';
-import 'package:csr_module/User/activity/activity.dart';
-import 'package:csr_module/User/main_page_struct/main_page_struct.dart';
-
+import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:csr_module/Admin/AdminDashboard/admin_dashboard.dart';
 
 import 'package:flutter/material.dart';
@@ -27,7 +26,6 @@ class AdminPageStructTablet extends StatefulWidget {
   final ValueChanged<String>? update;
 
   const AdminPageStructTablet({Key? key, this.update}) : super(key: key);
-
   @override
   _AdminPageStructTabletState createState() => _AdminPageStructTabletState();
 }
@@ -39,6 +37,8 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
     });
   }
 
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,32 +81,39 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                   controller: ScrollController(),
                   padding: EdgeInsets.zero,
                   children: <Widget>[
-                    UserAccountsDrawerHeader(
-                      accountName: Text(
-                        'Employee Name',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      accountEmail: Text('Employee Profession'),
-                      currentAccountPicture: Icon(
-                        Icons.account_circle_rounded,
-                        size: 75,
-                        color: Colors.white70,
-                      ),
-                      otherAccountsPictures: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.logout,
-                            color: Colors.white70,
-                          ),
-                          onPressed: () //async
-                              {
-                            //  await _auth.signOut();
-                          },
-                          tooltip: 'Logout',
-                        ),
-                      ],
-                    ),
+                    StreamBuilder<DocumentSnapshot>(
+                        stream: _firebaseFirestore
+                            .collection('Users')
+                            .doc(_auth.returnCurrentUserid())
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return CircularProgressIndicator();
+                          }
+                          return UserAccountsDrawerHeader(
+                            accountName: Text(
+                              snapshot.data!['displayName'],
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            accountEmail: Text(snapshot.data!['department']),
+                            currentAccountPicture: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(snapshot.data!['imgUrl'])),
+                            otherAccountsPictures: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.logout,
+                                  color: Colors.white70,
+                                ),
+                                onPressed: () async {
+                                  await _auth.signOut();
+                                },
+                                tooltip: 'Logout',
+                              ),
+                            ],
+                          );
+                        }),
                     SizedBox(
                       height: 20,
                     ),
@@ -245,13 +252,6 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
                               GlobalAdminPage.adminpage = 'payrollCollection';
                             });
                           },
-                        ),
-                        ListTile(
-                          title: MyText(
-                            text: "Products Sale",
-                            bold: (GlobalAdminPage.adminpage == ''),
-                          ),
-                          onTap: () {},
                         ),
                         ListTile(
                           title: MyText(

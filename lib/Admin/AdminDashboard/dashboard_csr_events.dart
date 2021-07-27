@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/Theme/colors.dart';
+
 import 'package:flutter/material.dart';
 
 class CsrEvents extends StatefulWidget {
@@ -17,97 +17,118 @@ class _CsrEventsState extends State<CsrEvents> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 15),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300, width: 2)),
       height: 400,
-      child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('events').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return Center(
-                child: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: CircularProgressIndicator(),
-                ),
-              );
-              ;
-            } else if (snapshot.data!.docs.isEmpty) {
-              return Center(
-                child: Text(
-                    "No events added try adding some in the events and calendar section",
-                    style: TextStyle(
-                        color: lightblue,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-              );
-            } else {
-              return ListView.builder(
-                  controller: ScrollController(),
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: snapshot.data!.docs.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return ItemCard(
-                      snapshot: snapshot,
-                      index: index,
-                      numItems: 10,
+      decoration: BoxDecoration(
+          border: Border.all(
+        color: Color.fromARGB(255, 204, 204, 204),
+        width: 1,
+      )),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            StreamBuilder<QuerySnapshot>(
+                stream:
+                    FirebaseFirestore.instance.collection('events').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.data!.docs.length == 0) {
+                    return SizedBox(
+                      height: 50,
+                      child: Center(
+                          child: Text('No Event is scheduled for now.',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 42, 67, 101),
+                                  fontWeight: FontWeight.bold))),
                     );
-                  });
-            }
-          }),
-    );
-  }
-}
-
-class ItemCard extends StatelessWidget {
-  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
-  final int index;
-  const ItemCard({
-    Key? key,
-    required this.numItems,
-    required this.snapshot,
-    required this.index,
-  }) : super(key: key);
-  final int numItems;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration:
-          BoxDecoration(border: Border.all(color: Colors.grey.shade300)),
-      height: 35,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Flexible(
-            child: Text(
-              snapshot.data!.docs[index]["name"],
-              style: TextStyle(
-                  color: Color.fromRGBO(45, 55, 72, 1),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18),
-            ),
-          ),
-          Flexible(
-            child: Text(
-              snapshot.data!.docs[index]["startdate"].toDate().day.toString() +
-                  '-' +
-                  snapshot.data!.docs[index]["startdate"]
-                      .toDate()
-                      .month
-                      .toString() +
-                  '-' +
-                  snapshot.data!.docs[index]["startdate"]
-                      .toDate()
-                      .year
-                      .toString(),
-              style: TextStyle(
-                color: Color.fromRGBO(45, 55, 72, 1),
-              ),
-            ),
-          ),
-        ],
+                  } else {
+                    return DataTable(
+                      columns: const <DataColumn>[
+                        DataColumn(
+                          label: Text('Event Name',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        DataColumn(
+                          label: Text('Start Date',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        DataColumn(
+                          label: Text('End Date',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                      rows: List<DataRow>.generate(
+                        snapshot.data!.docs.length,
+                        (int index) => DataRow(
+                          color: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return Color.fromARGB(255, 237, 242, 247)
+                                  .withOpacity(0.08);
+                            }
+                            if (index.isEven) {
+                              return Color.fromARGB(255, 237, 242, 247);
+                            }
+                            return null;
+                          }),
+                          cells: <DataCell>[
+                            DataCell(Text(
+                              snapshot.data!.docs[index]['name'],
+                              style: TextStyle(fontSize: 20),
+                            )),
+                            DataCell(
+                              Text(
+                                snapshot.data!.docs[index]["startdate"]
+                                        .toDate()
+                                        .day
+                                        .toString() +
+                                    '-' +
+                                    snapshot.data!.docs[index]["startdate"]
+                                        .toDate()
+                                        .month
+                                        .toString() +
+                                    '-' +
+                                    snapshot.data!.docs[index]["startdate"]
+                                        .toDate()
+                                        .year
+                                        .toString(),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                snapshot.data!.docs[index]["endDate"]
+                                        .toDate()
+                                        .day
+                                        .toString() +
+                                    '-' +
+                                    snapshot.data!.docs[index]["endDate"]
+                                        .toDate()
+                                        .month
+                                        .toString() +
+                                    '-' +
+                                    snapshot.data!.docs[index]["endDate"]
+                                        .toDate()
+                                        .year
+                                        .toString(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //  sortColumnIndex: count_newbie = snapshot.data!.docs.length,
+                    );
+                  }
+                }),
+          ],
+        ),
       ),
     );
   }

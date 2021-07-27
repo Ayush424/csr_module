@@ -16,6 +16,7 @@ class _NewbieState extends State<Newbie> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 15),
       decoration: BoxDecoration(
           border: Border.all(
         color: Color.fromARGB(255, 204, 204, 204),
@@ -51,6 +52,7 @@ class _NewbieState extends State<Newbie> {
                           label: Text('Emp',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 44, 82, 130),
+                                fontWeight: FontWeight.bold,
                               )),
                         ),
                         DataColumn(
@@ -59,6 +61,7 @@ class _NewbieState extends State<Newbie> {
                             child: Text('Name',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold,
                                 )),
                           ),
                         ),
@@ -68,6 +71,7 @@ class _NewbieState extends State<Newbie> {
                             child: Text('Department',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold,
                                 )),
                           ),
                         ),

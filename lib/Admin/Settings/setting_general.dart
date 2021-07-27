@@ -79,7 +79,7 @@ class _SettingState extends State<Setting> {
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Container(
-                                width: 1000,
+                                width: 800,
                                 child: DataTable(columns: const <DataColumn>[
                                   DataColumn(
                                     label: Text('Fields',

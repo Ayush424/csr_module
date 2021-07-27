@@ -800,6 +800,7 @@ class _NgoPartnerState extends State<NgoPartner> {
                                       'NGO Name',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
@@ -808,6 +809,7 @@ class _NgoPartnerState extends State<NgoPartner> {
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
                                         )),
                                   ),
                                   DataColumn(
@@ -815,6 +817,7 @@ class _NgoPartnerState extends State<NgoPartner> {
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
                                         )),
                                   ),
                                   DataColumn(
@@ -822,6 +825,7 @@ class _NgoPartnerState extends State<NgoPartner> {
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
                                         )),
                                   ),
                                   DataColumn(
@@ -829,6 +833,7 @@ class _NgoPartnerState extends State<NgoPartner> {
                                         style: TextStyle(
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
                                         )),
                                   ),
                                 ],

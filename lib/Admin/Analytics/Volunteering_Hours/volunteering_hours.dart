@@ -306,30 +306,37 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                               columns: const <DataColumn>[
                                 DataColumn(
                                   label: Text('Emp code',
-                                      style: TextStyle(color: Colors.black)),
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
+                                      )),
                                 ),
                                 DataColumn(
                                   label: Text('Name',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Department',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Date',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('hrs',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                               ],

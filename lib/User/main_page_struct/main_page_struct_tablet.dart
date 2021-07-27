@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csr_module/Admin/admin_page_struct/admin_page_struct_tablet.dart';
+
 import 'package:csr_module/User/events_and_calendar/calendar.dart';
 import 'package:csr_module/User/organization/dollar_for_dollar.dart';
 import '../homepage/static_homepage.dart';
@@ -99,8 +99,9 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           accountEmail: Text(snapshot.data!['department']),
-                          currentAccountPicture:
-                              Image.network(snapshot.data!['imgUrl']),
+                          currentAccountPicture: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(snapshot.data!['imgUrl'])),
                           otherAccountsPictures: [
                             IconButton(
                               icon: Icon(

@@ -18,8 +18,8 @@ class _SellerCartDialogueState extends State<SellerCartDialogue> {
       backgroundColor: const Color.fromARGB(255, 237, 242, 247),
       content: Container(
         color: const Color.fromARGB(255, 237, 242, 247),
-        height: 500,
-        width: 850,
+        height: screensize.height * 0.7,
+        width: screensize.width * 0.6,
         child: ListView(
           shrinkWrap: true,
           controller: ScrollController(),
@@ -166,7 +166,7 @@ class _SellerCartDialogueState extends State<SellerCartDialogue> {
                     style: TextStyle(
                         color: Color.fromRGBO(42, 67, 101, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20)),
+                        fontSize: 18)),
               ),
             ),
             Padding(
@@ -178,7 +178,7 @@ class _SellerCartDialogueState extends State<SellerCartDialogue> {
                     style: TextStyle(
                         color: Color.fromRGBO(42, 67, 101, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20)),
+                        fontSize: 18)),
               ),
             ),
             Padding(
@@ -190,7 +190,7 @@ class _SellerCartDialogueState extends State<SellerCartDialogue> {
                     style: TextStyle(
                         color: Color.fromRGBO(42, 67, 101, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20)),
+                        fontSize: 18)),
               ),
             ),
             Padding(
@@ -220,7 +220,7 @@ class DialogueItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 65,
+      height: 75,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: ListView(

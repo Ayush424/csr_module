@@ -52,6 +52,7 @@ class _MatureState extends State<Mature> {
                           label: Text('Emp',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 44, 82, 130),
+                                fontWeight: FontWeight.bold,
                               )),
                         ),
                         DataColumn(
@@ -60,6 +61,7 @@ class _MatureState extends State<Mature> {
                             child: Text('Name',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold,
                                 )),
                           ),
                         ),
@@ -69,6 +71,7 @@ class _MatureState extends State<Mature> {
                             child: Text('Department',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold,
                                 )),
                           ),
                         ),

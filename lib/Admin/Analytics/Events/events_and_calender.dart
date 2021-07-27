@@ -35,7 +35,7 @@ class _CalenderState extends State<Calender> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Wrap(
-                  spacing: 900,
+                  spacing: 700,
                   runSpacing: 20,
                   children: [
                     Text(
@@ -245,7 +245,7 @@ class _CalenderState extends State<Calender> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Wrap(
-                    spacing: 1000,
+                    spacing: 700,
                     runSpacing: 10,
                     children: [
                       Text(
@@ -293,7 +293,7 @@ class _CalenderState extends State<Calender> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
-                          columnSpacing: 240,
+                          columnSpacing: 180,
                           columns: const <DataColumn>[
                             DataColumn(
                               label: Padding(
@@ -317,16 +317,22 @@ class _CalenderState extends State<Calender> {
                                   )),
                             ),
                             DataColumn(
-                              label: Text('Date',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
+                              label: Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text('Date',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 44, 82, 130),
+                                    )),
+                              ),
                             ),
                             DataColumn(
-                              label: Text('Time',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
+                              label: Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text('Time',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 44, 82, 130),
+                                    )),
+                              ),
                             ),
                           ],
                           rows: List<DataRow>.generate(

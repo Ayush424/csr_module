@@ -30,6 +30,7 @@ class _SanakaarState extends State<Sanakaar> {
                   label: Text('Emp',
                       style: TextStyle(
                         color: Color.fromARGB(255, 44, 82, 130),
+                        fontWeight: FontWeight.bold,
                       )),
                 ),
                 DataColumn(
@@ -38,6 +39,7 @@ class _SanakaarState extends State<Sanakaar> {
                     child: Text('Name',
                         style: TextStyle(
                           color: Color.fromARGB(255, 44, 82, 130),
+                          fontWeight: FontWeight.bold,
                         )),
                   ),
                 ),
@@ -47,6 +49,7 @@ class _SanakaarState extends State<Sanakaar> {
                     child: Text('Department',
                         style: TextStyle(
                           color: Color.fromARGB(255, 44, 82, 130),
+                          fontWeight: FontWeight.bold,
                         )),
                   ),
                 ),
@@ -56,6 +59,7 @@ class _SanakaarState extends State<Sanakaar> {
                     child: Text('Amount',
                         style: TextStyle(
                           color: Color.fromARGB(255, 44, 82, 130),
+                          fontWeight: FontWeight.bold,
                         )),
                   ),
                 ),

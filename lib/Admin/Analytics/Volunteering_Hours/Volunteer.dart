@@ -198,6 +198,7 @@ class _VolunteerState extends State<Volunteer> {
                                             style: TextStyle(
                                               color: Color.fromARGB(
                                                   255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
                                             )),
                                       ),
                                     ),
@@ -206,6 +207,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -213,6 +215,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -220,6 +223,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                   ],
@@ -372,6 +376,7 @@ class _VolunteerState extends State<Volunteer> {
                                             style: TextStyle(
                                               color: Color.fromARGB(
                                                   255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
                                             )),
                                       ),
                                     ),
@@ -380,6 +385,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -387,6 +393,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -394,6 +401,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                   ],

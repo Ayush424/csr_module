@@ -281,7 +281,7 @@ class _EventsAdminState extends State<EventsAdmin> {
               children: [
                 Wrap(children: [
                   Wrap(
-                    spacing: 900,
+                    spacing: 700,
                     runSpacing: 20,
                     children: [
                       Text(
@@ -331,28 +331,32 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: 150,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                ),
-                                child: DropdownButton<String>(
-                                  value: value,
-                                  items: items
-                                      .map((item) => DropdownMenuItem<String>(
-                                            child: Text(
-                                              item,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10,
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                    )),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: value,
+                                    items: items
+                                        .map((item) => DropdownMenuItem<String>(
+                                              child: Text(
+                                                item,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10,
+                                                ),
                                               ),
-                                            ),
-                                            value: item,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) => setState(() {
-                                    this.value = value!;
-                                  }),
+                                              value: item,
+                                            ))
+                                        .toList(),
+                                    onChanged: (value) => setState(() {
+                                      this.value = value!;
+                                    }),
+                                  ),
                                 ),
                               ),
                             ],
@@ -384,7 +388,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.grey)),
                                   child: TextFormField(
-                                    style: TextStyle(fontSize: 10),
+                                    style: TextStyle(fontSize: 15),
                                     textAlign: TextAlign.center,
                                     enabled: false,
                                     keyboardType: TextInputType.text,
@@ -416,11 +420,13 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: 150,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                ),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                    )),
                                 child: DropdownButton<String>(
                                   value: value1,
                                   items: items1
@@ -551,11 +557,13 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: 150,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                ),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                    )),
                                 child: DropdownButton<String>(
                                   value: value2,
                                   items: items2
@@ -593,11 +601,13 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: 150,
+                                height: 40,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                ),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                    )),
                                 child: DropdownButton<String>(
                                   value: value3,
                                   items: items3
@@ -620,21 +630,24 @@ class _EventsAdminState extends State<EventsAdmin> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-                          child: ElevatedButton.icon(
-                            icon: Icon(
-                              Icons.add,
-                              size: 24.0,
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                            child: ElevatedButton.icon(
+                              icon: Icon(
+                                Icons.add,
+                                size: 24.0,
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(45, 55, 72, 1)),
+                              ),
+                              label: Text('Add'),
+                              onPressed: () {
+                                setState(() {});
+                              },
                             ),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(45, 55, 72, 1)),
-                            ),
-                            label: Text('Add'),
-                            onPressed: () {
-                              setState(() {});
-                            },
                           ),
                         ),
                       ],
@@ -679,6 +692,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   child: Text(' Event Name',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                               ),
@@ -686,30 +700,35 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 label: Text('Duration',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 44, 82, 130),
+                                      fontWeight: FontWeight.bold,
                                     )),
                               ),
                               DataColumn(
                                 label: Text('Date Started',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 44, 82, 130),
+                                      fontWeight: FontWeight.bold,
                                     )),
                               ),
                               DataColumn(
                                 label: Text('NGO Partner',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 44, 82, 130),
+                                      fontWeight: FontWeight.bold,
                                     )),
                               ),
                               DataColumn(
                                 label: Text('Attendees Count',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 44, 82, 130),
+                                      fontWeight: FontWeight.bold,
                                     )),
                               ),
                               DataColumn(
                                 label: Text('Action',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 44, 82, 130),
+                                      fontWeight: FontWeight.bold,
                                     )),
                               ),
                             ],

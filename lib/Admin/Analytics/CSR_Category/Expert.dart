@@ -51,6 +51,7 @@ class _ExpertState extends State<Expert> {
                           label: Text('Emp',
                               style: TextStyle(
                                 color: Color.fromARGB(255, 44, 82, 130),
+                                fontWeight: FontWeight.bold,
                               )),
                         ),
                         DataColumn(
@@ -59,6 +60,7 @@ class _ExpertState extends State<Expert> {
                             child: Text('Name',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold,
                                 )),
                           ),
                         ),
@@ -68,6 +70,7 @@ class _ExpertState extends State<Expert> {
                             child: Text('Department',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 44, 82, 130),
+                                  fontWeight: FontWeight.bold,
                                 )),
                           ),
                         ),

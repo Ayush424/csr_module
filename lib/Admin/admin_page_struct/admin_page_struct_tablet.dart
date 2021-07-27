@@ -68,7 +68,7 @@ class _AdminPageStructTabletState extends State<AdminPageStructTablet> {
           ],
           leading: const Icon(Icons.air_rounded),
           title: const Text(
-            "CSR Management",
+            "CSR Management System",
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: const Color.fromARGB(255, 45, 55, 72),

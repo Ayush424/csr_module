@@ -227,7 +227,7 @@ class _GoalsListState extends State<GoalsList> {
             controller: ScrollController(),
             child: SingleChildScrollView(
               child: DataTable(
-                  columnSpacing: 150,
+                  columnSpacing: 202,
                   columns: <DataColumn>[
                     DataColumn(
                         label: Text(
@@ -282,8 +282,7 @@ class _GoalsListState extends State<GoalsList> {
                           ),
                           DataCell(
                             Text(
-                              "Start Date: " +
-                                  snapshot.data!.docs[index]['startDate']
+                              snapshot.data!.docs[index]['startDate']
                                       .toDate()
                                       .day
                                       .toString() +
@@ -302,8 +301,7 @@ class _GoalsListState extends State<GoalsList> {
                           ),
                           DataCell(
                             Text(
-                              "Completion date: " +
-                                  snapshot.data!.docs[index]['startDate']
+                              snapshot.data!.docs[index]['startDate']
                                       .toDate()
                                       .add(Duration(
                                           days: int.parse(snapshot
@@ -322,8 +320,8 @@ class _GoalsListState extends State<GoalsList> {
                                   snapshot.data!.docs[index]['startDate']
                                       .toDate()
                                       .add(Duration(
-                                          days: int.parse(snapshot
-                                              .data!.docs[index]['days'])))
+                                          days: int.parse(
+                                              snapshot.data!.docs[index]['days'])))
                                       .year
                                       .toString(),
                               style: TextStyle(color: lightblue, fontSize: 15),

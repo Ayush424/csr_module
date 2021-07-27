@@ -556,7 +556,7 @@ class _NgoPartnerState extends State<NgoPartner> {
             ),
             actions: <Widget>[
               ElevatedButton(
-                child: new Text('Add'),
+                child: Text('Add'),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                       const Color.fromRGBO(45, 55, 72, 1)),
@@ -897,6 +897,8 @@ class _NgoPartnerState extends State<NgoPartner> {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onPressed: () {
+                                          NgoGlobalCount.docId =
+                                              ngoList[index].id;
                                           NgoGlobalCount.index = index;
                                           widget.update!("ngoDetails");
                                         },

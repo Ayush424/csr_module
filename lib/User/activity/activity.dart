@@ -157,6 +157,8 @@ class _ActivityState extends State<Activity> {
                                     children: [
                                       Flexible(
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Company Initiated Activities',
@@ -258,6 +260,8 @@ class _ActivityState extends State<Activity> {
                                       ),
                                       Flexible(
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Government Initiated Activities',

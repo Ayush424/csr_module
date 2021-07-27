@@ -70,7 +70,7 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
         ],
         leading: const Icon(Icons.air_rounded),
         title: const Text(
-          "CSR Management",
+          "CSR Management System",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color.fromARGB(255, 45, 55, 72),
@@ -414,7 +414,7 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
               } else if (GlobalAdminPage.adminpage == 'beneficiary') {
                 return Beneficiary();
               } else if (GlobalAdminPage.adminpage == 'ngoDetails') {
-                return partners(update: _update);
+                return Partners(update: _update);
               } else {
                 return Container();
               }

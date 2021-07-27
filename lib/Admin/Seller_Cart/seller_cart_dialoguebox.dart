@@ -13,7 +13,7 @@ class _SellerCartDialogueState extends State<SellerCartDialogue> {
 
   @override
   Widget build(BuildContext context) {
-    // var screensize = MediaQuery.of(context).size;
+    var screensize = MediaQuery.of(context).size;
     return AlertDialog(
       backgroundColor: const Color.fromARGB(255, 237, 242, 247),
       content: Container(

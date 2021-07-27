@@ -59,16 +59,18 @@ class _PartnersState extends State<Partners> {
                   ),
                 ],
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(45, 55, 72, 1)),
+              ListTile(
+                trailing: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromRGBO(45, 55, 72, 1)),
+                  ),
+                  child: Text('Back'),
+                  onPressed: () {
+                    widget.update!("ngoPartner");
+                    //  print(NgoGlobalCount.index);
+                  },
                 ),
-                child: Text('Back'),
-                onPressed: () {
-                  widget.update!("ngoPartner");
-                  //  print(NgoGlobalCount.index);
-                },
               ),
               Divider(
                 color: Color.fromARGB(255, 226, 232, 240),
@@ -525,8 +527,10 @@ class _PartnersState extends State<Partners> {
               add == true
                   ? Center(
                       child: Container(
+
                         height: 250,
                         decoration: BoxDecoration(
+
                           color: Color.fromARGB(255, 237, 242, 247),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
@@ -590,6 +594,8 @@ class _PartnersState extends State<Partners> {
                                             fontSize: 16,
                                           ),
                                           decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white,
                                             hintText: "Enter Name",
                                             border: OutlineInputBorder(),
                                             // contentPadding: EdgeInsets.all(10)
@@ -601,7 +607,7 @@ class _PartnersState extends State<Partners> {
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: 150,
                                 child: Column(
                                   children: [
                                     Text(
@@ -612,29 +618,35 @@ class _PartnersState extends State<Partners> {
                                           fontSize: 15),
                                     ),
                                     Container(
+                                      width: 150,
+                                      height: 30,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white,
-                                      ),
-                                      child: DropdownButton<String>(
-                                        value: value,
-                                        items: items
-                                            .map((item) =>
-                                                DropdownMenuItem<String>(
-                                                  child: Text(
-                                                    item,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 10,
-                                                    ),
-                                                  ),
-                                                  value: item,
-                                                ))
-                                            .toList(),
-                                        onChanged: (value) => setState(() {
-                                          this.value = value!;
-                                        }),
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: Colors.grey.shade600,
+                                          )),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<String>(
+                                            value: value,
+                                            items: items
+                                                .map((item) =>
+                                                    DropdownMenuItem<String>(
+                                                      child: Text(
+                                                        item,
+                                                        style: TextStyle(
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                      value: item,
+                                                    ))
+                                                .toList(),
+                                            onChanged: (value) => setState(() {
+                                              this.value = value!;
+                                            }),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -660,6 +672,8 @@ class _PartnersState extends State<Partners> {
                                             fontSize: 16,
                                           ),
                                           decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white,
                                             hintText: "Enter Amount",
                                             border: OutlineInputBorder(),
                                             // contentPadding: EdgeInsets.all(10)
@@ -681,30 +695,39 @@ class _PartnersState extends State<Partners> {
                                           decoration: TextDecoration.none,
                                           fontSize: 15),
                                     ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white,
-                                      ),
-                                      child: DropdownButton<String>(
-                                        value: value,
-                                        items: items
-                                            .map((item) =>
-                                                DropdownMenuItem<String>(
-                                                  child: Text(
-                                                    item,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 10,
-                                                    ),
-                                                  ),
-                                                  value: item,
-                                                ))
-                                            .toList(),
-                                        onChanged: (value) => setState(() {
-                                          this.value = value!;
-                                        }),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Container(
+                                        width: 150,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: Colors.grey.shade600,
+                                            )),
+                                        child: Center(
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<String>(
+                                              value: value,
+                                              items: items
+                                                  .map((item) =>
+                                                      DropdownMenuItem<String>(
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                        value: item,
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (value) =>
+                                                  setState(() {
+                                                this.value = value!;
+                                              }),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -730,6 +753,9 @@ class _PartnersState extends State<Partners> {
                                             fontSize: 16,
                                           ),
                                           decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white,
+
                                             hintText: "Enter Description",
                                             border: OutlineInputBorder(),
                                             // contentPadding: EdgeInsets.all(10)
@@ -760,6 +786,8 @@ class _PartnersState extends State<Partners> {
                                             fontSize: 16,
                                           ),
                                           decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white,
                                             hintText: "Enter Units",
                                             border: OutlineInputBorder(),
                                             // contentPadding: EdgeInsets.all(10)
@@ -771,12 +799,12 @@ class _PartnersState extends State<Partners> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.only(top: 30),
                                 child: ElevatedButton(
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              Color.fromARGB(255, 42, 67, 101)),
+                                              Color.fromRGBO(45, 55, 72, 1)),
                                     ),
                                     onPressed: () {
                                       setState(() {

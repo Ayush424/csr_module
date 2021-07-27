@@ -178,7 +178,7 @@ class _SettingSecurityState extends State<SettingSecurity> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
-                          columnSpacing: 275,
+                          columnSpacing: 198,
                           columns: const <DataColumn>[
                             DataColumn(
                               label: Padding(
@@ -262,7 +262,7 @@ class _SettingSecurityState extends State<SettingSecurity> {
                   height: 30,
                 ),
                 Wrap(
-                  spacing: 1100,
+                  spacing: 850,
                   children: [
                     Text(
                       'Add Employees',
@@ -302,7 +302,7 @@ class _SettingSecurityState extends State<SettingSecurity> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
-                          columnSpacing: 250,
+                          columnSpacing: 175,
                           columns: const <DataColumn>[
                             DataColumn(
                               label: Padding(

@@ -159,7 +159,7 @@ class _TrainingsState extends State<Trainings> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey)),
                               child: TextFormField(
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 15),
                                 textAlign: TextAlign.center,
                                 enabled: false,
                                 keyboardType: TextInputType.text,
@@ -233,22 +233,25 @@ class _TrainingsState extends State<Trainings> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 20),
-                      child: ElevatedButton.icon(
-                        icon: Icon(
-                          Icons.add,
-                          size: 24.0,
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 20),
+                        child: ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.add,
+                            size: 24.0,
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color.fromRGBO(45, 55, 72, 1)),
+                          ),
+                          label: Text('Add'),
+                          onPressed: () {
+                            setState(() {});
+                          },
                         ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(45, 55, 72, 1)),
-                        ),
-                        label: Text('Add'),
-                        onPressed: () {
-                          setState(() {});
-                        },
                       ),
                     ),
                   ],
@@ -270,7 +273,7 @@ class _TrainingsState extends State<Trainings> {
                 height: 10,
               ),
               Container(
-                height: 150,
+                height: 260,
                 width: 1200,
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -304,30 +307,35 @@ class _TrainingsState extends State<Trainings> {
                                   label: Text('Trainings Name',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Duration',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Starting Date',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Training id',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Action',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                               ],
@@ -457,82 +465,86 @@ class _TrainingsState extends State<Trainings> {
                             color: Color.fromARGB(255, 226, 232, 240),
                             thickness: 2,
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            height: 150,
-                            width: 1200,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                              color: Color.fromARGB(255, 204, 204, 204),
-                              width: 1,
-                            )),
-                            child: SingleChildScrollView(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                controller: ScrollController(),
-                                child: DataTable(
-                                  columnSpacing: 260,
-                                  columns: const <DataColumn>[
-                                    DataColumn(
-                                      label: Text(' Training Name ',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Duration',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Date Started',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Registered Employees',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                  ],
-                                  rows: List<DataRow>.generate(
-                                    numItems,
-                                    (int index) => DataRow(
-                                      color: MaterialStateProperty.resolveWith<
-                                          Color?>((Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return Color.fromARGB(
-                                                  255, 237, 242, 247)
-                                              .withOpacity(0.08);
-                                        }
-                                        if (index.isEven) {
-                                          return Color.fromARGB(
-                                              255, 237, 242, 247);
-                                        }
-                                        return null;
-                                      }),
-                                      cells: <DataCell>[
-                                        DataCell(Text('abc')),
-                                        DataCell(Text('xyz')),
-                                        DataCell(Text('xyz')),
-                                        DataCell(Text('xyz')),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Container(
+                          //   height: 150,
+                          //   width: 1200,
+                          //   decoration: BoxDecoration(
+                          //       border: Border.all(
+                          //     color: Color.fromARGB(255, 204, 204, 204),
+                          //     width: 1,
+                          //   )),
+                          //   child: SingleChildScrollView(
+                          //     child: SingleChildScrollView(
+                          //       scrollDirection: Axis.horizontal,
+                          //       controller: ScrollController(),
+                          //       child: DataTable(
+                          //         columnSpacing: 260,
+                          //         columns: const <DataColumn>[
+                          //           DataColumn(
+                          //             label: Text(' Training Name ',
+                          //                 style: TextStyle(
+                          //                   color: Color.fromARGB(
+                          //                       255, 44, 82, 130),
+                          //                   fontWeight: FontWeight.bold,
+                          //                 )),
+                          //           ),
+                          //           DataColumn(
+                          //             label: Text('Duration',
+                          //                 style: TextStyle(
+                          //                   color: Color.fromARGB(
+                          //                       255, 44, 82, 130),
+                          //                   fontWeight: FontWeight.bold,
+                          //                 )),
+                          //           ),
+                          //           DataColumn(
+                          //             label: Text('Date Started',
+                          //                 style: TextStyle(
+                          //                   color: Color.fromARGB(
+                          //                       255, 44, 82, 130),
+                          //                   fontWeight: FontWeight.bold,
+                          //                 )),
+                          //           ),
+                          //           DataColumn(
+                          //             label: Text('Registered Employees',
+                          //                 style: TextStyle(
+                          //                   color: Color.fromARGB(
+                          //                       255, 44, 82, 130),
+                          //                   fontWeight: FontWeight.bold,
+                          //                 )),
+                          //           ),
+                          //         ],
+                          //         rows: List<DataRow>.generate(
+                          //           numItems,
+                          //           (int index) => DataRow(
+                          //             color: MaterialStateProperty.resolveWith<
+                          //                 Color?>((Set<MaterialState> states) {
+                          //               if (states
+                          //                   .contains(MaterialState.selected)) {
+                          //                 return Color.fromARGB(
+                          //                         255, 237, 242, 247)
+                          //                     .withOpacity(0.08);
+                          //               }
+                          //               if (index.isEven) {
+                          //                 return Color.fromARGB(
+                          //                     255, 237, 242, 247);
+                          //               }
+                          //               return null;
+                          //             }),
+                          //             cells: <DataCell>[
+                          //               DataCell(Text('abc')),
+                          //               DataCell(Text('xyz')),
+                          //               DataCell(Text('xyz')),
+                          //               DataCell(Text('xyz')),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -549,13 +561,14 @@ class _TrainingsState extends State<Trainings> {
                                 scrollDirection: Axis.horizontal,
                                 controller: ScrollController(),
                                 child: DataTable(
-                                  columnSpacing: 260,
+                                  columnSpacing: 240,
                                   columns: const <DataColumn>[
                                     DataColumn(
                                       label: Text(' Employee Name ',
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -563,6 +576,7 @@ class _TrainingsState extends State<Trainings> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -570,6 +584,7 @@ class _TrainingsState extends State<Trainings> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -577,6 +592,7 @@ class _TrainingsState extends State<Trainings> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                   ],

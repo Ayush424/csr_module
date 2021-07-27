@@ -192,27 +192,27 @@ class _VolunteerState extends State<Volunteer> {
                                 child: DataTable(
                                   columns: const <DataColumn>[
                                     DataColumn(
-                                      label: Padding(
-                                        padding: EdgeInsets.all(20),
-                                        child: Text('Name',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                            )),
-                                      ),
+                                      label: Text('Name',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
+                                          )),
                                     ),
                                     DataColumn(
                                       label: Text('Department',
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
-                                      label: Text('Rate',
+                                      label: Text('Department',
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                     DataColumn(
@@ -220,6 +220,7 @@ class _VolunteerState extends State<Volunteer> {
                                           style: TextStyle(
                                             color: Color.fromARGB(
                                                 255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
                                           )),
                                     ),
                                   ],
@@ -243,17 +244,7 @@ class _VolunteerState extends State<Volunteer> {
                                       cells: <DataCell>[
                                         DataCell(Text('abc')),
                                         DataCell(Text('abc')),
-                                        DataCell(
-                                          new GestureDetector(
-                                            child: new Icon(
-                                              Icons.star,
-                                              color: _rating >= 1
-                                                  ? Colors.orange
-                                                  : Colors.grey,
-                                            ),
-                                            onTap: () => rate(1),
-                                          ),
-                                        ),
+                                        DataCell(Text("Department")),
                                         DataCell(
                                           IconButton(
                                             icon: Icon(
@@ -359,91 +350,114 @@ class _VolunteerState extends State<Volunteer> {
                           width: 1,
                         )),
                         child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                child: DataTable(
-                                  columns: const <DataColumn>[
-                                    DataColumn(
-                                      label: Padding(
-                                        padding: EdgeInsets.all(20),
-                                        child: Text('Name',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                            )),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Department',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Rate',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Action',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                          )),
-                                    ),
-                                  ],
-                                  rows: List<DataRow>.generate(
-                                    numItems,
-                                    (int index) => DataRow(
-                                      color: MaterialStateProperty.resolveWith<
-                                          Color?>((Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return Color.fromARGB(
-                                                  255, 237, 242, 247)
-                                              .withOpacity(0.08);
-                                        }
-                                        if (index.isEven) {
-                                          return Color.fromARGB(
-                                              255, 237, 242, 247);
-                                        }
-                                        return null;
-                                      }),
-                                      cells: <DataCell>[
-                                        DataCell(Text('abc')),
-                                        DataCell(Text('abc')),
-                                        DataCell(
-                                          new GestureDetector(
-                                            child: new Icon(
-                                              Icons.star,
-                                              color: _rating >= 1
-                                                  ? Colors.orange
-                                                  : Colors.grey,
-                                            ),
-                                            onTap: () => rate(1),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                            ),
-                                            onPressed: () {
-                                              _showMyDialog();
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                          child: Container(
+                            width: 1200,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                columnSpacing: 103,
+                                columns: const <DataColumn>[
+                                  DataColumn(
+                                    label: Text('Emp Code',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Name',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Department',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Area of Interest 1',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Area of Interest 2',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Action',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Action',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                ],
+                                rows: List<DataRow>.generate(
+                                  numItems,
+                                  (int index) => DataRow(
+                                    color: MaterialStateProperty.resolveWith<
+                                        Color?>((Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return Color.fromARGB(
+                                                255, 237, 242, 247)
+                                            .withOpacity(0.08);
+                                      }
+                                      if (index.isEven) {
+                                        return Color.fromARGB(
+                                            255, 237, 242, 247);
+                                      }
+                                      return null;
+                                    }),
+                                    cells: <DataCell>[
+                                      DataCell(Text('abc')),
+                                      DataCell(Text('abc')),
+                                      DataCell(Text('abc')),
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Text('abc'),
+                                      )),
+                                      DataCell(Text('abc')),
+                                      DataCell(IconButton(
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(Icons.check,
+                                            color: Colors.green, size: 20),
+                                        onPressed: () {},
+                                      )),
+                                      DataCell(IconButton(
+                                        padding: EdgeInsets.all(0),
+                                        icon: Icon(Icons.close,
+                                            color: Colors.red, size: 20),
+                                        onPressed: () {},
+                                      )),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),

@@ -273,7 +273,7 @@ class _TrainingsState extends State<Trainings> {
                 height: 10,
               ),
               Container(
-                height: 150,
+                height: 260,
                 width: 1200,
                 decoration: BoxDecoration(
                     border: Border.all(

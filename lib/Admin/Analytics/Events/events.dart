@@ -346,8 +346,8 @@ class _EventsAdminState extends State<EventsAdmin> {
                                               child: Text(
                                                 item,
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 10,
+                                                  color: Colors.grey,
+                                                  //fontSize: 10,
                                                 ),
                                               ),
                                               value: item,

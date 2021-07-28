@@ -35,7 +35,32 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
       });
     });
   }
-
+  TextEditingController _textFieldController = TextEditingController();
+_displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Enter Hours'),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Hours"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: new Text('Edit'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
   String dropdownValue = 'Select Event';
   bool select = false;
   static const int numItems = 4;
@@ -305,7 +330,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                             scrollDirection: Axis.horizontal,
                             controller: ScrollController(),
                             child: DataTable(
-                              columnSpacing: 218,
+                              columnSpacing: 215,
                               columns: const <DataColumn>[
                                 DataColumn(
                                   label: Text('Emp code',
@@ -336,7 +361,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                                       )),
                                 ),
                                 DataColumn(
-                                  label: Text('hrs',
+                                  label: Text('Hours',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
                                         fontWeight: FontWeight.bold,
@@ -364,7 +389,21 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                                     DataCell(Text('xyz')),
                                     DataCell(Text('abc')),
                                     DataCell(Text('abc')),
-                                    DataCell(Text('4')),
+                                    DataCell(Row(
+                                          
+                                          children: [
+                                            Text('1'),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.drive_file_rename_outline,
+                                                size: 20,
+                                              ),
+                                              onPressed: () {
+                                                _displayDialog(context);
+                                              },
+                                            ),
+                                          ],
+                                        )),
                                   ],
                                 ),
                               ),

@@ -99,8 +99,9 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           accountEmail: Text(snapshot.data!['department']),
-                          currentAccountPicture:
-                              Image.network(snapshot.data!['imgUrl']),
+                          currentAccountPicture: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(snapshot.data!['imgUrl'])),
                           otherAccountsPictures: [
                             IconButton(
                               icon: Icon(

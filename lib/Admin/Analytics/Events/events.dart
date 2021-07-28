@@ -52,7 +52,7 @@ class _EventsAdminState extends State<EventsAdmin> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Pending'),
+          title: Center(child: Text('Pending')),
           content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -204,24 +204,18 @@ class _EventsAdminState extends State<EventsAdmin> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('Do you want to delete the file?'),
-              ],
-            ),
+          content: Container(
+            width: 100,
+            height: 100,
+            child: Center(
+                child: Text(
+              'Added Successfully',
+              style: TextStyle(fontSize: 20),
+            )),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Confirm'),
-              onPressed: () {
-                print('Confirmed');
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Cancel'),
+              child: Text('Okay'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -313,10 +307,11 @@ class _EventsAdminState extends State<EventsAdmin> {
                   ),
                   Container(
                     child: Wrap(
-                      spacing: 100,
+                      spacing: 110,
                       runSpacing: 5,
                       children: [
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,23 +325,30 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Container(
-                                width: 150,
-                                height: 40,
+                                width: 250,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 10),
                                 decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: Colors.grey.shade400,
+                                      color: Colors.grey,
                                     )),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
+                                    focusColor:
+                                        Color.fromARGB(255, 113, 128, 150),
                                     value: value,
                                     items: items
                                         .map((item) => DropdownMenuItem<String>(
                                               child: Text(
                                                 item,
                                                 style: TextStyle(
-                                                  color: Colors.grey,
+                                                  color: Colors.black,
                                                   //fontSize: 10,
                                                 ),
                                               ),
@@ -363,6 +365,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -382,11 +385,14 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 },
                                 child: Container(
                                   width: _width / 1.7,
-                                  height: _height / 15,
+                                  height: _height / 13,
                                   margin: EdgeInsets.only(top: 10),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey)),
+                                      borderRadius: BorderRadius.circular(4),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      )),
                                   child: TextFormField(
                                     style: TextStyle(fontSize: 15),
                                     textAlign: TextAlign.center,
@@ -406,6 +412,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,37 +426,46 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Container(
-                                width: 150,
-                                height: 40,
+                                width: 250,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 10),
                                 decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: Colors.grey.shade400,
+                                      color: Colors.grey,
                                     )),
-                                child: DropdownButton<String>(
-                                  value: value1,
-                                  items: items1
-                                      .map((item1) => DropdownMenuItem<String>(
-                                            child: Text(
-                                              item1,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                            value: item1,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value1) => setState(() {
-                                    this.value1 = value1!;
-                                  }),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: value1,
+                                    items: items1
+                                        .map(
+                                            (item1) => DropdownMenuItem<String>(
+                                                  child: Text(
+                                                    item1,
+                                                    style: TextStyle(
+
+                                                        // fontSize: 10,
+                                                        ),
+                                                  ),
+                                                  value: item1,
+                                                ))
+                                        .toList(),
+                                    onChanged: (value1) => setState(() {
+                                      this.value1 = value1!;
+                                    }),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,6 +497,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,6 +529,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -543,6 +561,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -556,37 +575,46 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Container(
-                                width: 150,
-                                height: 40,
+                                width: 250,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 10),
                                 decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: Colors.grey.shade400,
+                                      color: Colors.grey,
                                     )),
-                                child: DropdownButton<String>(
-                                  value: value2,
-                                  items: items2
-                                      .map((item2) => DropdownMenuItem<String>(
-                                            child: Text(
-                                              item2,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                            value: item2,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value2) => setState(() {
-                                    this.value2 = value2!;
-                                  }),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: value2,
+                                    items: items2
+                                        .map(
+                                            (item2) => DropdownMenuItem<String>(
+                                                  child: Text(
+                                                    item2,
+                                                    style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        // fontSize: 10,
+                                                        ),
+                                                  ),
+                                                  value: item2,
+                                                ))
+                                        .toList(),
+                                    onChanged: (value2) => setState(() {
+                                      this.value2 = value2!;
+                                    }),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -600,31 +628,41 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Container(
-                                width: 150,
-                                height: 40,
+                                width: 250,
+                                height: 50,
+                                padding: EdgeInsets.only(
+                                  left: 10,
+                                ),
                                 decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: Colors.grey.shade400,
+                                      color: Colors.grey,
                                     )),
-                                child: DropdownButton<String>(
-                                  value: value3,
-                                  items: items3
-                                      .map((item3) => DropdownMenuItem<String>(
-                                            child: Text(
-                                              item3,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                            value: item3,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value3) => setState(() {
-                                    this.value3 = value3!;
-                                  }),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: value3,
+                                    items: items3
+                                        .map(
+                                            (item3) => DropdownMenuItem<String>(
+                                                  child: Text(
+                                                    item3,
+                                                    style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        // fontSize: 10,
+                                                        ),
+                                                  ),
+                                                  value: item3,
+                                                ))
+                                        .toList(),
+                                    onChanged: (value3) => setState(() {
+                                      this.value3 = value3!;
+                                    }),
+                                  ),
                                 ),
                               ),
                             ],
@@ -645,7 +683,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                               ),
                               label: Text('Add'),
                               onPressed: () {
-                                setState(() {});
+                                _showMyDialog();
                               },
                             ),
                           ),

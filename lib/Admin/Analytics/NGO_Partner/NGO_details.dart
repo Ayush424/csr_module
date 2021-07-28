@@ -527,296 +527,344 @@ class _PartnersState extends State<Partners> {
               add == true
                   ? Center(
                       child: Container(
-
-                        height: 250,
+                        height: 450,
                         decoration: BoxDecoration(
-
                           color: Color.fromARGB(255, 237, 242, 247),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(50, 50, 30, 50),
-                          child: Wrap(
-                            spacing: 250,
-                            runSpacing: 30,
-                            children: [
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            padding: const EdgeInsets.fromLTRB(50, 50, 30, 50),
+                            child: ListView(
+                              controller: ScrollController(),
+                              children: [
+                                Wrap(
+                                  spacing: 250,
+                                  runSpacing: 30,
                                   children: [
-                                    Text(
-                                      "Upload images",
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(45, 55, 72, 1),
-                                        decoration: TextDecoration.none,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: ElevatedButton.icon(
-                                        onPressed: () {
-                                          //_uploadDocuments();
-                                        },
-                                        label: Text('Upload'),
-                                        icon: Icon(Icons.upload_sharp),
-                                        style: ButtonStyle(
-                                          fixedSize: MaterialStateProperty.all(
-                                              Size(150, 40)),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromRGBO(
-                                                      45, 55, 72, 1)),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 150,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Product Name",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Container(
-                                        height: 40,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                            fontSize: 16,
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Upload images",
+                                            style: TextStyle(
+                                              color:
+                                                  Color.fromRGBO(45, 55, 72, 1),
+                                              decoration: TextDecoration.none,
+                                              fontSize: 15,
+                                            ),
                                           ),
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: "Enter Name",
-                                            border: OutlineInputBorder(),
-                                            // contentPadding: EdgeInsets.all(10)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: ElevatedButton.icon(
+                                              onPressed: () {
+                                                //_uploadDocuments();
+                                              },
+                                              label: Text('Upload'),
+                                              icon: Icon(Icons.upload_sharp),
+                                              style: ButtonStyle(
+                                                fixedSize:
+                                                    MaterialStateProperty.all(
+                                                        Size(150, 40)),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Color.fromRGBO(
+                                                            45, 55, 72, 1)),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 150,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Category",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15),
                                     ),
                                     Container(
                                       width: 150,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(
-                                            color: Colors.grey.shade600,
-                                          )),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<String>(
-                                            value: value,
-                                            items: items
-                                                .map((item) =>
-                                                    DropdownMenuItem<String>(
-                                                      child: Text(
-                                                        item,
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                        ),
-                                                      ),
-                                                      value: item,
-                                                    ))
-                                                .toList(),
-                                            onChanged: (value) => setState(() {
-                                              this.value = value!;
-                                            }),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Product Name",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1),
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 150,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Price",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Container(
-                                        height: 40,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: "Enter Amount",
-                                            border: OutlineInputBorder(),
-                                            // contentPadding: EdgeInsets.all(10)
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 150,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Company Shares",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Container(
-                                        width: 150,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: Colors.grey.shade600,
-                                            )),
-                                        child: Center(
-                                          child: DropdownButtonHideUnderline(
-                                            child: DropdownButton<String>(
-                                              value: value,
-                                              items: items
-                                                  .map((item) =>
-                                                      DropdownMenuItem<String>(
-                                                        child: Text(
-                                                          item,
-                                                          style: TextStyle(
-                                                            fontSize: 15,
-                                                          ),
-                                                        ),
-                                                        value: item,
-                                                      ))
-                                                  .toList(),
-                                              onChanged: (value) =>
-                                                  setState(() {
-                                                this.value = value!;
-                                              }),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Container(
+                                              height: 40,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  hintText: "Enter Name",
+                                                  border: OutlineInputBorder(),
+                                                  // contentPadding: EdgeInsets.all(10)
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 150,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Description",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Container(
-                                        height: 40,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                            fontSize: 16,
+                                    Container(
+                                      width: 150,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Category",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1),
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15),
                                           ),
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
+                                          Container(
+                                            width: 150,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                  color: Colors.grey.shade600,
+                                                )),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child:
+                                                  DropdownButtonHideUnderline(
+                                                child: DropdownButton<String>(
+                                                  value: value,
+                                                  items: items
+                                                      .map((item) =>
+                                                          DropdownMenuItem<
+                                                              String>(
+                                                            child: Text(
+                                                              item,
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            value: item,
+                                                          ))
+                                                      .toList(),
+                                                  onChanged: (value) =>
+                                                      setState(() {
+                                                    this.value = value!;
+                                                  }),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Price",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1),
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Container(
+                                              height: 40,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  hintText: "Enter Amount",
+                                                  border: OutlineInputBorder(),
+                                                  // contentPadding: EdgeInsets.all(10)
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Company Shares",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1),
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Container(
+                                              width: 150,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                    color: Colors.grey.shade600,
+                                                  )),
+                                              child: Center(
+                                                child:
+                                                    DropdownButtonHideUnderline(
+                                                  child: DropdownButton<String>(
+                                                    value: value,
+                                                    items: items
+                                                        .map((item) =>
+                                                            DropdownMenuItem<
+                                                                String>(
+                                                              child: Text(
+                                                                item,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                ),
+                                                              ),
+                                                              value: item,
+                                                            ))
+                                                        .toList(),
+                                                    onChanged: (value) =>
+                                                        setState(() {
+                                                      this.value = value!;
+                                                    }),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Description",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1),
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Container(
+                                              height: 40,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor: Colors.white,
 
-                                            hintText: "Enter Description",
-                                            border: OutlineInputBorder(),
-                                            // contentPadding: EdgeInsets.all(10)
+                                                  hintText: "Enter Description",
+                                                  border: OutlineInputBorder(),
+                                                  // contentPadding: EdgeInsets.all(10)
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 150,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Units",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Container(
-                                        height: 40,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                            fontSize: 16,
+                                    Container(
+                                      width: 150,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Units",
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    45, 55, 72, 1),
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15),
                                           ),
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: "Enter Units",
-                                            border: OutlineInputBorder(),
-                                            // contentPadding: EdgeInsets.all(10)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Container(
+                                              height: 40,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                                decoration: InputDecoration(
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  hintText: "Enter Units",
+                                                  border: OutlineInputBorder(),
+                                                  // contentPadding: EdgeInsets.all(10)
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
+
+                                    // add == false ? Text("Done") : Text(""),
                                   ],
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 30),
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Color.fromRGBO(45, 55, 72, 1)),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        add = false;
-                                      });
-                                    },
-                                    child: const Text("Done")),
-                              ),
-                              add == false ? Text("Done") : Text(""),
-                            ],
-                          ),
-                        ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                Center(
+                                  child: Wrap(
+                                    spacing: 100,
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Color.fromRGBO(
+                                                        45, 55, 72, 1)),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              add = false;
+                                            });
+                                          },
+                                          child: const Text("Done")),
+                                      ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Color.fromRGBO(
+                                                        45, 55, 72, 1)),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              add = false;
+                                            });
+                                          },
+                                          child: const Text("Cancel")),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )),
                       ),
                     )
                   : Text(""),

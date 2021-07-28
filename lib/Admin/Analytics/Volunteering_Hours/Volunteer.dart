@@ -57,13 +57,14 @@ class _VolunteerState extends State<Volunteer> {
 
   String _searchText = "";
   final myController = TextEditingController();
+  @override
   void dispose() {
     myController.dispose();
     super.dispose();
   }
 
   var date;
-
+  @override
   void initState() {
     date = DateTime.now();
 

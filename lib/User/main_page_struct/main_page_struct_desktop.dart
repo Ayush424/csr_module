@@ -46,8 +46,8 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: Container(
-        width: 350,
-        height: 100,
+        width: 370,
+        height: 120,
         color: Color.fromARGB(255, 45, 55, 72),
         margin: EdgeInsets.only(bottom: 430),
         child: StreamBuilder<DocumentSnapshot>(
@@ -60,60 +60,62 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                 return Center(child: CircularProgressIndicator());
               }
               return DrawerHeader(
-                child: Wrap(
-                  children: [
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image.network(snapshot.data!['imgUrl'])),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          snapshot.data!['displayName'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Text(
-                          snapshot.data!['department'],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          snapshot.data!['empcode'],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          snapshot.data!['email'],
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.logout,
-                            color: Colors.white,
+                child: Container(
+                  height: 150,
+                  width: 300,
+                  child: Wrap(
+                    spacing: 15,
+                    children: [
+                      Container(
+                          height: 80,
+                          width: 80,
+                          child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage:
+                                  NetworkImage(snapshot.data!['imgUrl']))),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            snapshot.data!['displayName'],
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
-                          onPressed: () async {
-                            await _auth.signOut();
-                          },
-                          tooltip: 'Logout',
-                        ),
-                      ],
-                    )
-                  ],
+                          Text(
+                            snapshot.data!['department'],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            snapshot.data!['empcode'],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            snapshot.data!['email'],
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.logout,
+                              color: Colors.white,
+                            ),
+                            onPressed: () async {
+                              await _auth.signOut();
+                            },
+                            tooltip: 'Logout',
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               );
             }),
@@ -129,19 +131,34 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                   color: Colors.white, size: 30),
             ),
           ),
-          Builder(
-            builder: (context) => Transform(
-              transform: Matrix4.translationValues(-20, 0, 0),
-              child: IconButton(
-                tooltip: 'User',
-                icon: const Icon(Icons.account_circle,
-                    color: Colors.white, size: 50),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              ),
-            ),
-          ),
+          StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('Users')
+                  .doc(_auth.returnCurrentUserid())
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return IconButton(
+                      tooltip: 'User',
+                      icon: Icon(Icons.account_circle, size: 50),
+                      onPressed: () {});
+                }
+                return Builder(
+                  builder: (context) => Transform(
+                    transform: Matrix4.translationValues(-20, 0, 0),
+                    child: IconButton(
+                      iconSize: 100,
+                      tooltip: 'User',
+                      icon: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(snapshot.data!['imgUrl'])),
+                      onPressed: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                    ),
+                  ),
+                );
+              }),
         ],
         leading: IconButton(
           icon: Icon(Icons.air_rounded),

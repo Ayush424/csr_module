@@ -46,17 +46,6 @@ class _PartnersState extends State<Partners> {
                       decoration: TextDecoration.none,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(1, 15, 0, 0),
-                    child: Text(
-                      '>>>>Details',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 44, 82, 130),
-                        decoration: TextDecoration.none,
-                      ),
-                    ),
-                  ),
                 ],
               ),
               ListTile(
@@ -95,362 +84,382 @@ class _PartnersState extends State<Partners> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Wrap(
-                                spacing: 90,
-                                runSpacing: 20,
-                                children: [
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Name:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
+                            Container(
+                              width: 1000,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                color: Colors.grey,
+                                width: 1,
+                              )),
+                              child: SingleChildScrollView(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: DataTable(
+                                    columnSpacing: 220,
+                                    dataRowHeight: 70,
+                                    headingRowHeight: 0,
+                                    columns: const <DataColumn>[
+                                      DataColumn(
+                                        label: Text(
+                                          '',
                                         ),
                                       ),
-                                      Container(
-                                        height: 50,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!.docs[ngoNumber]
-                                              ["name"],
-                                          style: TextStyle(fontSize: 15),
+                                      DataColumn(
+                                        label: Text(
+                                          '',
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Category:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
-                                              ["category"],
-                                          style: TextStyle(fontSize: 15),
+                                      DataColumn(
+                                        label: Text(
+                                          '',
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  Wrap(
-                                    spacing: 20,
-                                    children: [
-                                      Text(
-                                        "Email Id:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    rows: <DataRow>[
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "Name:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[ngoNumber]
+                                                    ["name"],
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "Category:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[
+                                                        NgoGlobalCount.index]
+                                                    ["category"],
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Email Id:",
+                                                  style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        45, 55, 72, 1),
+                                                    decoration:
+                                                        TextDecoration.none,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  snapshot.data!.docs[
+                                                          NgoGlobalCount.index]
+                                                      ["Email"],
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
-                                              ["Email"],
-                                          style: TextStyle(fontSize: 15),
-                                        ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "Name of Contact Person:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[
+                                                        NgoGlobalCount.index]
+                                                    ["ngoPrimaryPerson"],
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Contact No.:",
+                                                  style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        45, 55, 72, 1),
+                                                    decoration:
+                                                        TextDecoration.none,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  snapshot.data!.docs[
+                                                          NgoGlobalCount.index]
+                                                      ["contactNo"],
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "Address:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[
+                                                        NgoGlobalCount.index]
+                                                    ["Address"],
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "MoU Start Date:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot
+                                                        .data!
+                                                        .docs[NgoGlobalCount
+                                                                .index]
+                                                            ["MouStartDate"]
+                                                        .toDate()
+                                                        .day
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .docs[NgoGlobalCount
+                                                                .index]
+                                                            ["MouStartDate"]
+                                                        .toDate()
+                                                        .month
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .docs[NgoGlobalCount
+                                                                .index]
+                                                            ["MouStartDate"]
+                                                        .toDate()
+                                                        .year
+                                                        .toString(),
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                " MoU End Date:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(width: 5),
+                                              Text(
+                                                snapshot
+                                                        .data!
+                                                        .docs[NgoGlobalCount
+                                                                .index]
+                                                            ["MouEndDate"]
+                                                        .toDate()
+                                                        .day
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .docs[NgoGlobalCount
+                                                                .index]
+                                                            ["MouEndDate"]
+                                                        .toDate()
+                                                        .month
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .docs[NgoGlobalCount
+                                                                .index]
+                                                            ["MouEndDate"]
+                                                        .toDate()
+                                                        .year
+                                                        .toString(),
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                " MoU File:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              ElevatedButton.icon(
+                                                onPressed: () {
+                                                  //_uploadDocuments();
+                                                },
+                                                label: Text('Upload'),
+                                                icon: Icon(Icons.upload_sharp),
+                                                style: ButtonStyle(
+                                                  fixedSize:
+                                                      MaterialStateProperty.all(
+                                                          Size(150, 40)),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Color.fromRGBO(
+                                                              45, 55, 72, 1)),
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "Website URL:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[
+                                                        NgoGlobalCount.index]
+                                                    ["URL"],
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(Row(
+                                            children: [
+                                              Text(
+                                                "Funds Committed:",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      45, 55, 72, 1),
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                snapshot
+                                                    .data!
+                                                    .docs[NgoGlobalCount.index]
+                                                        ["Funds"]
+                                                    .toString(),
+                                                style: TextStyle(fontSize: 15),
+                                              ),
+                                            ],
+                                          )),
+                                          DataCell(Text('')),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                  Divider(
-                                    color: Colors.black26,
-                                    thickness: .5,
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Name of Contact Person:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
-                                              ["ngoPrimaryPerson"],
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Contact No.:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
-                                              ["contactNo"],
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Address:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
-                                              ["Address"],
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Divider(
-                                    color: Colors.black26,
-                                    thickness: .5,
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "MoU Start Date:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot
-                                                  .data!
-                                                  .docs[NgoGlobalCount.index]
-                                                      ["MouStartDate"]
-                                                  .toDate()
-                                                  .day
-                                                  .toString() +
-                                              "/" +
-                                              snapshot
-                                                  .data!
-                                                  .docs[NgoGlobalCount.index]
-                                                      ["MouStartDate"]
-                                                  .toDate()
-                                                  .month
-                                                  .toString() +
-                                              "/" +
-                                              snapshot
-                                                  .data!
-                                                  .docs[NgoGlobalCount.index]
-                                                      ["MouStartDate"]
-                                                  .toDate()
-                                                  .year
-                                                  .toString(),
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        " MoU End Date:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot
-                                                  .data!
-                                                  .docs[NgoGlobalCount.index]
-                                                      ["MouEndDate"]
-                                                  .toDate()
-                                                  .day
-                                                  .toString() +
-                                              "/" +
-                                              snapshot
-                                                  .data!
-                                                  .docs[NgoGlobalCount.index]
-                                                      ["MouEndDate"]
-                                                  .toDate()
-                                                  .month
-                                                  .toString() +
-                                              "/" +
-                                              snapshot
-                                                  .data!
-                                                  .docs[NgoGlobalCount.index]
-                                                      ["MouEndDate"]
-                                                  .toDate()
-                                                  .year
-                                                  .toString(),
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        " MoU File:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      ElevatedButton.icon(
-                                        onPressed: () {
-                                          //_uploadDocuments();
-                                        },
-                                        label: Text('Upload'),
-                                        icon: Icon(Icons.upload_sharp),
-                                        style: ButtonStyle(
-                                          fixedSize: MaterialStateProperty.all(
-                                              Size(150, 40)),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromRGBO(
-                                                      45, 55, 72, 1)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Divider(
-                                    color: Colors.black26,
-                                    thickness: .5,
-                                  ),
-                                  // Wrap(
-                                  //   spacing: 10,
-                                  //   children: [
-                                  //     Text(
-                                  //       "Products Offered:",
-                                  //       style: TextStyle(
-                                  //         color: Color.fromRGBO(45, 55, 72, 1),
-                                  //         decoration: TextDecoration.none,
-                                  //         fontSize: 15,
-                                  //         fontWeight: FontWeight.bold,
-                                  //       ),
-                                  //     ),
-                                  //     Container(
-                                  //       height: 40,
-                                  //       width: 150,
-                                  //       child: Text(
-                                  //         "3",
-                                  //         style: TextStyle(fontSize: 15),
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Website URL:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot.data!
-                                                  .docs[NgoGlobalCount.index]
-                                              ["URL"],
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    spacing: 10,
-                                    children: [
-                                      Text(
-                                        "Funds Committed:",
-                                        style: TextStyle(
-                                          color: Color.fromRGBO(45, 55, 72, 1),
-                                          decoration: TextDecoration.none,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 150,
-                                        child: Text(
-                                          snapshot
-                                              .data!
-                                              .docs[NgoGlobalCount.index]
-                                                  ["Funds"]
-                                              .toString(),
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                            Divider(
-                              color: Colors.black26,
-                              thickness: .5,
                             ),
                           ],
                         );
@@ -645,10 +654,13 @@ class _PartnersState extends State<Partners> {
                                                       .map((item) =>
                                                           DropdownMenuItem<
                                                               String>(
-                                                            child: Text(
-                                                              item,
-                                                              style: TextStyle(
-                                                                fontSize: 15,
+                                                            child: Center(
+                                                              child: Text(
+                                                                item,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                ),
                                                               ),
                                                             ),
                                                             value: item,
@@ -958,6 +970,13 @@ class ItemCard extends StatelessWidget {
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
             ),
+            Align(
+                alignment: Alignment.bottomRight,
+                child: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      //  Navigator.of(context).pop();
+                    })),
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:csr_module/Admin/Analytics/CSR_Category/category.dart';
 import 'package:csr_module/Admin/Analytics/CSR_Trainings/trainings.dart';
 import 'package:csr_module/Admin/Analytics/Events/events.dart';
 import 'package:csr_module/Admin/Analytics/Events/events_and_calender.dart';
-import 'package:csr_module/Admin/Analytics/NGO_Partner/NGO_details.dart';
+import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_details.dart';
 import 'package:csr_module/Admin/Analytics/NGO_Partner/ngo_partners1.dart';
 import 'package:csr_module/Admin/Analytics/Payroll_giving_collection/Payroll.dart';
 import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteer.dart';

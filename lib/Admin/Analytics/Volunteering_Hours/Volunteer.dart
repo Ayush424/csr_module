@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteer_repository.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Volunteer extends StatefulWidget {
@@ -10,18 +13,12 @@ class Volunteer extends StatefulWidget {
 class _VolunteerState extends State<Volunteer> {
   static const int numItems = 20;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-  int _rating = 0;
-
+  List members = [];
   bool star = false;
-
-  void rate(int rating) {
-    //Other actions based on rating such as api calls.
-    setState(() {
-      _rating = rating;
-    });
-  }
-
-  Future<void> _showMyDialog() async {
+  var date;
+  String _searchText = "";
+  final myController = TextEditingController();
+  Future<void> _showMyDialog(String docId) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -39,7 +36,12 @@ class _VolunteerState extends State<Volunteer> {
             TextButton(
               child: Text('Confirm'),
               onPressed: () {
-                print('Confirmed');
+                FirebaseFirestore.instance
+                    .collection("core_team")
+                    .doc(DateTime.now().year.toString())
+                    .collection("members")
+                    .doc(docId)
+                    .delete();
                 Navigator.of(context).pop();
               },
             ),
@@ -55,27 +57,33 @@ class _VolunteerState extends State<Volunteer> {
     );
   }
 
-  String _searchText = "";
-  final myController = TextEditingController();
   @override
   void dispose() {
     myController.dispose();
     super.dispose();
   }
 
-  var date;
   @override
   void initState() {
-    date = DateTime.now();
-
     super.initState();
-
+    //fetchDataFromFirebase();
+    date = DateTime.now();
     myController.addListener(() {
       setState(() {
         _searchText = myController.text;
       });
     });
   }
+
+  // fetchDataFromFirebase() async {
+  //   dynamic resultant = await VolunteerRepository().getMembers();
+  //   if (resultant == null) {
+  //   } else {
+  //     setState(() {
+  //       members = resultant;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -190,75 +198,96 @@ class _VolunteerState extends State<Volunteer> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Container(
-                                child: DataTable(
-                                  columns: const <DataColumn>[
-                                    DataColumn(
-                                      label: Text('Name',
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('core_team')
+                                      .doc(DateTime.now().year.toString())
+                                      .collection("members")
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    } else if (snapshot.data!.docs.length ==
+                                        0) {
+                                      return Center(
+                                        child: Text(
+                                          "Core Team for this year not set yet, ask admin to set it.",
                                           style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Department',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Department',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Action',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                  ],
-                                  rows: List<DataRow>.generate(
-                                    numItems,
-                                    (int index) => DataRow(
-                                      color: MaterialStateProperty.resolveWith<
-                                          Color?>((Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return Color.fromARGB(
-                                                  255, 237, 242, 247)
-                                              .withOpacity(0.08);
-                                        }
-                                        if (index.isEven) {
-                                          return Color.fromARGB(
-                                              255, 237, 242, 247);
-                                        }
-                                        return null;
-                                      }),
-                                      cells: <DataCell>[
-                                        DataCell(Text('abc')),
-                                        DataCell(Text('abc')),
-                                        DataCell(Text("Department")),
-                                        DataCell(
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                            ),
-                                            onPressed: () {
-                                              _showMyDialog();
-                                            },
+                                              fontSize: 20,
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130)),
+                                        ),
+                                      );
+                                    } else {
+                                      return DataTable(
+                                        columns: const <DataColumn>[
+                                          DataColumn(
+                                            label: Text('Name',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Department',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Action',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                        ],
+                                        rows: List<DataRow>.generate(
+                                          snapshot.data!.docs.length,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Text(snapshot
+                                                  .data!.docs[index]["name"])),
+                                              DataCell(Text(snapshot.data!
+                                                  .docs[index]["department"])),
+                                              DataCell(
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                  ),
+                                                  onPressed: () {
+                                                    _showMyDialog(snapshot
+                                                        .data!.docs[index].id);
+                                                  },
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ],
@@ -355,108 +384,198 @@ class _VolunteerState extends State<Volunteer> {
                             width: 1200,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: DataTable(
-                                columnSpacing: 103,
-                                columns: const <DataColumn>[
-                                  DataColumn(
-                                    label: Text('Emp Code',
+                              child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection("CsrRegistraionDetails")
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.data == null) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (snapshot.data!.docs.length == 0) {
+                                    return Center(
+                                      child: Text(
+                                        "No pending requests",
                                         style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Name',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Department',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Area of Interest 1',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Area of Interest 2',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Action',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Action',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                ],
-                                rows: List<DataRow>.generate(
-                                  numItems,
-                                  (int index) => DataRow(
-                                    color: MaterialStateProperty.resolveWith<
-                                        Color?>((Set<MaterialState> states) {
-                                      if (states
-                                          .contains(MaterialState.selected)) {
-                                        return Color.fromARGB(
-                                                255, 237, 242, 247)
-                                            .withOpacity(0.08);
-                                      }
-                                      if (index.isEven) {
-                                        return Color.fromARGB(
-                                            255, 237, 242, 247);
-                                      }
-                                      return null;
-                                    }),
-                                    cells: <DataCell>[
-                                      DataCell(Text('abc')),
-                                      DataCell(Text('abc')),
-                                      DataCell(Text('abc')),
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Text('abc'),
-                                      )),
-                                      DataCell(Text('abc')),
-                                      DataCell(IconButton(
-                                        padding: EdgeInsets.all(0),
-                                        icon: Icon(Icons.check,
-                                            color: Colors.green, size: 20),
-                                        onPressed: () {},
-                                      )),
-                                      DataCell(IconButton(
-                                        padding: EdgeInsets.all(0),
-                                        icon: Icon(Icons.close,
-                                            color: Colors.red, size: 20),
-                                        onPressed: () {},
-                                      )),
-                                    ],
-                                  ),
-                                ),
+                                            fontSize: 20,
+                                            color: Color.fromARGB(
+                                                255, 44, 82, 130)),
+                                      ),
+                                    );
+                                  } else {
+                                    return DataTable(
+                                      columnSpacing: 85,
+                                      columns: const <DataColumn>[
+                                        DataColumn(
+                                          label: Text('Emp Code',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Name',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Department',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Area of Interest 1',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Area of Interest 2',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Action',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Action',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 44, 82, 130),
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                      ],
+                                      rows: List<DataRow>.generate(
+                                        snapshot.data!.docs.length,
+                                        (int index) => DataRow(
+                                          color: MaterialStateProperty
+                                              .resolveWith<Color?>(
+                                                  (Set<MaterialState> states) {
+                                            if (states.contains(
+                                                MaterialState.selected)) {
+                                              return Color.fromARGB(
+                                                      255, 237, 242, 247)
+                                                  .withOpacity(0.08);
+                                            }
+                                            if (index.isEven) {
+                                              return Color.fromARGB(
+                                                  255, 237, 242, 247);
+                                            }
+                                            return null;
+                                          }),
+                                          cells: <DataCell>[
+                                            DataCell(Text(snapshot
+                                                .data!.docs[index]["empcode"])),
+                                            DataCell(Text(snapshot
+                                                .data!.docs[index]["name"])),
+                                            DataCell(Text(snapshot.data!
+                                                .docs[index]["department"])),
+                                            DataCell(Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Text(
+                                                  snapshot.data!.docs[index]
+                                                      ["areaOfInterest1"]),
+                                            )),
+                                            DataCell(Text(
+                                                snapshot.data!.docs[index]
+                                                    ["areaOfInterest2"])),
+                                            DataCell(IconButton(
+                                              padding: EdgeInsets.all(0),
+                                              icon: Icon(Icons.check,
+                                                  color: Colors.green,
+                                                  size: 20),
+                                              onPressed: () {
+                                                String docId = snapshot
+                                                    .data!.docs[index].id;
+                                                FirebaseFirestore.instance
+                                                    .collection("core_team")
+                                                    .doc(DateTime.now()
+                                                        .year
+                                                        .toString())
+                                                    .collection("members")
+                                                    .add({
+                                                  "uId": snapshot
+                                                      .data!.docs[index]["uId"],
+                                                  "department":
+                                                      snapshot.data!.docs[index]
+                                                          ["department"],
+                                                  "name": snapshot
+                                                      .data!.docs[index]["name"]
+                                                }).then((result) {
+                                                  FirebaseFirestore.instance
+                                                      .collection(
+                                                          "CsrRegistraionDetails")
+                                                      .doc(docId)
+                                                      .delete();
+                                                  return showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AlertDialog(
+                                                      content: SizedBox(
+                                                        height: 150,
+                                                        child: Center(
+                                                          child: Text(
+                                                            'added Successfully',
+                                                            style: TextStyle(
+                                                                fontSize: 20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  context,
+                                                                  'OK'),
+                                                          child:
+                                                              const Text('OK'),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
+                                              },
+                                            )),
+                                            DataCell(IconButton(
+                                              padding: EdgeInsets.all(0),
+                                              icon: Icon(Icons.close,
+                                                  color: Colors.red, size: 20),
+                                              onPressed: () {
+                                                String docId = snapshot
+                                                    .data!.docs[index].id;
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                        "CsrRegistraionDetails")
+                                                    .doc(docId)
+                                                    .delete();
+                                              },
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ),

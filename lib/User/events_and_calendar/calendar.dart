@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/colors.dart';
+import 'package:csr_module/User/dollarFordollar/product_details_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -188,6 +189,16 @@ class _CalendarState extends State<Calendar> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
+                                    ProductDetailsManager.ngoId = snapshot
+                                        .data!
+                                        .docs[index]
+                                        .reference
+                                        .parent
+                                        .parent!
+                                        .id;
+                                    ProductDetailsManager.productId =
+                                        snapshot.data!.docs[index].id;
+
                                     widget.update!("details");
                                   },
                                   child: ItemCard(
@@ -254,6 +265,7 @@ class ItemCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -322,7 +334,7 @@ class ItemCard extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             Text(
               data['description'],
@@ -331,14 +343,6 @@ class ItemCard extends StatelessWidget {
               style: TextStyle(
                   fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              'NGO/by : Name of Organisation',
-              style: TextStyle(
-                  fontSize: 18, color: Color.fromARGB(255, 113, 128, 150)),
-            )
           ],
         ),
       ),

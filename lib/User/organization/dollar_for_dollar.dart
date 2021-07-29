@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Theme/colors.dart';
+import 'package:csr_module/User/dollarFordollar/product_details_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // enum SingingCharacter { ngo, product }
 
 class DollarForDollar extends StatefulWidget {
-  const DollarForDollar({Key? key}) : super(key: key);
+  final ValueChanged<String>? update;
+  const DollarForDollar({Key? key, this.update}) : super(key: key);
 
   @override
   _DollarForDollarState createState() => _DollarForDollarState();
@@ -64,7 +66,9 @@ class _DollarForDollarState extends State<DollarForDollar> {
                     Padding(
                       padding: const EdgeInsets.only(right: 80, bottom: 10),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            widget.update!("cart");
+                          },
                           icon: Icon(
                             Icons.shopping_cart,
                             color: Color.fromARGB(255, 45, 55, 72),
@@ -185,7 +189,10 @@ class _DollarForDollarState extends State<DollarForDollar> {
                               itemBuilder: (context, index) {
                                 final id = snapshot.data!.docs[index].id;
                                 return NgoList(
-                                    data: snapshot.data!.docs[index], id: id);
+                                  data: snapshot.data!.docs[index],
+                                  id: id,
+                                  update: widget.update,
+                                );
                               });
                         }
                       }),
@@ -200,9 +207,10 @@ class _DollarForDollarState extends State<DollarForDollar> {
 }
 
 class NgoList extends StatefulWidget {
+  final ValueChanged<String>? update;
   final String id;
   final QueryDocumentSnapshot<Object?> data;
-  const NgoList({Key? key, required this.data, required this.id})
+  const NgoList({Key? key, required this.data, required this.id, this.update})
       : super(key: key);
 
   @override
@@ -254,6 +262,14 @@ class _NgoListState extends State<NgoList> {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return GestureDetector(
+                                onTap: () {
+                                  ProductDetailsManager.ngoId = snapshot2.data!
+                                      .docs[index].reference.parent.parent!.id;
+                                  ProductDetailsManager.productId =
+                                      snapshot2.data!.docs[index].id;
+
+                                  widget.update!("details");
+                                },
                                 child:
                                     ItemCard(data: snapshot2.data!.docs[index]),
                               );

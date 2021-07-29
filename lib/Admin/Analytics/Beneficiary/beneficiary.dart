@@ -15,6 +15,9 @@ class _BeneficiaryState extends State<Beneficiary> {
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
 
+  TextEditingController _textFieldController1 = TextEditingController();
+  final ScrollController _alwaysshownBarController = ScrollController();
+
   late DateTime date;
   final _nameController = TextEditingController();
   final _addressController = TextEditingController();
@@ -94,6 +97,7 @@ class _BeneficiaryState extends State<Beneficiary> {
                   child: SizedBox(
                     width: 900,
                     height: 1000,
+
                     child: ListView(
                       children: [
                         Row(
@@ -130,11 +134,30 @@ class _BeneficiaryState extends State<Beneficiary> {
                                         hintText: "Enter name",
                                         border: OutlineInputBorder(),
                                         //  contentPadding: EdgeInsets.all(10),
+
                                       ),
-                                    )
-                                  ],
+                                      TextFormField(
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                        // obscureText: true,
+                                        controller: _textFieldController1,
+                                        validator: (value) {
+                                          return value!.isNotEmpty
+                                              ? null
+                                              : "invalid field";
+                                        },
+                                        decoration: InputDecoration(
+                                          hintText: "Enter name",
+                                          border: OutlineInputBorder(),
+                                          //  contentPadding: EdgeInsets.all(10),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
+
                             ),
                             Padding(
                               padding:
@@ -166,11 +189,13 @@ class _BeneficiaryState extends State<Beneficiary> {
                                         hintText: "Enter name",
                                         border: OutlineInputBorder(),
                                         // contentPadding: EdgeInsets.all(10)
+
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+
                             ),
                           ],
                         ),
@@ -243,11 +268,13 @@ class _BeneficiaryState extends State<Beneficiary> {
                                         hintText: "Enter Gender",
                                         border: OutlineInputBorder(),
                                         //  contentPadding: EdgeInsets.all(10)
+
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+
                             ),
                           ],
                         ),
@@ -297,11 +324,42 @@ class _BeneficiaryState extends State<Beneficiary> {
                                               contentPadding:
                                                   EdgeInsets.only(top: 0.0)),
                                         ),
+
                                       ),
-                                    )
-                                  ],
+                                      InkWell(
+                                        onTap: () {
+                                          _selectDate1(context);
+                                        },
+                                        child: Container(
+                                          width: _width / 1.7,
+                                          height: _height / 15,
+                                          margin: EdgeInsets.only(top: 10),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: TextFormField(
+                                            style: TextStyle(fontSize: 15),
+                                            textAlign: TextAlign.start,
+                                            enabled: false,
+                                            keyboardType: TextInputType.text,
+                                            controller: _dateController1,
+                                            decoration: InputDecoration(
+                                                disabledBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide:
+                                                            BorderSide.none),
+                                                // labelText: 'Time',
+                                                contentPadding:
+                                                    EdgeInsets.only(top: 0.0)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
+
                             ),
                             Padding(
                               padding:
@@ -346,11 +404,42 @@ class _BeneficiaryState extends State<Beneficiary> {
                                               contentPadding:
                                                   EdgeInsets.only(top: 0.0)),
                                         ),
+
                                       ),
-                                    )
-                                  ],
+                                      InkWell(
+                                        onTap: () {
+                                          _selectDate2(context);
+                                        },
+                                        child: Container(
+                                          width: _width / 1.7,
+                                          height: _height / 15,
+                                          margin: EdgeInsets.only(top: 10),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: TextFormField(
+                                            style: TextStyle(fontSize: 15),
+                                            textAlign: TextAlign.start,
+                                            enabled: false,
+                                            keyboardType: TextInputType.text,
+                                            controller: _dateController2,
+                                            decoration: InputDecoration(
+                                                disabledBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide:
+                                                            BorderSide.none),
+                                                // labelText: 'Time',
+                                                contentPadding:
+                                                    EdgeInsets.only(top: 0.0)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
+
                             ),
                           ],
                         ),
@@ -388,32 +477,30 @@ class _BeneficiaryState extends State<Beneficiary> {
                                         hintText: "Enter Aadhar",
                                         border: OutlineInputBorder(),
                                         // contentPadding: EdgeInsets.all(10)
+
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 20),
-                              child: Container(
-                                width: 250,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Funds Committed',
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 42, 67, 101),
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    TextFormField(
-                                      style: TextStyle(
-                                        fontSize: 16,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 20),
+                                child: Container(
+                                  width: 250,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Funds Committed',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 42, 67, 101),
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold),
                                       ),
+
                                       controller: _fundsController,
                                       validator: (value) {
                                         return value!.isNotEmpty
@@ -424,11 +511,13 @@ class _BeneficiaryState extends State<Beneficiary> {
                                         hintText: "Enter amount",
                                         border: OutlineInputBorder(),
                                         //contentPadding: EdgeInsets.all(10)
+
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+
                             ),
                           ],
                         ),
@@ -462,13 +551,31 @@ class _BeneficiaryState extends State<Beneficiary> {
                                     hintText: "Enter Address",
                                     border: OutlineInputBorder(),
                                     //  contentPadding: EdgeInsets.all(10),
+
                                   ),
-                                )
-                              ],
+                                  TextFormField(
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                    // obscureText: true,
+                                    controller: _textFieldController11,
+                                    validator: (value) {
+                                      return value!.isNotEmpty
+                                          ? null
+                                          : "invalid field";
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: "Enter notes",
+                                      border: OutlineInputBorder(),
+                                      //  contentPadding: EdgeInsets.all(10),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

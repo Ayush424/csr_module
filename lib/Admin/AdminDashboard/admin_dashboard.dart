@@ -459,16 +459,22 @@ class _AdminDashboardState extends State<AdminDashboard>
                         Tab(
                           child: Container(
                             height: 50,
-                            width: ssize.width * 0.15,
+                            width: ssize.width > 1000
+                                ? ssize.width * 0.15
+                                : ssize.width * 0.3,
                             decoration: BoxDecoration(
-                                color:
-                                    //  selected
-                                    //     ? Colors.white
-                                    //     :
-                                    Color.fromRGBO(235, 248, 255, 1),
+                                color: Color.fromRGBO(235, 248, 255, 1),
                                 border:
                                     Border.all(color: Colors.grey.shade300)),
-                            child: Center(child: Text('CSR Events')),
+                            child: Center(
+                                child: Text(
+                              'CSR Events',
+                              style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width > 550
+                                          ? 24
+                                          : 20),
+                            )),
                           ),
                         ),
                         Transform(
@@ -476,12 +482,22 @@ class _AdminDashboardState extends State<AdminDashboard>
                           child: Tab(
                             child: Container(
                               height: 50,
-                              width: ssize.width * 0.15,
+                              width: ssize.width > 1000
+                                  ? ssize.width * 0.15
+                                  : ssize.width * 0.3,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(235, 248, 255, 1),
                                   border:
                                       Border.all(color: Colors.grey.shade300)),
-                              child: Center(child: Text('NGO Partners')),
+                              child: Center(
+                                  child: Text(
+                                'NGO Partners',
+                                style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width > 550
+                                            ? 24
+                                            : 20),
+                              )),
                             ),
                           ),
                         ),
@@ -492,7 +508,9 @@ class _AdminDashboardState extends State<AdminDashboard>
               ),
             ),
             Container(
-              constraints: BoxConstraints(maxHeight: 600),
+              constraints: BoxConstraints(
+                maxHeight: 600,
+              ),
               child: TabBarView(controller: _tabController, children: <Widget>[
                 Column(
                   children: [

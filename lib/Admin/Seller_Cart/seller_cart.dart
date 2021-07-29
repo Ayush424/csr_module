@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Admin/seller_cart/seller_cart_dialoguebox.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class SellerCart extends StatefulWidget {
   const SellerCart({Key? key}) : super(key: key);
@@ -65,6 +66,7 @@ class _SellerCartState extends State<SellerCart> {
                           child: ConstrainedBox(
                             constraints:
                                 BoxConstraints(minWidth: constraints.minWidth),
+
                             child: StreamBuilder<QuerySnapshot>(
                                 stream: FirebaseFirestore.instance
                                     .collection("orders")
@@ -256,6 +258,7 @@ class _SellerCartState extends State<SellerCart> {
                                     );
                                   }
                                 }),
+
                           ),
                         ),
                       ),
@@ -274,6 +277,7 @@ class _SellerCartState extends State<SellerCart> {
           Container(
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
               height: 210,
+
               child: SingleChildScrollView(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -425,6 +429,7 @@ class _SellerCartState extends State<SellerCart> {
                           );
                         }
                       }),
+
                 ),
               )),
         ],

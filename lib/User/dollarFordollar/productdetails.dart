@@ -45,7 +45,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                   decoration: TextDecoration.none,
                 ),
               ),
-              Icon(Icons.shopping_cart),
+              IconButton(
+                  onPressed: () {
+                    widget.update!("cart");
+                  },
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    color: Color.fromARGB(255, 45, 55, 72),
+                    size: 40,
+                  ))
             ],
           ),
           StreamBuilder<DocumentSnapshot>(
@@ -154,6 +162,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 .returnCurrentUserid())
                                             .collection("cart")
                                             .add({
+                                          "ngo": snapshot.data!["ngo"],
+                                          "quantity": 1,
+                                          "companyShares":
+                                              snapshot.data!["companyShares"],
                                           "name":
                                               snapshot.data!["product name"],
                                           "price":
@@ -217,7 +229,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Text(" NGO by:   ",
+                                  Text(" Sold by: " + snapshot.data!.get("ngo"),
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
@@ -230,7 +242,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                               Column(
                                 children: [
-                                  Text("Company Shares",
+                                  Text(
+                                      "Company Shares " +
+                                          snapshot.data!
+                                              .get("companyShares")
+                                              .toString() +
+                                          "%",
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
@@ -239,12 +256,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Text("Buys",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        decoration: TextDecoration.none,
-                                      )),
+                                  // Text("Buys",
+                                  //     style: TextStyle(
+                                  //       fontSize: 15,
+                                  //       color: Colors.black,
+                                  //       decoration: TextDecoration.none,
+                                  //     )),
                                 ],
                               ),
                               // Row(

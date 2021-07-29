@@ -66,7 +66,9 @@ class _DollarForDollarState extends State<DollarForDollar> {
                     Padding(
                       padding: const EdgeInsets.only(right: 80, bottom: 10),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            widget.update!("cart");
+                          },
                           icon: Icon(
                             Icons.shopping_cart,
                             color: Color.fromARGB(255, 45, 55, 72),

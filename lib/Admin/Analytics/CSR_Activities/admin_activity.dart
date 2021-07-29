@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ActivityAdmin extends StatefulWidget {
@@ -10,25 +11,15 @@ class ActivityAdmin extends StatefulWidget {
 class _ActivityAdminState extends State<ActivityAdmin> {
   static const int numItems = 20;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-
+  final TextEditingController _nameController = TextEditingController();
   static final List<String> items = <String>[
-    'Dropdown',
-    '2',
-    '3',
-    '4',
-    '5',
+    'Select type',
+    'Government initiated',
+    'Company initiated'
   ];
   String value = items.first;
-  static final List<String> items1 = <String>[
-    'Dropdown',
-    '2',
-    '3',
-    '4',
-    '5',
-  ];
-  String value1 = items1.first;
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showMyDialog(String id, String type) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -46,7 +37,13 @@ class _ActivityAdminState extends State<ActivityAdmin> {
             TextButton(
               child: Text('Confirm'),
               onPressed: () {
-                print('Confirmed');
+                FirebaseFirestore.instance
+                    .collection("activities")
+                    .doc("rKjP6IlqYq6wtWzy9DeO")
+                    .collection(type)
+                    .doc(id)
+                    .delete();
+
                 Navigator.of(context).pop();
               },
             ),
@@ -96,6 +93,7 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                 children: [
                   Container(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Types of activity",
@@ -109,7 +107,7 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Container(
-                            width: 150,
+                            width: 200,
                             height: 40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -144,9 +142,10 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                   Container(
                     width: 200,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Name of Activities",
+                          "Name of Activity",
                           style: TextStyle(
                             color: Color.fromRGBO(45, 55, 72, 1),
                             decoration: TextDecoration.none,
@@ -159,6 +158,7 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                           child: Container(
                             height: 40,
                             child: TextFormField(
+                              controller: _nameController,
                               style: TextStyle(
                                 fontSize: 15,
                               ),
@@ -173,53 +173,53 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                       ],
                     ),
                   ),
-                  Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          "CSR Category",
-                          style: TextStyle(
-                            color: Color.fromRGBO(45, 55, 72, 1),
-                            decoration: TextDecoration.none,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Container(
-                            width: 150,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.grey.shade400,
-                                )),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: value1,
-                                items: items1
-                                    .map((item1) => DropdownMenuItem<String>(
-                                          child: Text(
-                                            item1,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          value: item1,
-                                        ))
-                                    .toList(),
-                                onChanged: (value1) => setState(() {
-                                  this.value1 = value1!;
-                                }),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         "Activity type",
+                  //         style: TextStyle(
+                  //           color: Color.fromRGBO(45, 55, 72, 1),
+                  //           decoration: TextDecoration.none,
+                  //           fontSize: 20,
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding: const EdgeInsets.only(top: 10),
+                  //         child: Container(
+                  //           width: 200,
+                  //           height: 40,
+                  //           decoration: BoxDecoration(
+                  //               color: Colors.white,
+                  //               border: Border.all(
+                  //                 color: Colors.grey.shade400,
+                  //               )),
+                  //           child: DropdownButtonHideUnderline(
+                  //             child: DropdownButton<String>(
+                  //               value: value1,
+                  //               items: items1
+                  //                   .map((item1) => DropdownMenuItem<String>(
+                  //                         child: Text(
+                  //                           item1,
+                  //                           style: TextStyle(
+                  //                             fontWeight: FontWeight.bold,
+                  //                             fontSize: 15,
+                  //                           ),
+                  //                         ),
+                  //                         value: item1,
+                  //                       ))
+                  //                   .toList(),
+                  //               onChanged: (value1) => setState(() {
+                  //                 this.value1 = value1!;
+                  //               }),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 40),
                     child: ElevatedButton.icon(
@@ -233,7 +233,83 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                       ),
                       label: Text('Add'),
                       onPressed: () {
-                        setState(() {});
+                        if (value != items.first &&
+                            _nameController.text.isNotEmpty) {
+                          if (value == 'Government initiated') {
+                            FirebaseFirestore.instance
+                                .collection("activities")
+                                .doc("rKjP6IlqYq6wtWzy9DeO")
+                                .collection("governmentInitiatedActivities")
+                                .add({"name": _nameController.text}).then(
+                              (result) => showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  content: SizedBox(
+                                    height: 150,
+                                    child: Center(
+                                      child: Text(
+                                        'Added Successfully',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            FirebaseFirestore.instance
+                                .collection("activities")
+                                .doc("rKjP6IlqYq6wtWzy9DeO")
+                                .collection("companyInitiatedActivities")
+                                .add({"name": _nameController.text}).then(
+                              (result) => showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  content: SizedBox(
+                                    height: 150,
+                                    child: Center(
+                                      child: Text(
+                                        'Added Successfully',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                    content: Text(
+                                      'Please fill all the fields',
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.red),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'OK'),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ));
+                        }
                       },
                     ),
                   ),
@@ -273,59 +349,84 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Container(
-                                  child: DataTable(
-                                    columns: const <DataColumn>[
-                                      DataColumn(
-                                        label: Text('Name',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                      DataColumn(
-                                        label: Text('Action',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                    ],
-                                    rows: List<DataRow>.generate(
-                                      numItems,
-                                      (int index) => DataRow(
-                                        color: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return Color.fromARGB(
-                                                    255, 237, 242, 247)
-                                                .withOpacity(0.08);
-                                          }
-                                          if (index.isEven) {
-                                            return Color.fromARGB(
-                                                255, 237, 242, 247);
-                                          }
-                                          return null;
-                                        }),
-                                        cells: <DataCell>[
-                                          DataCell(Text('abc')),
-                                          DataCell(
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
+                                  child: StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('activities')
+                                          .doc('rKjP6IlqYq6wtWzy9DeO')
+                                          .collection(
+                                              "companyInitiatedActivities")
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.data == null) {
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        } else if (snapshot.data!.docs.length ==
+                                            0) {
+                                          return Text("no activities set yet");
+                                        } else {
+                                          return DataTable(
+                                            columns: const <DataColumn>[
+                                              DataColumn(
+                                                label: Text('Name',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 44, 82, 130),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
                                               ),
-                                              onPressed: () {
-                                                _showMyDialog();
-                                              },
+                                              DataColumn(
+                                                label: Text('Action',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 44, 82, 130),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
+                                              ),
+                                            ],
+                                            rows: List<DataRow>.generate(
+                                              snapshot.data!.docs.length,
+                                              (int index) => DataRow(
+                                                color: MaterialStateProperty
+                                                    .resolveWith<Color?>(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                                  if (states.contains(
+                                                      MaterialState.selected)) {
+                                                    return Color.fromARGB(
+                                                            255, 237, 242, 247)
+                                                        .withOpacity(0.08);
+                                                  }
+                                                  if (index.isEven) {
+                                                    return Color.fromARGB(
+                                                        255, 237, 242, 247);
+                                                  }
+                                                  return null;
+                                                }),
+                                                cells: <DataCell>[
+                                                  DataCell(Text(snapshot.data!
+                                                      .docs[index]["name"])),
+                                                  DataCell(
+                                                    IconButton(
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                      ),
+                                                      onPressed: () {
+                                                        _showMyDialog(
+                                                            snapshot.data!
+                                                                .docs[index].id,
+                                                            "companyInitiatedActivities");
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                          );
+                                        }
+                                      }),
                                 ),
                               ],
                             ),
@@ -358,66 +459,92 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                DataTable(
-                                  columns: const <DataColumn>[
-                                    DataColumn(
-                                      label: Text('Name ',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(40, 0, 0, 0),
-                                        child: Text('Action',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                    ),
-                                  ],
-                                  rows: List<DataRow>.generate(
-                                    numItems,
-                                    (int index) => DataRow(
-                                      color: MaterialStateProperty.resolveWith<
-                                          Color?>((Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return Color.fromARGB(
-                                                  255, 237, 242, 247)
-                                              .withOpacity(0.08);
-                                        }
-                                        if (index.isEven) {
-                                          return Color.fromARGB(
-                                              255, 237, 242, 247);
-                                        }
-                                        return null;
-                                      }),
-                                      cells: <DataCell>[
-                                        DataCell(Text('abc')),
-                                        DataCell(
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                40, 0, 0, 0),
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection("activities")
+                                        .doc("rKjP6IlqYq6wtWzy9DeO")
+                                        .collection(
+                                            "governmentInitiatedActivities")
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.data == null) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else if (snapshot.data!.docs.length ==
+                                          0) {
+                                        return Text("no activities set yet");
+                                      } else {
+                                        return DataTable(
+                                          columns: const <DataColumn>[
+                                            DataColumn(
+                                              label: Text('Name ',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 44, 82, 130),
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                            ),
+                                            DataColumn(
+                                              label: Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    40, 0, 0, 0),
+                                                child: Text('Action',
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 44, 82, 130),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
                                               ),
-                                              onPressed: () {
-                                                _showMyDialog();
-                                              },
+                                            ),
+                                          ],
+                                          rows: List<DataRow>.generate(
+                                            snapshot.data!.docs.length,
+                                            (int index) => DataRow(
+                                              color: MaterialStateProperty
+                                                  .resolveWith<Color?>(
+                                                      (Set<MaterialState>
+                                                          states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return Color.fromARGB(
+                                                          255, 237, 242, 247)
+                                                      .withOpacity(0.08);
+                                                }
+                                                if (index.isEven) {
+                                                  return Color.fromARGB(
+                                                      255, 237, 242, 247);
+                                                }
+                                                return null;
+                                              }),
+                                              cells: <DataCell>[
+                                                DataCell(Text(snapshot.data!
+                                                    .docs[index]["name"])),
+                                                DataCell(
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            40, 0, 0, 0),
+                                                    child: IconButton(
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                      ),
+                                                      onPressed: () {
+                                                        _showMyDialog(
+                                                            snapshot.data!
+                                                                .docs[index].id,
+                                                            "governmentInitiatedActivities");
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                        );
+                                      }
+                                    }),
                               ],
                             ),
                           ),

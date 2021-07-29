@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 // import 'themes/Colors.dart';
@@ -9,42 +11,22 @@ class Beneficiary extends StatefulWidget {
   _BeneficiaryState createState() => _BeneficiaryState();
 }
 
-class Item {
-  Item({
-    required this.expandedValue,
-    required this.headerValue,
-    this.isExpanded = false,
-  });
-
-  String expandedValue;
-  String headerValue;
-  bool isExpanded;
-}
-
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: 'Panel $index',
-      expandedValue: 'This is item number $index',
-    );
-  });
-}
-
 class _BeneficiaryState extends State<Beneficiary> {
-  final List<Item> _data = generateItems(8);
   static const int numItems = 10;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
+
   TextEditingController _textFieldController1 = TextEditingController();
   final ScrollController _alwaysshownBarController = ScrollController();
+
   late DateTime date;
-  final _textFieldController2 = TextEditingController();
-  final _textFieldController3 = TextEditingController();
-  final _textFieldController4 = TextEditingController();
-  final _textFieldController7 = TextEditingController();
-  final _textFieldController8 = TextEditingController();
-  final _textFieldController9 = TextEditingController();
-  final _textFieldController10 = TextEditingController();
-  final _textFieldController11 = TextEditingController();
+  final _nameController = TextEditingController();
+  final _addressController = TextEditingController();
+
+  final _fundsController = TextEditingController();
+  final _ngoController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _aadharController = TextEditingController();
+  final _codeController = TextEditingController();
   DateFormat format = DateFormat('MMM, y');
   late String dateTime;
   late double _height;
@@ -115,31 +97,44 @@ class _BeneficiaryState extends State<Beneficiary> {
                   child: SizedBox(
                     width: 900,
                     height: 1000,
-                    child: Scrollbar(
-                      controller: _alwaysshownBarController,
-                      isAlwaysShown: true,
-                      child: ListView(
-                        controller: _alwaysshownBarController,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Name',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
+
+                    child: ListView(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Name',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                      // obscureText: true,
+                                      controller: _nameController,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter name",
+                                        border: OutlineInputBorder(),
+                                        //  contentPadding: EdgeInsets.all(10),
+
                                       ),
                                       TextFormField(
                                         style: TextStyle(
@@ -162,143 +157,174 @@ class _BeneficiaryState extends State<Beneficiary> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Contact Person',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
+
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'NGO name',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
                                       ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        controller: _textFieldController2,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: "Enter name",
+                                      controller: _ngoController,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter name",
+                                        border: OutlineInputBorder(),
+                                        // contentPadding: EdgeInsets.all(10)
+
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Code',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      // obscureText: true,
+                                      controller: _codeController,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                          hintText: "Enter code",
                                           border: OutlineInputBorder(),
-                                          // contentPadding: EdgeInsets.all(10)
-                                        ),
+                                          contentPadding: EdgeInsets.all(10)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Gender',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      controller: _genderController,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter Gender",
+                                        border: OutlineInputBorder(),
+                                        //  contentPadding: EdgeInsets.all(10)
+
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Category',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
+
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Support Start Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        _selectDate1(context);
+                                      },
+                                      child: Container(
+                                        width: _width / 1.7,
+                                        height: _height / 15,
+                                        margin: EdgeInsets.only(top: 10),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey)),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.start,
+                                          enabled: false,
+                                          keyboardType: TextInputType.text,
+                                          controller: _dateController1,
+                                          decoration: InputDecoration(
+                                              disabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              // labelText: 'Time',
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 0.0)),
                                         ),
-                                        // obscureText: true,
-                                        controller: _textFieldController3,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                            hintText: "Enter category",
-                                            border: OutlineInputBorder(),
-                                            contentPadding: EdgeInsets.all(10)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Contact number',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        controller: _textFieldController4,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: "Enter number",
-                                          border: OutlineInputBorder(),
-                                          //  contentPadding: EdgeInsets.all(10)
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'MoU Start Date',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
+
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -333,22 +359,52 @@ class _BeneficiaryState extends State<Beneficiary> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'MoU End Date',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
+
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Support End Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        _selectDate2(context);
+                                      },
+                                      child: Container(
+                                        width: _width / 1.7,
+                                        height: _height / 15,
+                                        margin: EdgeInsets.only(top: 10),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.grey)),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.start,
+                                          enabled: false,
+                                          keyboardType: TextInputType.text,
+                                          controller: _dateController2,
+                                          decoration: InputDecoration(
+                                              disabledBorder:
+                                                  UnderlineInputBorder(
+                                                      borderSide:
+                                                          BorderSide.none),
+                                              // labelText: 'Time',
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 0.0)),
+                                        ),
+
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -383,44 +439,45 @@ class _BeneficiaryState extends State<Beneficiary> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Address',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
+
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 20),
+                              child: Container(
+                                width: 250,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Aadhar number',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 42, 67, 101),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                        fontSize: 16,
                                       ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        // obscureText: true,
-                                        controller: _textFieldController7,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: "Enter address",
-                                          border: OutlineInputBorder(),
-                                          // contentPadding: EdgeInsets.all(10)
-                                        ),
+                                      // obscureText: true,
+                                      controller: _aadharController,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter Aadhar",
+                                        border: OutlineInputBorder(),
+                                        // contentPadding: EdgeInsets.all(10)
+
                                       ),
                                     ],
                                   ),
@@ -443,122 +500,58 @@ class _BeneficiaryState extends State<Beneficiary> {
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        controller: _textFieldController8,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: "Enter amount",
-                                          border: OutlineInputBorder(),
-                                          //contentPadding: EdgeInsets.all(10)
-                                        ),
+
+                                      controller: _fundsController,
+                                      validator: (value) {
+                                        return value!.isNotEmpty
+                                            ? null
+                                            : "invalid field";
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Enter amount",
+                                        border: OutlineInputBorder(),
+                                        //contentPadding: EdgeInsets.all(10)
+
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Email id',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        // obscureText: true,
-                                        controller: _textFieldController9,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: "Enter email id",
-                                          border: OutlineInputBorder(),
-                                          //  contentPadding: EdgeInsets.all(10)
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 137),
+                          child: Container(
+                            width: 500,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Address',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 42, 67, 101),
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
-                                child: Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Website URL',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 42, 67, 101),
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextFormField(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        controller: _textFieldController10,
-                                        validator: (value) {
-                                          return value!.isNotEmpty
-                                              ? null
-                                              : "invalid field";
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: "Enter URL",
-                                          border: OutlineInputBorder(),
-                                          //  contentPadding: EdgeInsets.all(10)
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 137),
-                            child: Container(
-                              width: 500,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Notes',
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 42, 67, 101),
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold),
+                                TextFormField(
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                  // obscureText: true,
+                                  controller: _addressController,
+                                  validator: (value) {
+                                    return value!.isNotEmpty
+                                        ? null
+                                        : "invalid field";
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: "Enter Address",
+                                    border: OutlineInputBorder(),
+                                    //  contentPadding: EdgeInsets.all(10),
+
                                   ),
                                   TextFormField(
                                     style: TextStyle(
@@ -597,8 +590,28 @@ class _BeneficiaryState extends State<Beneficiary> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')));
+                    var startDate = Timestamp.fromDate(
+                        DateFormat('M/d/yyyy').parse(_dateController1.text));
+                    var endDate = Timestamp.fromDate(
+                        DateFormat('M/d/yyyy').parse(_dateController1.text));
+                    final Map<String, dynamic> entry = {
+                      "name": _nameController.text,
+                      "Address": _addressController.text,
+                      "ngoName": _ngoController.text,
+                      "funds": int.parse(_fundsController.text),
+                      "AadharNo": _aadharController.text,
+                      "suppStartDate": startDate,
+                      "suppEndDate": endDate,
+                      "code": _codeController.text,
+                      "Gender": _genderController.text,
+                    };
+                    FirebaseFirestore.instance
+                        .collection("Beneficiaries")
+                        .add(entry)
+                        .then((value) => ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                                SnackBar(content: Text('Successfully added'))));
+                    Navigator.of(context).pop();
                   }
                   // Navigator.of(context).pop();
                 },
@@ -610,15 +623,14 @@ class _BeneficiaryState extends State<Beneficiary> {
                       const Color.fromRGBO(45, 55, 72, 1)),
                 ),
                 onPressed: () {
-                  _textFieldController1.clear();
-                  _textFieldController2.clear();
-                  _textFieldController3.clear();
-                  _textFieldController4.clear();
-                  _textFieldController7.clear();
-                  _textFieldController8.clear();
-                  _textFieldController9.clear();
-                  _textFieldController10.clear();
-                  _textFieldController11.clear();
+                  _genderController.clear();
+                  _fundsController.clear();
+                  _aadharController.clear();
+                  _addressController.clear();
+                  _codeController.clear();
+                  _ngoController.clear();
+                  _nameController.clear();
+
                   _dateController1.text =
                       DateFormat.yMd().format(DateTime.now());
                   _dateController2.text =
@@ -637,476 +649,610 @@ class _BeneficiaryState extends State<Beneficiary> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
 
-    return Container(
-        color: Colors.white,
-        constraints: BoxConstraints.expand(),
-        child: Padding(
-            padding: EdgeInsets.all(40),
-            child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Analytics - Beneficiary',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 42, 67, 101),
-                          fontSize: 36,
-                          decoration: TextDecoration.none),
-                    ),
-                    Divider(
-                      color: Color.fromARGB(255, 226, 232, 240),
-                      thickness: 2,
-                    ),
-                    SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        runSpacing: 10,
-                        spacing: 10,
-                        direction: Axis.horizontal,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(left: 10),
-                                primary: Colors.white,
-                                side: BorderSide(
-                                    color: Color.fromRGBO(255, 183, 75, 1))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 290,
-                                child: Row(
+    return Scaffold(
+      body: Container(
+          color: Colors.white,
+          constraints: BoxConstraints.expand(),
+          child: Padding(
+              padding: EdgeInsets.all(40),
+              child: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Analytics - Beneficiary',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 42, 67, 101),
+                            fontSize: 36,
+                            decoration: TextDecoration.none),
+                      ),
+                      Divider(
+                        color: Color.fromARGB(255, 226, 232, 240),
+                        thickness: 2,
+                      ),
+                      SizedBox(height: 30),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection("Beneficiaries")
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data == null) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else {
+                                int funds = 0;
+                                int beneficiaries = 0;
+                                for (QueryDocumentSnapshot doc
+                                    in snapshot.data!.docs) {
+                                  int fund = doc["funds"].toInt();
+                                  beneficiaries += 1;
+                                  funds += fund;
+                                }
+                                return Wrap(
+                                  runSpacing: 10,
+                                  spacing: 10,
+                                  direction: Axis.horizontal,
                                   children: [
-                                    Flexible(
-                                      child: CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor:
-                                              Color.fromRGBO(255, 183, 75, 1),
-                                          child: Icon(
-                                            Icons.how_to_reg,
-                                            color: Colors.white,
-                                            size: 40,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Flexible(
-                                      child: ListView(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        controller: ScrollController(),
-                                        children: [
-                                          Row(
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.only(left: 10),
+                                          primary: Colors.white,
+                                          side: BorderSide(
+                                              color: Color.fromRGBO(
+                                                  255, 183, 75, 1))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: SizedBox(
+                                          height: 70,
+                                          width: 290,
+                                          child: Row(
                                             children: [
-                                              Text(
-                                                '   209 ',
-                                                style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        255, 183, 75, 1),
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.w900,
-                                                    fontFamily: 'Rubik'),
+                                              Flexible(
+                                                child: CircleAvatar(
+                                                    radius: 25,
+                                                    backgroundColor:
+                                                        Color.fromRGBO(
+                                                            255, 183, 75, 1),
+                                                    child: Icon(
+                                                      Icons.how_to_reg,
+                                                      color: Colors.white,
+                                                      size: 40,
+                                                    )),
+                                              ),
+                                              SizedBox(
+                                                width: 6,
                                               ),
                                               Flexible(
-                                                  flex: 1,
-                                                  child:
-                                                      MyText(text: 'People')),
+                                                child: ListView(
+                                                  physics:
+                                                      ClampingScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  controller:
+                                                      ScrollController(),
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          '  ' +
+                                                              snapshot.data!
+                                                                  .docs.length
+                                                                  .toString() +
+                                                              '  ',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      255,
+                                                                      183,
+                                                                      75,
+                                                                      1),
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                              fontFamily:
+                                                                  'Rubik'),
+                                                        ),
+                                                        Flexible(
+                                                            flex: 1,
+                                                            child: MyText(
+                                                                text:
+                                                                    'People')),
+                                                      ],
+                                                    ),
+                                                    MyText(
+                                                        text:
+                                                            'Benefitted so far'),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
-                                          MyText(text: 'Benefitted so far'),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(left: 10),
-                                primary: Colors.white,
-                                side: BorderSide(
-                                    color: Color.fromRGBO(255, 75, 162, 1))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 290,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: CircleAvatar(
-                                          maxRadius: 25,
-                                          backgroundColor:
-                                              Color.fromRGBO(255, 75, 162, 1),
-                                          child: Icon(
-                                            Icons.attach_money,
-                                            color: Colors.white,
-                                            size: 50,
-                                          )),
                                     ),
                                     SizedBox(
-                                      width: 6,
+                                      height: 5,
                                     ),
-                                    Flexible(
-                                      child: ListView(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        controller: ScrollController(),
-                                        children: [
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                Flexible(
-                                                  flex: 2,
-                                                  child: Text(
-                                                    '255.5k ',
-                                                    style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            255, 75, 162, 1),
-                                                        fontSize: 24,
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        fontFamily: 'Rubik'),
-                                                  ),
-                                                ),
-                                                Flexible(
-                                                    flex: 1,
-                                                    child: MyText(text: 'INR')),
-                                              ],
-                                            ),
-                                          ),
-                                          MyText(
-                                            text: 'Total fund collected',
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.only(left: 10),
-                                primary: Colors.white,
-                                side: BorderSide(
-                                    color: Color.fromRGBO(186, 18, 18, 1))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 290,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor:
-                                              Color.fromRGBO(186, 18, 18, 1),
-                                          child: Icon(
-                                            Icons.people_outlined,
-                                            color: Colors.white,
-                                            size: 40,
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Flexible(
-                                      child: ListView(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        controller: ScrollController(),
-                                        children: [
-                                          Text(
-                                            '   25 ',
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    186, 18, 18, 1),
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.w900,
-                                                fontFamily: 'Rubik'),
-                                          ),
-                                          MyText(text: 'NGO Benefitted'),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 100),
-                    Text(
-                      'Beneficiary',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 42, 67, 101),
-                          fontSize: 30,
-                          decoration: TextDecoration.none),
-                    ),
-                    Divider(
-                      color: Color.fromARGB(255, 226, 232, 240),
-                      thickness: 2,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                        height: 400,
-                        width: 1200,
-                        color: Color.fromARGB(25, 237, 242, 247),
-                        // decoration: BoxDecoration(
-                        //     color: Color.fromARGB(25, 237, 242, 247),
-
-                        //     border: Border.all(
-                        //       color: Color.fromARGB(25, 237, 242, 247),
-                        //     )),
-                        child: ListView(
-                          children: [
-                            Container(
-                              child: Theme(
-                                data: Theme.of(context).copyWith(
-                                  cardColor: Color.fromARGB(255, 237, 242, 247),
-                                ),
-                                child: ExpansionPanelList(
-                                  dividerColor:
-                                      Color.fromARGB(25, 237, 242, 247),
-                                  expansionCallback:
-                                      (int index, bool isExpanded) {
-                                    setState(() {
-                                      _data[index].isExpanded = !isExpanded;
-                                    });
-                                  },
-                                  children:
-                                      _data.map<ExpansionPanel>((Item item) {
-                                    return ExpansionPanel(
-                                      headerBuilder: (BuildContext context,
-                                          bool isExpanded) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15),
-                                          child: Wrap(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            spacing: 120,
-                                            runSpacing: 5,
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.only(left: 10),
+                                          primary: Colors.white,
+                                          side: BorderSide(
+                                              color: Color.fromRGBO(
+                                                  255, 75, 162, 1))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: SizedBox(
+                                          height: 70,
+                                          width: 290,
+                                          child: Row(
                                             children: [
-                                              Text(
-                                                'Beneficiary Name',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                              Flexible(
+                                                child: CircleAvatar(
+                                                    maxRadius: 25,
+                                                    backgroundColor:
+                                                        Color.fromRGBO(
+                                                            255, 75, 162, 1),
+                                                    child: Icon(
+                                                      Icons.attach_money,
+                                                      color: Colors.white,
+                                                      size: 50,
+                                                    )),
                                               ),
-                                              Text(
-                                                'Beneficiary Code',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24),
+                                              SizedBox(
+                                                width: 6,
                                               ),
-                                              Text(
-                                                'NGO Name',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24),
-                                              ),
-                                              Text(
-                                                'Funds Allocated',
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24),
+                                              Flexible(
+                                                child: ListView(
+                                                  physics:
+                                                      ClampingScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  controller:
+                                                      ScrollController(),
+                                                  children: [
+                                                    Container(
+                                                      child: Row(
+                                                        children: [
+                                                          Flexible(
+                                                            flex: 2,
+                                                            child: Text(
+                                                              funds.toString() +
+                                                                  ' ',
+                                                              style: TextStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          255,
+                                                                          75,
+                                                                          162,
+                                                                          1),
+                                                                  fontSize: 24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900,
+                                                                  fontFamily:
+                                                                      'Rubik'),
+                                                            ),
+                                                          ),
+                                                          Flexible(
+                                                              flex: 1,
+                                                              child: MyText(
+                                                                  text: 'INR')),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    MyText(
+                                                      text:
+                                                          'Total fund collected',
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        );
-                                      },
-                                      body: Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 20,
-                                        ),
-                                        child: Wrap(
-                                          // alignment: WrapAlignment.start,
-                                          spacing: 50,
-                                          runSpacing: 10,
-                                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Gender',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Male',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Address',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Address',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Support Start Date',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Date',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Support End Date',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Date',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Aadhar Number',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Number',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  'Others',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 42, 67, 101),
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  'Other Notes',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 42, 67, 101),
-                                                    fontSize: 24,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
                                         ),
                                       ),
-                                      isExpanded: item.isExpanded,
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
-                    SizedBox(height: 50),
-                    Center(
-                      child: ElevatedButton.icon(
-                        icon: Icon(
-                          Icons.add,
-                          size: 24.0,
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(45, 55, 72, 1)),
-                        ),
-                        label: Text('Add New'),
-                        onPressed: () {
-                          _displayDialog(context);
-                        },
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.only(left: 10),
+                                          primary: Colors.white,
+                                          side: BorderSide(
+                                              color: Color.fromRGBO(
+                                                  186, 18, 18, 1))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: SizedBox(
+                                          height: 70,
+                                          width: 290,
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                child: CircleAvatar(
+                                                    radius: 25,
+                                                    backgroundColor:
+                                                        Color.fromRGBO(
+                                                            186, 18, 18, 1),
+                                                    child: Icon(
+                                                      Icons.people_outlined,
+                                                      color: Colors.white,
+                                                      size: 40,
+                                                    )),
+                                              ),
+                                              SizedBox(
+                                                width: 6,
+                                              ),
+                                              Flexible(
+                                                child: ListView(
+                                                  physics:
+                                                      ClampingScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  controller:
+                                                      ScrollController(),
+                                                  children: [
+                                                    Text(
+                                                      '   25 ',
+                                                      style: TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              186, 18, 18, 1),
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.w900,
+                                                          fontFamily: 'Rubik'),
+                                                    ),
+                                                    MyText(
+                                                        text: 'NGO Benefitted'),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                            }),
                       ),
-                    ),
-                  ]),
-            )));
+                      SizedBox(height: 100),
+                      Text(
+                        'Beneficiary',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 42, 67, 101),
+                            fontSize: 30,
+                            decoration: TextDecoration.none),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(
+                        color: Color.fromARGB(255, 226, 232, 240),
+                        thickness: 2,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: 350,
+                        width: 1150,
+                        color: teal,
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection("Beneficiaries")
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data == null) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else if (snapshot.data!.docs.length == 0) {
+                                return Center(child: Text("No beneficiaries"));
+                              } else {
+                                return ListView.builder(
+                                    itemCount: snapshot.data!.docs.length,
+                                    itemBuilder: (context, index) {
+                                      QueryDocumentSnapshot data =
+                                          snapshot.data!.docs[index];
+                                      return ExpansionTile(
+                                          backgroundColor: Colors.white,
+                                          collapsedBackgroundColor:
+                                              (index % 2 != 0)
+                                                  ? Colors.white
+                                                  : teal,
+                                          childrenPadding:
+                                              EdgeInsetsDirectional.only(
+                                                  bottom: 5, top: 10),
+                                          tilePadding: EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
+                                          title: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: Wrap(
+                                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              spacing: 120,
+                                              runSpacing: 9,
+                                              children: [
+                                                Text(
+                                                  data["name"],
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  data['code'],
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24),
+                                                ),
+                                                Text(
+                                                  data["ngoName"],
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24),
+                                                ),
+                                                Text(
+                                                  data['funds'].toString(),
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 42, 67, 101),
+                                                      fontSize: 24),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15),
+                                              child: Wrap(
+                                                  // alignment: WrapAlignment.start,
+                                                  spacing: 270,
+                                                  runSpacing: 10,
+                                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Gender',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      42,
+                                                                      67,
+                                                                      101),
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text(
+                                                          data["Gender"],
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    42,
+                                                                    67,
+                                                                    101),
+                                                            fontSize: 24,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Address',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      42,
+                                                                      67,
+                                                                      101),
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text(
+                                                          data['Address'],
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    42,
+                                                                    67,
+                                                                    101),
+                                                            fontSize: 24,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Support Start Date',
+                                                          style: TextStyle(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      42,
+                                                                      67,
+                                                                      101),
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text(
+                                                          data['suppStartDate']
+                                                                  .toDate()
+                                                                  .day
+                                                                  .toString() +
+                                                              '/' +
+                                                              data['suppStartDate']
+                                                                  .toDate()
+                                                                  .month
+                                                                  .toString() +
+                                                              '/' +
+                                                              data['suppStartDate']
+                                                                  .toDate()
+                                                                  .year
+                                                                  .toString(),
+                                                          style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    42,
+                                                                    67,
+                                                                    101),
+                                                            fontSize: 24,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ]),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15),
+                                              child: Wrap(
+                                                spacing: 270,
+                                                runSpacing: 10,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Support End Date',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    42,
+                                                                    67,
+                                                                    101),
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        data['suppEndDate']
+                                                                .toDate()
+                                                                .day
+                                                                .toString() +
+                                                            '/' +
+                                                            data['suppEndDate']
+                                                                .toDate()
+                                                                .month
+                                                                .toString() +
+                                                            '/' +
+                                                            data['suppEndDate']
+                                                                .toDate()
+                                                                .year
+                                                                .toString(),
+                                                        style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 42, 67, 101),
+                                                          fontSize: 24,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Aadhar Number',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    42,
+                                                                    67,
+                                                                    101),
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        data['AadharNo'],
+                                                        style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 42, 67, 101),
+                                                          fontSize: 24,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  // Column(
+                                                  //   children: [
+                                                  //     Text(
+                                                  //       'Others',
+                                                  //       style: TextStyle(
+                                                  //           color:
+                                                  //               Color.fromARGB(
+                                                  //                   255,
+                                                  //                   42,
+                                                  //                   67,
+                                                  //                   101),
+                                                  //           fontSize: 24,
+                                                  //           fontWeight:
+                                                  //               FontWeight
+                                                  //                   .bold),
+                                                  //     ),
+                                                  //     Text(
+                                                  //       'Other Notes',
+                                                  //       style: TextStyle(
+                                                  //         color: Color.fromARGB(
+                                                  //             255, 42, 67, 101),
+                                                  //         fontSize: 24,
+                                                  //       ),
+                                                  //     )
+                                                  //   ],
+                                                  // ),
+                                                ],
+                                              ),
+                                            ),
+                                          ]);
+                                    });
+                              }
+                            }),
+                      ),
+                      SizedBox(height: 50),
+                      Center(
+                        child: ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.add,
+                            size: 24.0,
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color.fromRGBO(45, 55, 72, 1)),
+                          ),
+                          label: Text('Add New'),
+                          onPressed: () {
+                            _displayDialog(context);
+                          },
+                        ),
+                      ),
+                    ]),
+              ))),
+    );
   }
 }
 

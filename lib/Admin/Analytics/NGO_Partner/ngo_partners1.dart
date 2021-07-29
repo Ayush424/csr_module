@@ -693,62 +693,62 @@ class _NgoPartnerState extends State<NgoPartner> {
                           color: Color.fromARGB(255, 226, 232, 240),
                           thickness: 2,
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Wrap(
-                            spacing: 15,
-                            children: [
-                              SizedBox(
-                                width: 60,
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      date = DateTime(
-                                          date.year, date.month - 1, 15);
-                                    });
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_left,
-                                    size: 30,
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  WidgetSpan(
-                                      child: Icon(
-                                    Icons.event,
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                    size: 23,
-                                  )),
-                                  TextSpan(
-                                      text: format.format(date),
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                      ))
-                                ])),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      date = DateTime(
-                                          date.year, date.month + 1, 15);
-                                    });
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_right,
-                                    size: 30,
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ],
-                          ),
-                        ),
+                        // const SizedBox(
+                        //   height: 25,
+                        // ),
+                        // Align(
+                        //   alignment: Alignment.center,
+                        //   child: Wrap(
+                        //     spacing: 15,
+                        //     children: [
+                        //       SizedBox(
+                        //         width: 60,
+                        //       ),
+                        //       IconButton(
+                        //           onPressed: () {
+                        //             setState(() {
+                        //               date = DateTime(
+                        //                   date.year, date.month - 1, 15);
+                        //             });
+                        //           },
+                        //           icon: Icon(
+                        //             Icons.arrow_left,
+                        //             size: 30,
+                        //             color: Color.fromARGB(255, 44, 82, 130),
+                        //           )),
+                        //       Padding(
+                        //         padding: const EdgeInsets.only(top: 8),
+                        //         child: RichText(
+                        //             text: TextSpan(children: [
+                        //           WidgetSpan(
+                        //               child: Icon(
+                        //             Icons.event,
+                        //             color: Color.fromARGB(255, 44, 82, 130),
+                        //             size: 23,
+                        //           )),
+                        //           TextSpan(
+                        //               text: format.format(date),
+                        //               style: TextStyle(
+                        //                 fontSize: 25,
+                        //                 color: Color.fromARGB(255, 44, 82, 130),
+                        //               ))
+                        //         ])),
+                        //       ),
+                        //       IconButton(
+                        //           onPressed: () {
+                        //             setState(() {
+                        //               date = DateTime(
+                        //                   date.year, date.month + 1, 15);
+                        //             });
+                        //           },
+                        //           icon: Icon(
+                        //             Icons.arrow_right,
+                        //             size: 30,
+                        //             color: Color.fromARGB(255, 44, 82, 130),
+                        //           )),
+                        //     ],
+                        //   ),
+                        // ),
                         const SizedBox(
                           height: 30,
                         ),
@@ -777,15 +777,15 @@ class _NgoPartnerState extends State<NgoPartner> {
                                           : LegendPosition.bottom,
                                   showLegends: true,
                                   legendTextStyle: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 22,
                                     decoration: TextDecoration.none,
                                     color: Color.fromARGB(255, 42, 67, 101),
                                   ),
                                 ),
                                 chartValuesOptions: ChartValuesOptions(
-                                  showChartValueBackground: true,
-                                  showChartValues: false,
-                                  showChartValuesInPercentage: false,
+                                  showChartValueBackground: false,
+                                  showChartValues: true,
+                                  showChartValuesInPercentage: true,
                                   showChartValuesOutside: false,
                                   decimalPlaces: 1,
                                 ),

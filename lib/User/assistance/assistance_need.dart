@@ -16,12 +16,10 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
   TextEditingController categoryController = TextEditingController();
   String dropdownvalue = "Select Category";
 
-
   static const int numItems = 6;
 
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   Future<void> _showMyDialog(String id) async {
-
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -31,11 +29,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
           content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-
-
-
                 Text('Do you want to delete this request?'),
-
               ],
             ),
           ),
@@ -43,14 +37,10 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
             TextButton(
               child: Text('Confirm'),
               onPressed: () {
-
-                print('Confirmed');
-
                 FirebaseFirestore.instance
                     .collection('assistance')
                     .doc(id)
                     .delete();
-
 
                 Navigator.of(context).pop();
               },
@@ -73,9 +63,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
       constraints: BoxConstraints.expand(),
       color: Colors.white,
       child: ListView(
-
         controller: ScrollController(),
-
         children: [
           Padding(
             padding: const EdgeInsets.all(40),
@@ -105,7 +93,6 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                               color: darkblue,
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
-
                         ),
                       ),
                       SizedBox(
@@ -132,7 +119,6 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                           minLines: 5,
                           maxLines: 10,
                         ),
-
                         height: 200,
                       ),
                       Center(
@@ -217,9 +203,7 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                           decoration: TextDecoration.none,
                         ),
                       ),
-
                       Divider(),
-
                       Padding(
                         padding: EdgeInsets.all((10)),
                         child: SingleChildScrollView(
@@ -233,7 +217,6 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                               ),
-
                               child: StreamBuilder<QuerySnapshot>(
                                   stream: FirebaseFirestore.instance
                                       .collection('assistance')
@@ -340,7 +323,6 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
                                       );
                                     }
                                   }),
-
                             ),
                           ),
                         ),

@@ -35,7 +35,32 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
       });
     });
   }
-
+  TextEditingController _textFieldController = TextEditingController();
+_displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Enter Hours'),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Hours"),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: new Text('Edit'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(45, 55, 72, 1)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
   String dropdownValue = 'Select Event';
   bool select = false;
   static const int numItems = 4;
@@ -130,27 +155,30 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                   child: PieChart(
                     dataMap: dataMap,
                     animationDuration: Duration(milliseconds: 800),
-                    chartLegendSpacing: 32,
-                    // chartRadius: MediaQuery.of(context).size.width / 6,
-                    // colorList: colorList,
-                    chartRadius: 180,
+                    chartLegendSpacing:
+                                    MediaQuery.of(context).size.width >= 990
+                                        ? 180
+                                        : 50,
+                    chartRadius: 190,
                     initialAngleInDegree: 0,
                     // ringStrokeWidth: 10,
                     // centerText: "HYBRID",
                     legendOptions: LegendOptions(
                       showLegendsInRow: false,
-                      legendPosition: LegendPosition.right,
+                      legendPosition: MediaQuery.of(context).size.width >= 990
+                                          ? LegendPosition.right
+                                          : LegendPosition.bottom,
                       showLegends: true,
                       legendTextStyle: TextStyle(
-                        fontSize: 20,
+                        fontSize: 24,
                         decoration: TextDecoration.none,
                         color: Color.fromARGB(255, 42, 67, 101),
                       ),
                     ),
                     chartValuesOptions: ChartValuesOptions(
-                      showChartValueBackground: true,
+                      showChartValueBackground: false,
                       showChartValues: true,
-                      showChartValuesInPercentage: false,
+                      showChartValuesInPercentage: true,
                       showChartValuesOutside: false,
                       decimalPlaces: 1,
                     ),
@@ -161,7 +189,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                 ),
                 Wrap(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    spacing: 322,
+                    spacing: 280,
                     runSpacing: 10,
                     children: [
                       Padding(
@@ -291,7 +319,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                     ? Container()
                     : Container(
                         height: 200,
-                        width: 1200,
+                        width: 1150,
                         decoration: BoxDecoration(
                             border: Border.all(
                           color: Color.fromARGB(255, 204, 204, 204),
@@ -302,7 +330,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                             scrollDirection: Axis.horizontal,
                             controller: ScrollController(),
                             child: DataTable(
-                              columnSpacing: 231,
+                              columnSpacing: 215,
                               columns: const <DataColumn>[
                                 DataColumn(
                                   label: Text('Emp code',
@@ -333,7 +361,7 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                                       )),
                                 ),
                                 DataColumn(
-                                  label: Text('hrs',
+                                  label: Text('Hours',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
                                         fontWeight: FontWeight.bold,
@@ -361,7 +389,21 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
                                     DataCell(Text('xyz')),
                                     DataCell(Text('abc')),
                                     DataCell(Text('abc')),
-                                    DataCell(Text('4')),
+                                    DataCell(Row(
+                                          
+                                          children: [
+                                            Text('1'),
+                                            IconButton(
+                                              icon: Icon(
+                                                Icons.drive_file_rename_outline,
+                                                size: 20,
+                                              ),
+                                              onPressed: () {
+                                                _displayDialog(context);
+                                              },
+                                            ),
+                                          ],
+                                        )),
                                   ],
                                 ),
                               ),

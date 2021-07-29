@@ -166,91 +166,97 @@ class _SettingSecurityState extends State<SettingSecurity> {
                   height: 10,
                 ),
                 Container(
-                  height: 200,
-                  width: 1200,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    color: Color.fromARGB(255, 204, 204, 204),
-                    width: 1,
-                  )),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          columnSpacing: 198,
-                          columns: const <DataColumn>[
-                            DataColumn(
-                              label: Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text('Emp Code',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                    )),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text('Department',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Emp Id',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Admin',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Action',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                          ],
-                          rows: List<DataRow>.generate(
-                            numItems,
-                            (int index) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
-                                  return Color.fromARGB(255, 237, 242, 247)
-                                      .withOpacity(0.08);
-                                }
-                                if (index.isEven) {
-                                  return Color.fromARGB(255, 237, 242, 247);
-                                }
-                                return null;
-                              }),
-                              cells: <DataCell>[
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Text("abc")),
-                                DataCell(Text("abc")),
-                                DataCell(
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                    ),
-                                    onPressed: () {
-                                      _displayDialog(
-                                          context, " new Address", "Name");
-                                    },
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  height: 210,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Container(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints:
+                                BoxConstraints(minWidth: constraints.minWidth),
+                            child: DataTable(
+                              columnSpacing: 198,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text('Emp Code',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                        )),
                                   ),
                                 ),
+                                DataColumn(
+                                  label: Text('Department',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Emp Id',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Admin',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Action',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
                               ],
+                              rows: List<DataRow>.generate(
+                                numItems,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Text("abc")),
+                                    DataCell(Text("abc")),
+                                    DataCell(
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                        ),
+                                        onPressed: () {
+                                          _displayDialog(
+                                              context, " new Address", "Name");
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -290,94 +296,100 @@ class _SettingSecurityState extends State<SettingSecurity> {
                   height: 30,
                 ),
                 Container(
-                  height: 200,
-                  width: 1200,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    color: Color.fromARGB(255, 204, 204, 204),
-                    width: 1,
-                  )),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          columnSpacing: 175,
-                          columns: const <DataColumn>[
-                            DataColumn(
-                              label: Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text('Employee Name',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                    )),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text('Department',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Date of Joining',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Action',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Action',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                          ],
-                          rows: List<DataRow>.generate(
-                            numItems,
-                            (int index) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
-                                  return Color.fromARGB(255, 237, 242, 247)
-                                      .withOpacity(0.08);
-                                }
-                                if (index.isEven) {
-                                  return Color.fromARGB(255, 237, 242, 247);
-                                }
-                                return null;
-                              }),
-                              cells: <DataCell>[
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(Icons.check,
-                                      color: Colors.green, size: 20),
-                                  onPressed: () {},
-                                )),
-                                DataCell(IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(Icons.close,
-                                      color: Colors.red, size: 20),
-                                  onPressed: () {},
-                                )),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.grey)),
+                  height: 210,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Container(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints:
+                                BoxConstraints(minWidth: constraints.minWidth),
+                            child: DataTable(
+                              columnSpacing: 175,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text('Employee Name',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                        )),
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text('Department',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Date of Joining',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Action',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Action',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
                               ],
+                              rows: List<DataRow>.generate(
+                                numItems,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      icon: Icon(Icons.check,
+                                          color: Colors.green, size: 20),
+                                      onPressed: () {},
+                                    )),
+                                    DataCell(IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      icon: Icon(Icons.close,
+                                          color: Colors.red, size: 20),
+                                      onPressed: () {},
+                                    )),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),

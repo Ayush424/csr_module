@@ -2,7 +2,6 @@ import 'package:csr_module/auth/services/firebase_auth_service.dart';
 import 'package:csr_module/sign_in/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'Admin/Settings/setting_security.dart';
 import 'auth/models/user.dart';
 

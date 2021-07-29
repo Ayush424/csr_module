@@ -302,145 +302,131 @@ class _TrainingsState extends State<Trainings> {
                   color: Color.fromARGB(255, 204, 204, 204),
                   width: 1,
                 )),
-                child: LayoutBuilder(
-                  builder: (context, constraints) => SingleChildScrollView(
+                child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     controller: ScrollController(),
-                    child: Container(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection("trainings")
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.data == null) {
-                                return Center(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              } else if (snapshot.data!.docs.length == 0) {
-                                return Text("no trainings added");
-                              } else {
-                                return ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      minWidth: constraints.minWidth),
-                                  child: DataTable(
-                                    columnSpacing: 165,
-                                    columns: const <DataColumn>[
-                                      DataColumn(
-                                        label: Text('Trainings Name',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                      DataColumn(
-                                        label: Text('Duration',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                      DataColumn(
-                                        label: Text('Starting Date',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                      DataColumn(
-                                        label: Text('Training id',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                      DataColumn(
-                                        label: Text('Action',
-                                            style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 44, 82, 130),
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                      ),
-                                    ],
-                                    rows: List<DataRow>.generate(
-                                      snapshot.data!.docs.length,
-                                      (int index) => DataRow(
-                                        color: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
-                                          if (states.contains(
-                                              MaterialState.selected)) {
-                                            return Color.fromARGB(
-                                                    255, 237, 242, 247)
-                                                .withOpacity(0.08);
-                                          }
-                                          if (index.isEven) {
-                                            return Color.fromARGB(
-                                                255, 237, 242, 247);
-                                          }
-                                          return null;
-                                        }),
-                                        cells: <DataCell>[
-                                          DataCell(Text(snapshot
-                                              .data!.docs[index]["name"])),
-                                          DataCell(Text(snapshot
-                                                  .data!.docs[index]["duration"]
-                                                  .toString() +
-                                              " hours")),
-                                          DataCell(Text(snapshot.data!
-                                                  .docs[index]["startDate"]
-                                                  .toDate()
-                                                  .day
-                                                  .toString() +
-                                              "/" +
-                                              snapshot.data!
-                                                  .docs[index]["startDate"]
-                                                  .toDate()
-                                                  .month
-                                                  .toString() +
-                                              "/" +
-                                              snapshot.data!
-                                                  .docs[index]["startDate"]
-                                                  .toDate()
-                                                  .year
-                                                  .toString())),
-                                          DataCell(Text(snapshot
-                                              .data!.docs[index]["id"])),
-                                          DataCell(
-                                            ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        const Color.fromRGBO(
-                                                            45, 55, 72, 1)),
-                                              ),
-                                              child: Text('View more'),
-                                              onPressed: () {
-                                                setState(() {
-                                                  details = true;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ],
-
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("trainings")
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Center(
+                              child: SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          } else if (snapshot.data!.docs.length == 0) {
+                            return Text("no trainings added");
+                          } else {
+                            return DataTable(
+                              columnSpacing: 165,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text('Trainings Name',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Duration',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Starting Date',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Training id',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Action',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                              ],
+                              rows: List<DataRow>.generate(
+                                snapshot.data!.docs.length,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Text(
+                                        snapshot.data!.docs[index]["name"])),
+                                    DataCell(Text(snapshot
+                                            .data!.docs[index]["duration"]
+                                            .toString() +
+                                        " hours")),
+                                    DataCell(Text(snapshot
+                                            .data!.docs[index]["startDate"]
+                                            .toDate()
+                                            .day
+                                            .toString() +
+                                        "/" +
+                                        snapshot.data!.docs[index]["startDate"]
+                                            .toDate()
+                                            .month
+                                            .toString() +
+                                        "/" +
+                                        snapshot.data!.docs[index]["startDate"]
+                                            .toDate()
+                                            .year
+                                            .toString())),
+                                    DataCell(
+                                        Text(snapshot.data!.docs[index]["id"])),
+                                    DataCell(
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  const Color.fromRGBO(
+                                                      45, 55, 72, 1)),
+                                        ),
+                                        child: Text('View more'),
+                                        onPressed: () {
+                                          setState(() {
+                                            docId =
+                                                snapshot.data!.docs[index].id;
+                                            heading = snapshot.data!.docs[index]
+                                                ["name"];
+                                            details = true;
+                                          });
+                                        },
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                      ),
-                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                   ),
                 ),
               ),

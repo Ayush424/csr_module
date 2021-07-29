@@ -15,10 +15,11 @@ class _SellerCartState extends State<SellerCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints.expand(),
+      ///constraints: BoxConstraints.expand(),
       color: Colors.white,
       padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
       child: ListView(
+        shrinkWrap: true,
         controller: ScrollController(),
         children: [
           ListTile(
@@ -43,118 +44,142 @@ class _SellerCartState extends State<SellerCart> {
             ),
           ),
           Container(
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-              height: 210,
-              child: SingleChildScrollView(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columnSpacing: 85,
-                    columns: const <DataColumn>[
-                      DataColumn(
-                        label: Text('Employee Code',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16)),
-                      ),
-                      DataColumn(
-                        label: Text('Name ',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16)),
-                      ),
-                      DataColumn(
-                        label: Text('Order Date',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16)),
-                      ),
-                      DataColumn(
-                        label: Text('Amount',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 44, 82, 130),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16)),
-                      ),
-                      DataColumn(
-                        label: Text(''),
-                      ),
-                      DataColumn(
-                        label: Text(''),
-                      ),
-                    ],
-                    rows: List<DataRow>.generate(
-                      numItems,
-                      (int index) => DataRow(
-                        color: MaterialStateProperty.resolveWith<Color?>(
-                            (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.selected)) {
-                            return Color.fromARGB(255, 237, 242, 247)
-                                .withOpacity(0.08);
-                          }
-                          if (index.isEven) {
-                            return Color.fromARGB(255, 237, 242, 247);
-                          }
-                          return null;
-                        }),
-                        cells: <DataCell>[
-                          DataCell(
-                            Text('Emp Code'),
-                          ),
-                          DataCell(
-                            Text('Name'),
-                          ),
-                          DataCell(
-                            Text(
-                              'June 27,2021',
+            height: 210,
+            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints:
+                                BoxConstraints(minWidth: constraints.maxWidth),
+                            child: DataTable(
+                              columnSpacing:
+                                  MediaQuery.of(context).size.width * 0.065,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text('Employee Code',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                DataColumn(
+                                  label: Text('Name ',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                DataColumn(
+                                  label: Text('Order Date',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                DataColumn(
+                                  label: Text('Amount',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                DataColumn(
+                                  label: Text(''),
+                                ),
+                                DataColumn(
+                                  label: Text(''),
+                                ),
+                              ],
+                              rows: List<DataRow>.generate(
+                                numItems,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(
+                                      Text('Emp Code'),
+                                    ),
+                                    DataCell(
+                                      Text('Name'),
+                                    ),
+                                    DataCell(
+                                      Text(
+                                        'June 27,2021',
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Text(
+                                        'Total Amount',
+                                      ),
+                                    ),
+                                    DataCell(
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Color.fromRGBO(
+                                                  44, 82, 130, 1),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              )),
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    SellerCartDialogue());
+                                          },
+                                          child: Text(
+                                            'View Order',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 252, 254, 1)),
+                                          )),
+                                    ),
+                                    DataCell(
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.pink,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              )),
+                                          onPressed: () {},
+                                          child: Text(
+                                            'Mark as Delivered',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1)),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                          DataCell(
-                            Text(
-                              'Total Amount',
-                            ),
-                          ),
-                          DataCell(
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Color.fromRGBO(44, 82, 130, 1),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                    )),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => SellerCartDialogue());
-                                },
-                                child: Text(
-                                  'View Order',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(255, 252, 254, 1)),
-                                )),
-                          ),
-                          DataCell(
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.pink,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                    )),
-                                onPressed: () {},
-                                child: Text(
-                                  'Mark as Delivered',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1)),
-                                )),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              )),
+                    )),
+          ),
           SizedBox(
             height: 50,
           ),

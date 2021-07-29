@@ -367,7 +367,9 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
               if (GlobalMainPage.mainpage == 'cangive') {
                 return AssistanceCanGive();
               } else if (GlobalMainPage.mainpage == 'details') {
-                return ProductDetails();
+                return ProductDetails(
+                  update: _update,
+                );
               } else if (GlobalMainPage.mainpage == 'ineed') {
                 return AssistanceNeed();
               } else if (GlobalMainPage.mainpage == 'coreteam') {
@@ -387,7 +389,9 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                   update: _update,
                 );
               } else if (GlobalMainPage.mainpage == 'Dollar') {
-                return DollarForDollar();
+                return DollarForDollar(
+                  update: _update,
+                );
               } else {
                 return Container();
               }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/Admin/admin_page_struct/admin_page_struct_tablet.dart';
+import 'package:csr_module/User/dollarFordollar/cart.dart';
+import 'package:csr_module/User/dollarFordollar/productdetails.dart';
 import 'package:csr_module/User/events_and_calendar/calendar.dart';
 import 'package:csr_module/User/organization/dollar_for_dollar.dart';
 import '../homepage/static_homepage.dart';
@@ -301,6 +303,14 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
       body: Builder(builder: (context) {
         if (GlobalMainPage.mainpage == 'cangive') {
           return AssistanceCanGive();
+        } else if (GlobalMainPage.mainpage == 'cart') {
+          return Cart(
+              //update: _update,
+              );
+        } else if (GlobalMainPage.mainpage == 'details') {
+          return ProductDetails(
+            update: _update,
+          );
         } else if (GlobalMainPage.mainpage == 'ineed') {
           return AssistanceNeed();
         } else if (GlobalMainPage.mainpage == 'coreteam') {
@@ -320,7 +330,9 @@ class _MainPageStructTabletState extends State<MainPageStructTablet> {
             update: _update,
           );
         } else if (GlobalMainPage.mainpage == 'Dollar') {
-          return DollarForDollar();
+          return DollarForDollar(
+            update: _update,
+          );
         } else {
           return Container();
         }

@@ -10,11 +10,13 @@ class Trainings extends StatefulWidget {
 }
 
 class _TrainingsState extends State<Trainings> {
+  String heading = '';
+  String docId = "";
   static const int numItems = 6;
 
   TextEditingController _textFieldController = TextEditingController();
 
-  _displayDialog(BuildContext context) async {
+  _displayDialog(BuildContext context, String documentId) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -32,6 +34,12 @@ class _TrainingsState extends State<Trainings> {
                       const Color.fromRGBO(45, 55, 72, 1)),
                 ),
                 onPressed: () {
+                  FirebaseFirestore.instance
+                      .collection("trainings")
+                      .doc(docId)
+                      .collection("participants")
+                      .doc(documentId)
+                      .update({"hours": _textFieldController.text});
                   Navigator.of(context).pop();
                 },
               )
@@ -49,6 +57,9 @@ class _TrainingsState extends State<Trainings> {
   DateTime selectedDate = DateTime.now();
 
   TextEditingController _dateController = TextEditingController();
+  TextEditingController _idController = TextEditingController();
+  TextEditingController _durationController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -121,6 +132,7 @@ class _TrainingsState extends State<Trainings> {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
+                              controller: _nameController,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -191,6 +203,7 @@ class _TrainingsState extends State<Trainings> {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
+                              controller: _durationController,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -220,6 +233,7 @@ class _TrainingsState extends State<Trainings> {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
+                              controller: _idController,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -249,7 +263,15 @@ class _TrainingsState extends State<Trainings> {
                           ),
                           label: Text('Add'),
                           onPressed: () {
-                            setState(() {});
+                            FirebaseFirestore.instance
+                                .collection("trainings")
+                                .add({
+                              "duration": _durationController.text,
+                              "id": _idController.text,
+                              "name": _nameController.text,
+                              "participants": 0,
+                              "startDate": _dateController.text
+                            });
                           },
                         ),
                       ),
@@ -410,6 +432,7 @@ class _TrainingsState extends State<Trainings> {
                                             ),
                                           ),
                                         ],
+
                                       ),
                                     ),
                                   ),
@@ -432,29 +455,13 @@ class _TrainingsState extends State<Trainings> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'Analystics - CSR Trainings',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      decoration: TextDecoration.none,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(1, 5, 0, 0),
-                                    child: Text(
-                                      '>>>>Details',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        decoration: TextDecoration.none,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                heading,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Color.fromARGB(255, 44, 82, 130),
+                                  decoration: TextDecoration.none,
+                                ),
                               ),
                               Row(
                                 children: [
@@ -482,86 +489,6 @@ class _TrainingsState extends State<Trainings> {
                             color: Color.fromARGB(255, 226, 232, 240),
                             thickness: 2,
                           ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Container(
-                          //   height: 150,
-                          //   width: 1200,
-                          //   decoration: BoxDecoration(
-                          //       border: Border.all(
-                          //     color: Color.fromARGB(255, 204, 204, 204),
-                          //     width: 1,
-                          //   )),
-                          //   child: SingleChildScrollView(
-                          //     child: SingleChildScrollView(
-                          //       scrollDirection: Axis.horizontal,
-                          //       controller: ScrollController(),
-                          //       child: DataTable(
-                          //         columnSpacing: 260,
-                          //         columns: const <DataColumn>[
-                          //           DataColumn(
-                          //             label: Text(' Training Name ',
-                          //                 style: TextStyle(
-                          //                   color: Color.fromARGB(
-                          //                       255, 44, 82, 130),
-                          //                   fontWeight: FontWeight.bold,
-                          //                 )),
-                          //           ),
-                          //           DataColumn(
-                          //             label: Text('Duration',
-                          //                 style: TextStyle(
-                          //                   color: Color.fromARGB(
-                          //                       255, 44, 82, 130),
-                          //                   fontWeight: FontWeight.bold,
-                          //                 )),
-                          //           ),
-                          //           DataColumn(
-                          //             label: Text('Date Started',
-                          //                 style: TextStyle(
-                          //                   color: Color.fromARGB(
-                          //                       255, 44, 82, 130),
-                          //                   fontWeight: FontWeight.bold,
-                          //                 )),
-                          //           ),
-                          //           DataColumn(
-                          //             label: Text('Registered Employees',
-                          //                 style: TextStyle(
-                          //                   color: Color.fromARGB(
-                          //                       255, 44, 82, 130),
-                          //                   fontWeight: FontWeight.bold,
-                          //                 )),
-                          //           ),
-                          //         ],
-                          //         rows: List<DataRow>.generate(
-                          //           numItems,
-                          //           (int index) => DataRow(
-                          //             color: MaterialStateProperty.resolveWith<
-                          //                 Color?>((Set<MaterialState> states) {
-                          //               if (states
-                          //                   .contains(MaterialState.selected)) {
-                          //                 return Color.fromARGB(
-                          //                         255, 237, 242, 247)
-                          //                     .withOpacity(0.08);
-                          //               }
-                          //               if (index.isEven) {
-                          //                 return Color.fromARGB(
-                          //                     255, 237, 242, 247);
-                          //               }
-                          //               return null;
-                          //             }),
-                          //             cells: <DataCell>[
-                          //               DataCell(Text('abc')),
-                          //               DataCell(Text('xyz')),
-                          //               DataCell(Text('xyz')),
-                          //               DataCell(Text('xyz')),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -577,81 +504,138 @@ class _TrainingsState extends State<Trainings> {
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 controller: ScrollController(),
-                                child: DataTable(
-                                  columnSpacing: 240,
-                                  columns: const <DataColumn>[
-                                    DataColumn(
-                                      label: Text(' Employee Name ',
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("trainings")
+                                      .doc(docId)
+                                      .collection("participants")
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    } else if (snapshot.data!.docs.length ==
+                                        0) {
+                                      return Center(
+                                        child: Text(
+                                          "No one registered yet",
                                           style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Department',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Registered On',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Hours Completed',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                  ],
-                                  rows: List<DataRow>.generate(
-                                    numItems,
-                                    (int index) => DataRow(
-                                      color: MaterialStateProperty.resolveWith<
-                                          Color?>((Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.selected)) {
-                                          return Color.fromARGB(
-                                                  255, 237, 242, 247)
-                                              .withOpacity(0.08);
-                                        }
-                                        if (index.isEven) {
-                                          return Color.fromARGB(
-                                              255, 237, 242, 247);
-                                        }
-                                        return null;
-                                      }),
-                                      cells: <DataCell>[
-                                        DataCell(Text('abc')),
-                                        DataCell(Text('xyz')),
-                                        DataCell(Text('xyz')),
-                                        DataCell(Wrap(
-                                          spacing: 10,
-                                          children: [
-                                            Text('1'),
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.drive_file_rename_outline,
-                                                size: 20,
-                                              ),
-                                              onPressed: () {
-                                                _displayDialog(context);
-                                              },
-                                            ),
-                                          ],
-                                        )),
-                                      ],
-                                    ),
-                                  ),
+                                              fontSize: 20,
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130)),
+                                        ),
+                                      );
+                                    } else {
+                                      return DataTable(
+                                        columnSpacing: 240,
+                                        columns: const <DataColumn>[
+                                          DataColumn(
+                                            label: Text(' Employee Name ',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Department',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Registered On',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Hours Completed',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                        ],
+                                        rows: List<DataRow>.generate(
+                                          snapshot.data!.docs.length,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Text(snapshot
+                                                  .data!.docs[index]["name"])),
+                                              DataCell(Text(snapshot.data!
+                                                  .docs[index]["department"])),
+                                              DataCell(Text(snapshot
+                                                      .data!
+                                                      .docs[index]
+                                                          ["registeredOn"]
+                                                      .toDate()
+                                                      .day
+                                                      .toString() +
+                                                  "/" +
+                                                  snapshot
+                                                      .data!
+                                                      .docs[index]
+                                                          ["registeredOn"]
+                                                      .toDate()
+                                                      .month
+                                                      .toString() +
+                                                  "/" +
+                                                  snapshot
+                                                      .data!
+                                                      .docs[index]
+                                                          ["registeredOn"]
+                                                      .toDate()
+                                                      .year
+                                                      .toString())),
+                                              DataCell(Wrap(
+                                                spacing: 10,
+                                                children: [
+                                                  Text(snapshot.data!
+                                                      .docs[index]["hours"]
+                                                      .toString()),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                      Icons
+                                                          .drive_file_rename_outline,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () {
+                                                      _displayDialog(
+                                                          context,
+                                                          snapshot.data!
+                                                              .docs[index].id);
+                                                    },
+                                                  ),
+                                                ],
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ),

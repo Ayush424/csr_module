@@ -63,7 +63,8 @@ class _OrganizationState extends State<Organization> {
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection('core_team')
-                            .where('Year', isEqualTo: year)
+                            .doc(DateTime.now().year.toString())
+                            .collection("members")
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (snapshot.data == null) {
@@ -96,7 +97,7 @@ class _OrganizationState extends State<Organization> {
                                 ),
                               ],
                               rows: List<DataRow>.generate(
-                                snapshot.data!.docs.single['Members'].length,
+                                snapshot.data!.docs.length,
                                 (int index) => DataRow(
                                   color:
                                       MaterialStateProperty.resolveWith<Color?>(
@@ -112,12 +113,10 @@ class _OrganizationState extends State<Organization> {
                                     return null;
                                   }),
                                   cells: <DataCell>[
-                                    DataCell(Text(snapshot
-                                        .data!.docs.single['Members'].values
-                                        .toList()[index])),
-                                    DataCell(Text(snapshot
-                                        .data!.docs.single['Members'].keys
-                                        .toList()[index])),
+                                    DataCell(Text(
+                                        snapshot.data!.docs[index]["name"])),
+                                    DataCell(Text(snapshot.data!.docs[index]
+                                        ["department"])),
                                   ],
                                 ),
                               ),

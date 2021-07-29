@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'Intermediate.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -143,7 +145,16 @@ class _CategoriesState extends State<Categories>
                                       color: Color.fromRGBO(235, 248, 255, 1),
                                       border: Border.all(
                                           color: Colors.grey.shade300)),
-                                  child: Center(child: Text('Newbie')),
+                                  child: Center(
+                                      child: Text(
+                                    'Newbie',
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width >
+                                                    550
+                                                ? 24
+                                                : 16),
+                                  )),
                                 ),
                               ),
                               Transform(
@@ -151,12 +162,24 @@ class _CategoriesState extends State<Categories>
                                 child: Tab(
                                   child: Container(
                                     height: 50,
-                                    width: ssize.width * 0.15,
+                                    width: ssize.width > 900
+                                        ? ssize.width * 0.15
+                                        : ssize.width * 0.25,
                                     decoration: BoxDecoration(
                                         color: Color.fromRGBO(235, 248, 255, 1),
                                         border: Border.all(
                                             color: Colors.grey.shade300)),
-                                    child: Center(child: Text('Intermediate')),
+                                    child: Center(
+                                        child: Text(
+                                      'Intermediate',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width >
+                                                  550
+                                              ? 24
+                                              : 16),
+                                    )),
                                   ),
                                 ),
                               ),
@@ -170,7 +193,17 @@ class _CategoriesState extends State<Categories>
                                         color: Color.fromRGBO(235, 248, 255, 1),
                                         border: Border.all(
                                             color: Colors.grey.shade300)),
-                                    child: Center(child: Text('Mature')),
+                                    child: Center(
+                                        child: Text(
+                                      'Mature',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width >
+                                                  550
+                                              ? 24
+                                              : 16),
+                                    )),
                                   ),
                                 ),
                               ),
@@ -184,7 +217,17 @@ class _CategoriesState extends State<Categories>
                                         color: Color.fromRGBO(235, 248, 255, 1),
                                         border: Border.all(
                                             color: Colors.grey.shade300)),
-                                    child: Center(child: Text('Expert')),
+                                    child: Center(
+                                        child: Text(
+                                      'Expert',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width >
+                                                  550
+                                              ? 24
+                                              : 16),
+                                    )),
                                   ),
                                 ),
                               ),

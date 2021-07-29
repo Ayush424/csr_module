@@ -145,68 +145,92 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     height: 200,
                   ),
                   Center(
-                    child: GestureDetector(
-                        child: Chip(
-                          backgroundColor: darkblue,
-                          label: Text(
-                            "Apply",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        onTap: () {
-                          final Map<String, dynamic> entry = {
-                            'others': textController.text,
-                            'areaOfInterest1': interest,
-                            'areaOfInterest2': interest2,
-                            'uId': _authService.returnCurrentUserid()
-                          };
-                          if (interest != 'Select a Category' &&
-                              interest2 != 'Select a Category' &&
-                              textController.text.isNotEmpty) {
-                            FirebaseFirestore.instance
-                                .collection('CsrRegistraionDetails')
-                                .add(entry)
-                                .then(
-                                  (result) => showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      content: SizedBox(
-                                        height: 150,
-                                        child: Center(
-                                          child: Text(
-                                            'Applied Successfully',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'OK'),
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
+                    child: StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("Users")
+                            .doc(_authService.returnCurrentUserid())
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Chip(
+                              backgroundColor: darkblue,
+                              label: Text(
+                                "Apply",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
                           } else {
-                            showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                      content: Text(
-                                        'Please fill all the above fields',
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.red),
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'OK'),
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    ));
+                            return GestureDetector(
+                                child: Chip(
+                                  backgroundColor: darkblue,
+                                  label: Text(
+                                    "Apply",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                onTap: () {
+                                  final Map<String, dynamic> entry = {
+                                    'others': textController.text,
+                                    'areaOfInterest1': interest,
+                                    'areaOfInterest2': interest2,
+                                    'uId': _authService.returnCurrentUserid(),
+                                    'name': snapshot.data!["displayName"],
+                                    'department': snapshot.data!["department"],
+                                    'empcode': snapshot.data!["empcode"],
+                                  };
+                                  if (interest != 'Select a Category' &&
+                                      interest2 != 'Select a Category' &&
+                                      textController.text.isNotEmpty) {
+                                    FirebaseFirestore.instance
+                                        .collection('CsrRegistraionDetails')
+                                        .add(entry)
+                                        .then(
+                                          (result) => showDialog<String>(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog(
+                                              content: SizedBox(
+                                                height: 150,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Applied Successfully',
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          context, 'OK'),
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                              content: Text(
+                                                'Please fill all the above fields',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.red),
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          context, 'OK'),
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ));
+                                  }
+                                });
                           }
                         }),
                   )

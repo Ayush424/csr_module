@@ -251,7 +251,8 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       ListTile(
                         title: MyText(
                           text: "NGO Partner",
-                          bold: (GlobalAdminPage.adminpage == 'ngoPartner'),
+                          bold: (GlobalAdminPage.adminpage == 'ngoPartner' ||
+                              GlobalAdminPage.adminpage == 'ngoDetails'),
                         ),
                         onTap: () {
                           setState(() {
@@ -380,7 +381,8 @@ class _AdminPageStructDesktopState extends State<AdminPageStructDesktop> {
                       transform: Matrix4.translationValues(-16, 0, 0),
                       child: MyText(
                         text: "Events and Calendar",
-                        bold: (GlobalAdminPage.adminpage == 'calender'),
+                        bold: (GlobalAdminPage.adminpage == 'calender' ||
+                            GlobalAdminPage.adminpage == 'eventsandcalendar'),
                       ),
                     ),
                     onTap: () {

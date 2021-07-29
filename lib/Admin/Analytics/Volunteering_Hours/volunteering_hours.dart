@@ -35,8 +35,9 @@ class _VolunteeringHoursState extends State<VolunteeringHours> {
       });
     });
   }
+
   TextEditingController _textFieldController = TextEditingController();
-_displayDialog(BuildContext context) async {
+  _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -61,6 +62,7 @@ _displayDialog(BuildContext context) async {
           );
         });
   }
+
   String dropdownValue = 'Select Event';
   bool select = false;
   static const int numItems = 4;
@@ -156,9 +158,7 @@ _displayDialog(BuildContext context) async {
                     dataMap: dataMap,
                     animationDuration: Duration(milliseconds: 800),
                     chartLegendSpacing:
-                                    MediaQuery.of(context).size.width >= 990
-                                        ? 180
-                                        : 50,
+                        MediaQuery.of(context).size.width >= 990 ? 180 : 50,
                     chartRadius: 190,
                     initialAngleInDegree: 0,
                     // ringStrokeWidth: 10,
@@ -166,8 +166,8 @@ _displayDialog(BuildContext context) async {
                     legendOptions: LegendOptions(
                       showLegendsInRow: false,
                       legendPosition: MediaQuery.of(context).size.width >= 990
-                                          ? LegendPosition.right
-                                          : LegendPosition.bottom,
+                          ? LegendPosition.right
+                          : LegendPosition.bottom,
                       showLegends: true,
                       legendTextStyle: TextStyle(
                         fontSize: 24,
@@ -318,93 +318,106 @@ _displayDialog(BuildContext context) async {
                 dropdownValue == "Select Event"
                     ? Container()
                     : Container(
-                        height: 200,
-                        width: 1150,
                         decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Color.fromARGB(255, 204, 204, 204),
-                          width: 1,
-                        )),
-                        child: SingleChildScrollView(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
+                            border: Border.all(color: Colors.grey)),
+                        height: 210,
+                        child: LayoutBuilder(
+                          builder: (context, constraints) =>
+                              SingleChildScrollView(
                             controller: ScrollController(),
-                            child: DataTable(
-                              columnSpacing: 215,
-                              columns: const <DataColumn>[
-                                DataColumn(
-                                  label: Text('Emp code',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                DataColumn(
-                                  label: Text('Name',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                DataColumn(
-                                  label: Text('Department',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                DataColumn(
-                                  label: Text('Date',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                                DataColumn(
-                                  label: Text('Hours',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                              ],
-                              rows: List<DataRow>.generate(
-                                numItems,
-                                (int index) => DataRow(
-                                  color:
-                                      MaterialStateProperty.resolveWith<Color?>(
-                                          (Set<MaterialState> states) {
-                                    if (states
-                                        .contains(MaterialState.selected)) {
-                                      return Color.fromARGB(255, 237, 242, 247)
-                                          .withOpacity(0.08);
-                                    }
-                                    if (index.isEven) {
-                                      return Color.fromARGB(255, 237, 242, 247);
-                                    }
-                                    return null;
-                                  }),
-                                  cells: <DataCell>[
-                                    DataCell(Text('abc')),
-                                    DataCell(Text('xyz')),
-                                    DataCell(Text('abc')),
-                                    DataCell(Text('abc')),
-                                    DataCell(Row(
-                                          
-                                          children: [
-                                            Text('1'),
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.drive_file_rename_outline,
-                                                size: 20,
+                            child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                controller: ScrollController(),
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      minWidth: constraints.minWidth),
+                                  child: DataTable(
+                                    columnSpacing: 215,
+                                    columns: const <DataColumn>[
+                                      DataColumn(
+                                        label: Text('Emp code',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      ),
+                                      DataColumn(
+                                        label: Text('Name',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      ),
+                                      DataColumn(
+                                        label: Text('Department',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      ),
+                                      DataColumn(
+                                        label: Text('Date',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      ),
+                                      DataColumn(
+                                        label: Text('Hours',
+                                            style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130),
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                      ),
+                                    ],
+                                    rows: List<DataRow>.generate(
+                                      numItems,
+                                      (int index) => DataRow(
+                                        color: MaterialStateProperty
+                                            .resolveWith<Color?>(
+                                                (Set<MaterialState> states) {
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return Color.fromARGB(
+                                                    255, 237, 242, 247)
+                                                .withOpacity(0.08);
+                                          }
+                                          if (index.isEven) {
+                                            return Color.fromARGB(
+                                                255, 237, 242, 247);
+                                          }
+                                          return null;
+                                        }),
+                                        cells: <DataCell>[
+                                          DataCell(Text('abc')),
+                                          DataCell(Text('xyz')),
+                                          DataCell(Text('abc')),
+                                          DataCell(Text('abc')),
+                                          DataCell(Row(
+                                            children: [
+                                              Text('1'),
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons
+                                                      .drive_file_rename_outline,
+                                                  size: 20,
+                                                ),
+                                                onPressed: () {
+                                                  _displayDialog(context);
+                                                },
                                               ),
-                                              onPressed: () {
-                                                _displayDialog(context);
-                                              },
-                                            ),
-                                          ],
-                                        )),
-                                  ],
+                                            ],
+                                          )),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

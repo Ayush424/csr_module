@@ -113,7 +113,7 @@ class _VolunteerState extends State<Volunteer> {
                     height: 20,
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,6 +192,7 @@ class _VolunteerState extends State<Volunteer> {
                           color: Color.fromARGB(255, 204, 204, 204),
                           width: 1,
                         )),
+
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -287,9 +288,10 @@ class _VolunteerState extends State<Volunteer> {
                                       );
                                     }
                                   },
+
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -378,6 +380,7 @@ class _VolunteerState extends State<Volunteer> {
                           color: Color.fromARGB(255, 204, 204, 204),
                           width: 1,
                         )),
+
                         child: SingleChildScrollView(
                           child: Container(
                             width: 1200,
@@ -575,6 +578,7 @@ class _VolunteerState extends State<Volunteer> {
                                     );
                                   }
                                 },
+
                               ),
                             ),
                           ),

@@ -44,6 +44,7 @@ class _PayrollCollectionState extends State<PayrollCollection>
 
   @override
   Widget build(BuildContext context) {
+    final myList = List.generate(4, (index) => Sanakaar());
     var screensize = MediaQuery.of(context).size;
     var ssize = MediaQuery.of(context).size;
     return Scaffold(
@@ -301,37 +302,43 @@ class _PayrollCollectionState extends State<PayrollCollection>
               ),
             ),
             Container(
+              height: 300,
               constraints: BoxConstraints(maxHeight: 600),
-              child: TabBarView(controller: _tabController, children: <Widget>[
-                Column(
-                  children: [
-                    Flexible(
-                      child: SD(),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Flexible(
-                      child: Sanakaar(),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Flexible(
-                      child: Ekohum(),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Flexible(
-                      child: Sikh(),
-                    ),
-                  ],
-                ),
-              ]),
+              child: TabBarView(
+                controller: _tabController, children: myList,
+                // <Widget>[
+                // List.generate(4, (index) => null
+
+                //  Column(
+                //   children: [
+                //     Flexible(
+                //       child: myList,
+                //     ),
+                //   ],
+                // ),
+                // Column(
+                //   children: [
+                //     Flexible(
+                //       child: Sanakaar(),
+                //     ),
+                //   ],
+                // ),
+                // Column(
+                //   children: [
+                //     Flexible(
+                //       child: Ekohum(),
+                //     ),
+                //   ],
+                // ),
+                // Column(
+                //   children: [
+                //     Flexible(
+                //       child: Sikh(),
+                //     ),
+                //   ],
+                // ),
+                // ]
+              ),
             )
           ],
         ),
@@ -399,311 +406,10 @@ class EventsList extends StatelessWidget {
   }
 }
 
+class TabData {
+  String name;
 
+  String data;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/Payroll/Ekohum.dart';
-// import 'package:flutter_application_1/Payroll/Sanakaar.dart';
-// import 'SD.dart';
-// import 'Sikh.dart';
-// import 'package:syncfusion_flutter_charts/charts.dart';
-// import 'package:intl/intl.dart';
-
-// class Payroll extends StatefulWidget {
-//   Payroll({Key? key}) : super(key: key);
-
-//   @override
-//   _PayrollState createState() => _PayrollState();
-// }
-
-// class _PayrollState extends State<Payroll> with SingleTickerProviderStateMixin {
-//   late TabController _tabController;
-
-//   late DateTime date;
-
-//   @override
-//   void initState() {
-//     _tabController = TabController(length: 4, vsync: this);
-
-//     date = DateTime.now();
-
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     _tabController.dispose();
-//     super.dispose();
-//   }
-//    static const int numItems = 4;
-//   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
-//   late List<Days> _chartData;
-//   late TooltipBehavior _tooltipBehavior;
-
-//   late DateTime date;
-
-//   DateFormat format = DateFormat('MMM, y');
-
-//   @override
-//   void initState() {
-//     _chartData = getChartData();
-//     _tooltipBehavior = TooltipBehavior(enable: true);
-
-//     date = DateTime.now();
-
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     var ssize = MediaQuery.of(context).size;
-//     var screensize = MediaQuery.of(context).size;
-//     return Scaffold(
-//       body: Container(
-//         constraints: BoxConstraints.expand(),
-//         color: Colors.white,
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
-//           child: SingleChildScrollView(
-//             scrollDirection: Axis.vertical,
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   'Analytics - CSr Categories',
-//                   style: TextStyle(
-//                     fontSize: 36,
-//                     color: Color.fromARGB(255, 42, 67, 101),
-//                     decoration: TextDecoration.none,
-//                   ),
-//                 ),
-//                 Divider(
-//                   color: Color.fromARGB(255, 226, 232, 240),
-//                   thickness: 2,
-//                 ),
-//                 const SizedBox(
-//                   height: 20,
-//                 ),
-//                 Padding(
-//                   padding: const EdgeInsets.only(top: 90),
-//                   child: Container(
-//                     height: 50,
-//                     child: Row(
-//                       children: <Widget>[
-//                         Flexible(
-//                           child: TabBar(
-//                             controller: _tabController,
-//                             indicatorSize: TabBarIndicatorSize.label,
-//                             indicatorWeight: 0.1,
-//                             isScrollable: true,
-//                             labelColor: Color.fromRGBO(44, 82, 130, 1),
-//                             labelStyle: TextStyle(
-//                                 fontSize: 28, fontWeight: FontWeight.w400),
-//                             unselectedLabelStyle: TextStyle(
-//                                 color: Color.fromRGBO(44, 82, 130, 1),
-//                                 fontSize: 28,
-//                                 fontWeight: FontWeight.w400),
-//                             tabs: [
-//                               Tab(
-//                                 child: Container(
-//                                   height: 50,
-//                                   width: ssize.width * 0.15,
-//                                   decoration: BoxDecoration(
-//                                       color: Color.fromRGBO(235, 248, 255, 1),
-//                                       border: Border.all(
-//                                           color: Colors.grey.shade300)),
-//                                   child: Center(child: Text('SD')),
-//                                 ),
-//                               ),
-//                               Transform(
-//                                 transform: Matrix4.translationValues(-30, 0, 0),
-//                                 child: Tab(
-//                                   child: Container(
-//                                     height: 50,
-//                                     width: ssize.width * 0.15,
-//                                     decoration: BoxDecoration(
-//                                         color: Color.fromRGBO(235, 248, 255, 1),
-//                                         border: Border.all(
-//                                             color: Colors.grey.shade300)),
-//                                     child: Center(child: Text('Sanakaar')),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Transform(
-//                                 transform: Matrix4.translationValues(-60, 0, 0),
-//                                 child: Tab(
-//                                   child: Container(
-//                                     height: 50,
-//                                     width: ssize.width * 0.15,
-//                                     decoration: BoxDecoration(
-//                                         color: Color.fromRGBO(235, 248, 255, 1),
-//                                         border: Border.all(
-//                                             color: Colors.grey.shade300)),
-//                                     child: Center(child: Text('Ekohum')),
-//                                   ),
-//                                 ),
-//                               ),
-//                               Transform(
-//                                 transform: Matrix4.translationValues(-90, 0, 0),
-//                                 child: Tab(
-//                                   child: Container(
-//                                     height: 50,
-//                                     width: ssize.width * 0.15,
-//                                     decoration: BoxDecoration(
-//                                         color: Color.fromRGBO(235, 248, 255, 1),
-//                                         border: Border.all(
-//                                             color: Colors.grey.shade300)),
-//                                     child: Center(child: Text('Sikh')),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 Container(
-//                   constraints: BoxConstraints(maxHeight: 600),
-//                   child:
-//                       TabBarView(controller: _tabController, children: <Widget>[
-//                     Column(
-//                       children: [
-//                         Flexible(
-//                           child: SD(),
-//                         ),
-//                       ],
-//                     ),
-//                     Column(
-//                       children: [
-//                         Flexible(
-//                           child: Sanakaar(),
-//                         ),
-//                       ],
-//                     ),
-//                     Column(
-//                       children: [
-//                         Flexible(
-//                           child: Ekohum(),
-//                         ),
-//                       ],
-//                     ),
-//                     Column(
-//                       children: [
-//                         Flexible(
-//                           child: Sikh(),
-//                         ),
-//                       ],
-//                     ),
-//                   ]),
-//                 )
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class MyText extends StatefulWidget {
-//   final String text;
-//   const MyText({Key? key, required this.text}) : super(key: key);
-
-//   @override
-//   State<MyText> createState() => _MyTextState();
-// }
-
-// class _MyTextState extends State<MyText> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text(
-//       widget.text,
-//       style: TextStyle(
-//         fontSize: 18,
-//         fontWeight: FontWeight.w700,
-//         fontFamily: 'Rubik',
-//         color: const Color.fromRGBO(44, 82, 130, 1),
-//       ),
-//     );
-//   }
-// }
-
-
-
-// List<Days> getChartData() {
-//   final List<Days> chartData = <Days>[
-//     Days('SD', 6000, Colors.pink),
-//     Days('Sanskaar', 9000, Colors.red),
-//     Days('Ekohum', 3000, Colors.green),
-//     Days('Sikh', 5500, Color.fromRGBO(31, 58, 104, 1)),
-//   ];
-//   return chartData;
-// }
-
-// class Days {
-//   final String month;
-//   final double volunteeringHours;
-//   final Color pointColorMapper;
-
-//   Days(this.month, this.volunteeringHours, this.pointColorMapper);
-// }
-
-// List events = ['SD', "Sanskaar", "Ekohum", "Sikh"];
-// List colors = [
-//   Colors.pink,
-//   Colors.red,
-//   Colors.green,
-//   Color.fromRGBO(31, 58, 104, 1)
-// ];
-
-// class EventsList extends StatelessWidget {
-//   const EventsList({Key? key, required this.numItems, required this.index})
-//       : super(key: key);
-//   final int index;
-//   final int numItems;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(left: 30, top: 10),
-//       child: Container(
-//         height: 20,
-//         child: ListView(
-//           scrollDirection: Axis.horizontal,
-//           controller: ScrollController(),
-//           shrinkWrap: true,
-//           physics: ClampingScrollPhysics(),
-//           children: [
-//             Icon(Icons.crop_square_rounded, color: colors[index]),
-//             SizedBox(
-//               width: 10,
-//             ),
-//             Text(
-//               events[index],
-//               style:
-//                   TextStyle(color: colors[index], fontWeight: FontWeight.bold),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+  TabData(this.name, this.data);
+}

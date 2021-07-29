@@ -21,88 +21,82 @@ class _EkohumState extends State<Ekohum> {
         width: 1,
       )),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            DataTable(
-              columns: const <DataColumn>[
-                DataColumn(
-                  label: Text('Emp',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 44, 82, 130),
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-                DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    child: Text('Name',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 44, 82, 130),
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                ),
-                DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    child: Text('Department',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 44, 82, 130),
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                ),
-                DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    child: Text('Amount',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 44, 82, 130),
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                ),
-              ],
-              rows: List<DataRow>.generate(
-                numItems,
-                (int index) => DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.selected)) {
-                      return Color.fromARGB(255, 237, 242, 247)
-                          .withOpacity(0.08);
-                    }
-                    if (index.isEven) {
-                      return Color.fromARGB(255, 237, 242, 247);
-                    }
-                    return null;
-                  }),
-                  cells: <DataCell>[
-                    DataCell(Text('Emp')),
-                    DataCell(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: Text("Name"),
-                      ),
-                    ),
-                    DataCell(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: Text("Department"),
-                      ),
-                    ),
-                    DataCell(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: Text("Amount"),
-                      ),
-                    ),
-                  ],
-                ),
+        child: DataTable(
+          columns: const <DataColumn>[
+            DataColumn(
+              label: Text('Emp',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 44, 82, 130),
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+            DataColumn(
+              label: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                child: Text('Name',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 44, 82, 130),
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+            ),
+            DataColumn(
+              label: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                child: Text('Department',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 44, 82, 130),
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+            ),
+            DataColumn(
+              label: Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                child: Text('Amount',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 44, 82, 130),
+                      fontWeight: FontWeight.bold,
+                    )),
               ),
             ),
           ],
+          rows: List<DataRow>.generate(
+            numItems,
+            (int index) => DataRow(
+              color: MaterialStateProperty.resolveWith<Color?>(
+                  (Set<MaterialState> states) {
+                if (states.contains(MaterialState.selected)) {
+                  return Color.fromARGB(255, 237, 242, 247).withOpacity(0.08);
+                }
+                if (index.isEven) {
+                  return Color.fromARGB(255, 237, 242, 247);
+                }
+                return null;
+              }),
+              cells: <DataCell>[
+                DataCell(Text('Emp')),
+                DataCell(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40),
+                    child: Text("Name"),
+                  ),
+                ),
+                DataCell(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40),
+                    child: Text("Department"),
+                  ),
+                ),
+                DataCell(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40),
+                    child: Text("Amount"),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

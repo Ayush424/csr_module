@@ -801,108 +801,120 @@ class _CalenderState extends State<Calender> {
                     color: Color.fromARGB(255, 204, 204, 204),
                     width: 1,
                   )),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          columnSpacing: 180,
-                          columns: const <DataColumn>[
-                            DataColumn(
-                              label: Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text(' Emp Code',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                    )),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text('Name',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Text('Department',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 44, 82, 130),
-                                  )),
-                            ),
-                            DataColumn(
-                              label: Padding(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Text('Date',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                    )),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Padding(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Text('Time',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                    )),
-                              ),
-                            ),
-                          ],
-                          rows: List<DataRow>.generate(
-                            numItems,
-                            (int index) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
-                                  return Color.fromARGB(255, 237, 242, 247)
-                                      .withOpacity(0.08);
-                                }
-                                if (index.isEven) {
-                                  return Color.fromARGB(255, 237, 242, 247);
-                                }
-                                return null;
-                              }),
-                              cells: <DataCell>[
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text('abc'),
-                                )),
-                                DataCell(Padding(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Row(
-                                    children: [
-                                      Text('6 hr'),
-                                      SizedBox(width: 5),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.edit,
-                                        ),
-                                        onPressed: () {
-                                          _displayDialog(
-                                              context, " Hours", "Name");
-                                        },
-                                      ),
-                                    ],
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      child: Container(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: ConstrainedBox(
+                            constraints:
+                                BoxConstraints(minWidth: constraints.minWidth),
+                            child: DataTable(
+                              columnSpacing: 180,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text(' Emp Code',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                        )),
                                   ),
-                                )),
+                                ),
+                                DataColumn(
+                                  label: Text('Name',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Text('Department',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 44, 82, 130),
+                                      )),
+                                ),
+                                DataColumn(
+                                  label: Padding(
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Text('Date',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                        )),
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Padding(
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Text('Time',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                        )),
+                                  ),
+                                ),
                               ],
+                              rows: List<DataRow>.generate(
+                                numItems,
+                                (int index) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (index.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text('abc'),
+                                    )),
+                                    DataCell(Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Row(
+                                        children: [
+                                          Text('6 hr'),
+                                          SizedBox(width: 5),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.edit,
+                                            ),
+                                            onPressed: () {
+                                              _displayDialog(
+                                                  context, " Hours", "Name");
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),

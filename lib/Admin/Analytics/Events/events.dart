@@ -717,110 +717,130 @@ class _EventsAdminState extends State<EventsAdmin> {
                       color: Color.fromARGB(255, 204, 204, 204),
                       width: 1,
                     )),
-                    child: SingleChildScrollView(
-                      child: Container(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: DataTable(
-                            columnSpacing: 112,
-                            columns: const <DataColumn>[
-                              DataColumn(
-                                label: Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(' Event Name',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 44, 82, 130),
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text('Duration',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              DataColumn(
-                                label: Text('Date Started',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              DataColumn(
-                                label: Text('NGO Partner',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              DataColumn(
-                                label: Text('Attendees Count',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              DataColumn(
-                                label: Text('Action',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                            ],
-                            rows: List<DataRow>.generate(
-                              numItems,
-                              (int index) => DataRow(
-                                color:
-                                    MaterialStateProperty.resolveWith<Color?>(
-                                        (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.selected)) {
-                                    return Color.fromARGB(255, 237, 242, 247)
-                                        .withOpacity(0.08);
-                                  }
-                                  if (index.isEven) {
-                                    return Color.fromARGB(255, 237, 242, 247);
-                                  }
-                                  return null;
-                                }),
-                                cells: <DataCell>[
-                                  DataCell(Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Text('abc'),
-                                  )),
-                                  DataCell(Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Text('abc'),
-                                  )),
-                                  DataCell(Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Text('abc'),
-                                  )),
-                                  DataCell(Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Text('abc'),
-                                  )),
-                                  DataCell(Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Text('abc'),
-                                  )),
-                                  DataCell(
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                const Color.fromRGBO(
-                                                    45, 55, 72, 1)),
-                                      ),
-                                      child: Text('View more'),
-                                      onPressed: () {
-                                        widget.update!("eventsandcalendar");
-                                      },
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: Container(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  minWidth: constraints.minWidth),
+                              child: DataTable(
+                                columnSpacing: 112,
+                                columns: const <DataColumn>[
+                                  DataColumn(
+                                    label: Padding(
+                                      padding: EdgeInsets.all(20),
+                                      child: Text(' Event Name',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 44, 82, 130),
+                                            fontWeight: FontWeight.bold,
+                                          )),
                                     ),
                                   ),
+                                  DataColumn(
+                                    label: Text('Duration',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Date Started',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('NGO Partner',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Attendees Count',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  DataColumn(
+                                    label: Text('Action',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
                                 ],
+                                rows: List<DataRow>.generate(
+                                  numItems,
+                                  (int index) => DataRow(
+                                    color: MaterialStateProperty.resolveWith<
+                                        Color?>((Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return Color.fromARGB(
+                                                255, 237, 242, 247)
+                                            .withOpacity(0.08);
+                                      }
+                                      if (index.isEven) {
+                                        return Color.fromARGB(
+                                            255, 237, 242, 247);
+                                      }
+                                      return null;
+                                    }),
+                                    cells: <DataCell>[
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: Text('abc'),
+                                      )),
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: Text('abc'),
+                                      )),
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: Text('abc'),
+                                      )),
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: Text('abc'),
+                                      )),
+                                      DataCell(Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: Text('abc'),
+                                      )),
+                                      DataCell(
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    const Color.fromRGBO(
+                                                        45, 55, 72, 1)),
+                                          ),
+                                          child: Text('View more'),
+                                          onPressed: () {
+                                            widget.update!("eventsandcalendar");
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                           ),

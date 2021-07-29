@@ -86,10 +86,9 @@ class _ActivityAdminState extends State<ActivityAdmin> {
               height: 20,
             ),
             Container(
-              height: 100,
               child: Wrap(
                 spacing: 100,
-                runSpacing: 90,
+                runSpacing: 20,
                 children: [
                   Container(
                     child: Column(
@@ -344,91 +343,100 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                             color: Color.fromARGB(255, 204, 204, 204),
                             width: 1,
                           )),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Container(
-                                  child: StreamBuilder<QuerySnapshot>(
-                                      stream: FirebaseFirestore.instance
-                                          .collection('activities')
-                                          .doc('rKjP6IlqYq6wtWzy9DeO')
-                                          .collection(
-                                              "companyInitiatedActivities")
-                                          .snapshots(),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.data == null) {
-                                          return Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        } else if (snapshot.data!.docs.length ==
-                                            0) {
-                                          return Text("no activities set yet");
-                                        } else {
-                                          return DataTable(
-                                            columns: const <DataColumn>[
-                                              DataColumn(
-                                                label: Text('Name',
-                                                    style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 44, 82, 130),
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    )),
-                                              ),
-                                              DataColumn(
-                                                label: Text('Action',
-                                                    style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 44, 82, 130),
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    )),
-                                              ),
-                                            ],
-                                            rows: List<DataRow>.generate(
-                                              snapshot.data!.docs.length,
-                                              (int index) => DataRow(
-                                                color: MaterialStateProperty
-                                                    .resolveWith<Color?>(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                                  if (states.contains(
-                                                      MaterialState.selected)) {
-                                                    return Color.fromARGB(
-                                                            255, 237, 242, 247)
-                                                        .withOpacity(0.08);
-                                                  }
-                                                  if (index.isEven) {
-                                                    return Color.fromARGB(
-                                                        255, 237, 242, 247);
-                                                  }
-                                                  return null;
-                                                }),
-                                                cells: <DataCell>[
-                                                  DataCell(Text(snapshot.data!
-                                                      .docs[index]["name"])),
-                                                  DataCell(
-                                                    IconButton(
-                                                      icon: Icon(
-                                                        Icons.delete,
+                          child: LayoutBuilder(
+                            builder: (context, constraints) =>
+                                SingleChildScrollView(
+                              controller: ScrollController(),
+                              child: Container(
+                                child: StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('activities')
+                                        .doc('rKjP6IlqYq6wtWzy9DeO')
+                                        .collection(
+                                            "companyInitiatedActivities")
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.data == null) {
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else if (snapshot.data!.docs.length ==
+                                          0) {
+                                        return Text("no activities set yet");
+                                      } else {
+                                        return SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                                minWidth: constraints.minWidth),
+                                            child: DataTable(
+                                              columns: const <DataColumn>[
+                                                DataColumn(
+                                                  label: Text('Name',
+                                                      style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 44, 82, 130),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      )),
+                                                ),
+                                                DataColumn(
+                                                  label: Text('Action',
+                                                      style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 44, 82, 130),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      )),
+                                                ),
+                                              ],
+                                              rows: List<DataRow>.generate(
+                                                snapshot.data!.docs.length,
+                                                (int index) => DataRow(
+                                                  color: MaterialStateProperty
+                                                      .resolveWith<Color?>(
+                                                          (Set<MaterialState>
+                                                              states) {
+                                                    if (states.contains(
+                                                        MaterialState
+                                                            .selected)) {
+                                                      return Color.fromARGB(255,
+                                                              237, 242, 247)
+                                                          .withOpacity(0.08);
+                                                    }
+                                                    if (index.isEven) {
+                                                      return Color.fromARGB(
+                                                          255, 237, 242, 247);
+                                                    }
+                                                    return null;
+                                                  }),
+                                                  cells: <DataCell>[
+                                                    DataCell(Text(snapshot.data!
+                                                        .docs[index]["name"])),
+                                                    DataCell(
+                                                      IconButton(
+                                                        icon: Icon(
+                                                          Icons.delete,
+                                                        ),
+                                                        onPressed: () {
+                                                          _showMyDialog(
+                                                              snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id,
+                                                              "companyInitiatedActivities");
+                                                        },
                                                       ),
-                                                      onPressed: () {
-                                                        _showMyDialog(
-                                                            snapshot.data!
-                                                                .docs[index].id,
-                                                            "companyInitiatedActivities");
-                                                      },
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          );
-                                        }
-                                      }),
-                                ),
-                              ],
+                                          ),
+                                        );
+                                      }
+                                    }),
+                              ),
                             ),
                           ),
                         ),
@@ -455,41 +463,35 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                             color: Color.fromARGB(255, 204, 204, 204),
                             width: 1,
                           )),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                StreamBuilder<QuerySnapshot>(
-                                    stream: FirebaseFirestore.instance
-                                        .collection("activities")
-                                        .doc("rKjP6IlqYq6wtWzy9DeO")
-                                        .collection(
-                                            "governmentInitiatedActivities")
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.data == null) {
-                                        return Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      } else if (snapshot.data!.docs.length ==
-                                          0) {
-                                        return Text("no activities set yet");
-                                      } else {
-                                        return DataTable(
-                                          columns: const <DataColumn>[
-                                            DataColumn(
-                                              label: Text('Name ',
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 44, 82, 130),
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ),
-                                            DataColumn(
-                                              label: Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    40, 0, 0, 0),
-                                                child: Text('Action',
+                          child: LayoutBuilder(
+                            builder: (context, constraints) =>
+                                SingleChildScrollView(
+                              controller: ScrollController(),
+                              child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("activities")
+                                      .doc("rKjP6IlqYq6wtWzy9DeO")
+                                      .collection(
+                                          "governmentInitiatedActivities")
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else if (snapshot.data!.docs.length ==
+                                        0) {
+                                      return Text("no activities set yet");
+                                    } else {
+                                      return SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              minWidth: constraints.minWidth),
+                                          child: DataTable(
+                                            columns: const <DataColumn>[
+                                              DataColumn(
+                                                label: Text('Name ',
                                                     style: TextStyle(
                                                       color: Color.fromARGB(
                                                           255, 44, 82, 130),
@@ -497,55 +499,70 @@ class _ActivityAdminState extends State<ActivityAdmin> {
                                                           FontWeight.bold,
                                                     )),
                                               ),
-                                            ),
-                                          ],
-                                          rows: List<DataRow>.generate(
-                                            snapshot.data!.docs.length,
-                                            (int index) => DataRow(
-                                              color: MaterialStateProperty
-                                                  .resolveWith<Color?>(
-                                                      (Set<MaterialState>
-                                                          states) {
-                                                if (states.contains(
-                                                    MaterialState.selected)) {
-                                                  return Color.fromARGB(
-                                                          255, 237, 242, 247)
-                                                      .withOpacity(0.08);
-                                                }
-                                                if (index.isEven) {
-                                                  return Color.fromARGB(
-                                                      255, 237, 242, 247);
-                                                }
-                                                return null;
-                                              }),
-                                              cells: <DataCell>[
-                                                DataCell(Text(snapshot.data!
-                                                    .docs[index]["name"])),
-                                                DataCell(
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            40, 0, 0, 0),
-                                                    child: IconButton(
-                                                      icon: Icon(
-                                                        Icons.delete,
+                                              DataColumn(
+                                                label: Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      40, 0, 0, 0),
+                                                  child: Text('Action',
+                                                      style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 44, 82, 130),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      )),
+                                                ),
+                                              ),
+                                            ],
+                                            rows: List<DataRow>.generate(
+                                              snapshot.data!.docs.length,
+                                              (int index) => DataRow(
+                                                color: MaterialStateProperty
+                                                    .resolveWith<Color?>(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                                  if (states.contains(
+                                                      MaterialState.selected)) {
+                                                    return Color.fromARGB(
+                                                            255, 237, 242, 247)
+                                                        .withOpacity(0.08);
+                                                  }
+                                                  if (index.isEven) {
+                                                    return Color.fromARGB(
+                                                        255, 237, 242, 247);
+                                                  }
+                                                  return null;
+                                                }),
+                                                cells: <DataCell>[
+                                                  DataCell(Text(snapshot.data!
+                                                      .docs[index]["name"])),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              40, 0, 0, 0),
+                                                      child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.delete,
+                                                        ),
+                                                        onPressed: () {
+                                                          _showMyDialog(
+                                                              snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id,
+                                                              "governmentInitiatedActivities");
+                                                        },
                                                       ),
-                                                      onPressed: () {
-                                                        _showMyDialog(
-                                                            snapshot.data!
-                                                                .docs[index].id,
-                                                            "governmentInitiatedActivities");
-                                                      },
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        );
-                                      }
-                                    }),
-                              ],
+                                        ),
+                                      );
+                                    }
+                                  }),
                             ),
                           ),
                         ),

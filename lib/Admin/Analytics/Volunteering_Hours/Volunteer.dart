@@ -83,6 +83,7 @@ class _VolunteerState extends State<Volunteer> {
   //     });
   //   }
   // }
+  String key = '';
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +137,12 @@ class _VolunteerState extends State<Volunteer> {
                               ),
                               child: TextField(
                                 controller: myController,
+                                onChanged: (value) {
+                                  // Update the key when the value changes.
+                                  setState(() => key = value);
+                                },
                                 decoration: InputDecoration(
-                                  // labelText: "Search",
+                                  // labelTj-ext: "Search",
                                   hintText: "Search ",
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(

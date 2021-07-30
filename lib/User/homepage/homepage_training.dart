@@ -84,7 +84,7 @@ class _HomeTrainingsState extends State<HomeTrainings> {
                                       )),
                                 ),
                                 DataColumn(
-                                  label: Text('Starting On',
+                                  label: Text('Date',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),

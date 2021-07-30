@@ -276,243 +276,247 @@ class _HomeDashboardState extends State<HomeDashboard> {
               color: Color.fromARGB(255, 204, 204, 204),
               width: 1,
             )),
-            child: SingleChildScrollView(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('events')
-                        .where('team',
-                            arrayContains: _authService.returnCurrentUserid())
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (snapshot.data!.docs.isEmpty) {
-                        return Center(
-                          child: Text(
-                              "You have not registered/participated in any events till now.",
-                              style: TextStyle(
-                                  color: lightblue,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
-                        );
-                      } else {
-                        return DataTable(
-                          columnSpacing: 120,
-                          columns: const <DataColumn>[
-                            DataColumn(
-                              label: Text('Event Name',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
-                            ),
-                            DataColumn(
-                              label: Text('Duration',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
-                            ),
-                            DataColumn(
-                              label: Text(' ',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
-                            ),
-                            DataColumn(
-                              label: Text('',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
-                            ),
-                            DataColumn(
-                              label: Text('',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 44, 82, 130),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
-                            ),
-                          ],
-                          rows: List<DataRow>.generate(
-                            snapshot.data!.docs.length,
-                            (int counter) => DataRow(
-                              color: MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
-                                  return Color.fromARGB(255, 237, 242, 247)
-                                      .withOpacity(0.08);
-                                }
-                                if (counter.isEven) {
-                                  return Color.fromARGB(255, 237, 242, 247);
-                                }
-                                return null;
-                              }),
-                              cells: <DataCell>[
-                                DataCell(
-                                  Center(
-                                    child: Text(
-                                        snapshot.data!.docs[counter]['name'],
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color.fromRGBO(
-                                                42, 67, 101, 1))),
-                                  ),
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                controller: ScrollController(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('events')
+                          .where('team',
+                              arrayContains: _authService.returnCurrentUserid())
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.data!.docs.isEmpty) {
+                          return Center(
+                            child: Text(
+                                "You have not registered/participated in any events till now.",
+                                style: TextStyle(
+                                    color: lightblue,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                          );
+                        } else {
+                          return ConstrainedBox(
+                            constraints:
+                                BoxConstraints(minWidth: constraints.minWidth),
+                            child: DataTable(
+                              columnSpacing: 120,
+                              columns: const <DataColumn>[
+                                DataColumn(
+                                  label: Text('Event Name',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
                                 ),
-                                DataCell(
-                                  Center(
-                                    child: Text('5 hours',
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                42, 67, 101, 1))),
-                                  ),
+                                DataColumn(
+                                  label: Text('Duration',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
                                 ),
-                                DataCell(
-                                  Center(
-                                    child: Text(
-                                        'updated ' +
-                                            DateTime.now()
-                                                .difference(snapshot.data!
-                                                    .docs[counter]['startdate']
-                                                    .toDate())
-                                                .inDays
-                                                .toString() +
-                                            ' days ago',
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                42, 67, 101, 1))),
-                                  ),
+                                DataColumn(
+                                  label: Text(' ',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
                                 ),
-                                DataCell(
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary:
-                                              Color.fromRGBO(44, 82, 130, 1),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          )),
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                AlertDialog(
-                                                    title: Center(
-                                                        child: Text(
-                                                      'Team Members',
-                                                      style: TextStyle(
-                                                        color: Color.fromRGBO(
-                                                            42, 67, 101, 1),
-                                                      ),
-                                                    )),
-                                                    content: Container(
-                                                      height: size.height * 0.3,
-                                                      width: size.width * 0.3,
-                                                      child: ListView.builder(
-                                                          controller:
-                                                              ScrollController(),
-                                                          physics:
-                                                              ClampingScrollPhysics(),
-                                                          shrinkWrap: true,
-                                                          itemCount: snapshot
-                                                              .data!
-                                                              .docs[counter]
-                                                                  ['team']
-                                                              .length,
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            final docId = snapshot
-                                                                    .data!
-                                                                    .docs[counter]
-                                                                ['team'][index];
-
-                                                            return StreamBuilder<
-                                                                    DocumentSnapshot>(
-                                                                stream: FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'Users')
-                                                                    .doc(docId)
-                                                                    .snapshots(),
-                                                                builder: (context,
-                                                                    snapshot2) {
-                                                                  if (snapshot2
-                                                                          .data ==
-                                                                      null) {
-                                                                    return Center(
-                                                                        child:
-                                                                            CircularProgressIndicator());
-                                                                  }
-
-                                                                  return ListTile(
-                                                                    tileColor:
-                                                                        Colors.grey[
-                                                                            200],
-                                                                    horizontalTitleGap:
-                                                                        25,
-                                                                    leading:
-                                                                        SizedBox(
-                                                                      width:
-                                                                          120,
-                                                                      child:
-                                                                          Text(
-                                                                        snapshot2
-                                                                            .data!['displayName'],
-                                                                        maxLines:
-                                                                            2,
-                                                                      ),
-                                                                    ),
-                                                                    title: Transform(
-                                                                        transform: Matrix4.translationValues(
-                                                                            20,
-                                                                            0,
-                                                                            0),
-                                                                        child: Text(
-                                                                            snapshot2.data!['empcode'])),
-                                                                    trailing: Text(
-                                                                        snapshot2
-                                                                            .data!['department']),
-                                                                  );
-                                                                });
-                                                          }),
-                                                    )));
-                                      },
-                                      child: Text(
-                                        'Team Members',
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                255, 252, 254, 1)),
-                                      )),
+                                DataColumn(
+                                  label: Text('',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
                                 ),
-                                DataCell(
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.pink,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          )),
-                                      onPressed: () {},
-                                      child: Text(
-                                        'Ongoing',
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                255, 255, 255, 1)),
-                                      )),
+                                DataColumn(
+                                  label: Text('',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 44, 82, 130),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
                                 ),
                               ],
+                              rows: List<DataRow>.generate(
+                                snapshot.data!.docs.length,
+                                (int counter) => DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Color.fromARGB(255, 237, 242, 247)
+                                          .withOpacity(0.08);
+                                    }
+                                    if (counter.isEven) {
+                                      return Color.fromARGB(255, 237, 242, 247);
+                                    }
+                                    return null;
+                                  }),
+                                  cells: <DataCell>[
+                                    DataCell(
+                                      Center(
+                                        child: Text(
+                                            snapshot.data!.docs[counter]
+                                                ['name'],
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Color.fromRGBO(
+                                                    42, 67, 101, 1))),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Center(
+                                        child: Text('5 hours',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    42, 67, 101, 1))),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Center(
+                                        child: Text(
+                                            'updated ' +
+                                                DateTime.now()
+                                                    .difference(snapshot
+                                                        .data!
+                                                        .docs[counter]
+                                                            ['startdate']
+                                                        .toDate())
+                                                    .inDays
+                                                    .toString() +
+                                                ' days ago',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    42, 67, 101, 1))),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Color.fromRGBO(
+                                                  44, 82, 130, 1),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              )),
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        AlertDialog(
+                                                            title: Center(
+                                                                child: Text(
+                                                              'Team Members',
+                                                              style: TextStyle(
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        42,
+                                                                        67,
+                                                                        101,
+                                                                        1),
+                                                              ),
+                                                            )),
+                                                            content: Container(
+                                                              height:
+                                                                  size.height *
+                                                                      0.3,
+                                                              width:
+                                                                  size.width *
+                                                                      0.3,
+                                                              child: ListView
+                                                                  .builder(
+                                                                      controller:
+                                                                          ScrollController(),
+                                                                      physics:
+                                                                          ClampingScrollPhysics(),
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      itemCount: snapshot
+                                                                          .data!
+                                                                          .docs[
+                                                                              counter]
+                                                                              [
+                                                                              'team']
+                                                                          .length,
+                                                                      scrollDirection:
+                                                                          Axis
+                                                                              .vertical,
+                                                                      itemBuilder:
+                                                                          (BuildContext context,
+                                                                              int index) {
+                                                                        final docId = snapshot
+                                                                            .data!
+                                                                            .docs[counter]['team'][index];
+
+                                                                        return StreamBuilder<
+                                                                                DocumentSnapshot>(
+                                                                            stream:
+                                                                                FirebaseFirestore.instance.collection('Users').doc(docId).snapshots(),
+                                                                            builder: (context, snapshot2) {
+                                                                              if (snapshot2.data == null) {
+                                                                                return Center(child: CircularProgressIndicator());
+                                                                              }
+
+                                                                              return ListTile(
+                                                                                tileColor: Colors.grey[200],
+                                                                                horizontalTitleGap: 25,
+                                                                                leading: SizedBox(
+                                                                                  width: 120,
+                                                                                  child: Text(
+                                                                                    snapshot2.data!['displayName'],
+                                                                                    maxLines: 2,
+                                                                                  ),
+                                                                                ),
+                                                                                title: Transform(transform: Matrix4.translationValues(20, 0, 0), child: Text(snapshot2.data!['empcode'])),
+                                                                                trailing: Text(snapshot2.data!['department']),
+                                                                              );
+                                                                            });
+                                                                      }),
+                                                            )));
+                                          },
+                                          child: Text(
+                                            'Team Members',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 252, 254, 1)),
+                                          )),
+                                    ),
+                                    DataCell(
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.pink,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              )),
+                                          onPressed: () {},
+                                          child: Text(
+                                            'Ongoing',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1)),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    }),
+                          );
+                        }
+                      }),
+                ),
               ),
             ),
           ),

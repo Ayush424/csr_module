@@ -18,8 +18,6 @@ class HomeDocuments extends StatefulWidget {
 }
 
 class _HomeDocumentsState extends State<HomeDocuments> {
-
-
   @override
   void dispose() {
     _textFieldController.dispose();
@@ -194,96 +192,110 @@ class _HomeDocumentsState extends State<HomeDocuments> {
                         color: Color.fromARGB(255, 237, 242, 247),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-
-
-                      child: StreamBuilder<DocumentSnapshot>(
-                          stream: _firebaseFirestore
-                              .collection('Users')
-                              .doc(_authService.returnCurrentUserid())
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null) {
-                              return Center(child: CircularProgressIndicator());
-                            } else {
-                              if (snapshot.data!['documents'].length == 0) {
-                                return Center(
-                                    child: Text(
-                                  "No documents added yet",
-                                  style:
-                                      TextStyle(color: lightblue, fontSize: 20),
-                                ));
-                              }
-                              final List keyList =
-                                  snapshot.data!['documents'].keys.toList();
-                              final List valueList =
-                                  snapshot.data!['documents'].values.toList();
-                              return DataTable(
-                                columns: [
-                                  DataColumn(
-                                      label: Text(
-                                    'Document',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: lightblue),
-                                  )),
-                                  DataColumn(
-                                      label: Text(
-                                    'Download',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: lightblue),
-                                  )),
-                                  DataColumn(
-                                      label: Text(
-                                    'Action',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: lightblue),
-                                  )),
-                                ],
-                                rows: List<DataRow>.generate(
-                                  snapshot.data!['documents'].length,
-                                  (int index) => DataRow(
-                                    color: MaterialStateProperty.resolveWith<
-                                        Color?>((Set<MaterialState> states) {
-                                      if (states
-                                          .contains(MaterialState.selected)) {
-                                        return Color.fromARGB(
-                                                255, 237, 242, 247)
-                                            .withOpacity(0.08);
-                                      }
-                                      if (index.isEven) {
-                                        return Color.fromARGB(
-                                            255, 237, 242, 247);
-                                      }
-                                      return null;
-                                    }),
-                                    cells: <DataCell>[
-                                      DataCell(Text(keyList[index])),
-                                      DataCell(IconButton(
-                                        color: darkblue,
-                                        icon: Icon(Icons.download),
-                                        onPressed: () {
-                                          _launchUrl(valueList[index]);
-                                        },
-                                      )),
-                                      DataCell(IconButton(
-                                        icon: Icon(
-                                          Icons.delete,
-                                          color: darkblue,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) =>
+                            SingleChildScrollView(
+                          controller: ScrollController(),
+                          child: StreamBuilder<DocumentSnapshot>(
+                              stream: _firebaseFirestore
+                                  .collection('Users')
+                                  .doc(_authService.returnCurrentUserid())
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  if (snapshot.data!['documents'].length == 0) {
+                                    return Center(
+                                        child: Text(
+                                      "No documents added yet",
+                                      style: TextStyle(
+                                          color: lightblue, fontSize: 20),
+                                    ));
+                                  }
+                                  final List keyList =
+                                      snapshot.data!['documents'].keys.toList();
+                                  final List valueList = snapshot
+                                      .data!['documents'].values
+                                      .toList();
+                                  return SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          minWidth: constraints.minWidth),
+                                      child: DataTable(
+                                        columns: [
+                                          DataColumn(
+                                              label: Text(
+                                            'Document',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: lightblue),
+                                          )),
+                                          DataColumn(
+                                              label: Text(
+                                            'Download',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: lightblue),
+                                          )),
+                                          DataColumn(
+                                              label: Text(
+                                            'Action',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: lightblue),
+                                          )),
+                                        ],
+                                        rows: List<DataRow>.generate(
+                                          snapshot.data!['documents'].length,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Text(keyList[index])),
+                                              DataCell(IconButton(
+                                                color: darkblue,
+                                                icon: Icon(Icons.download),
+                                                onPressed: () {
+                                                  _launchUrl(valueList[index]);
+                                                },
+                                              )),
+                                              DataCell(IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: darkblue,
+                                                ),
+                                                onPressed: () {
+                                                  _showMyDialog(keyList[index],
+                                                      valueList[index]);
+                                                },
+                                              )),
+                                            ],
+                                          ),
                                         ),
-                                        onPressed: () {
-                                          _showMyDialog(
-                                              keyList[index], valueList[index]);
-                                        },
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }
-                          }),
-
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
+                        ),
+                      ),
                     ),
                   ),
                 ],

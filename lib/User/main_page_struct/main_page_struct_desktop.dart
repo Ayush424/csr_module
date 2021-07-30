@@ -369,7 +369,7 @@ class _MainPageStructDesktopState extends State<MainPageStructDesktop> {
                 return AssistanceCanGive();
               } else if (GlobalMainPage.mainpage == 'cart') {
                 return Cart(
-                    //update: _update,
+                    //                  update: _update,
                     );
               } else if (GlobalMainPage.mainpage == 'details') {
                 return ProductDetails(

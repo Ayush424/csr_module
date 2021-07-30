@@ -3,6 +3,7 @@
 // import 'productdetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csr_module/User/dollarFordollar/productdetails.dart';
+import 'package:csr_module/User/organization/dollar_for_dollar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
@@ -158,7 +159,14 @@ class _CartState extends State<Cart> {
                               ),
                             ),
                             ElevatedButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  //                widget.update!("Dollar");
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => ProductDetails()),
+                                  // );
+                                },
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(

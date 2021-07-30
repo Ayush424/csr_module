@@ -68,91 +68,99 @@ class _HomePayrollState extends State<HomePayroll> {
                           color: Color.fromARGB(255, 204, 204, 204),
                           width: 1,
                         )),
-                        child: SingleChildScrollView(
-                          child: StreamBuilder<QuerySnapshot>(
-                              stream: FirebaseFirestore.instance
-                                  .collection('payroll')
-                                  .doc(_authService.returnCurrentUserid())
-                                  .collection('user_payrolls')
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data == null)
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                else if (snapshot.data!.docs.length > 0) {
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      DataTable(
-                                        columns: const <DataColumn>[
-                                          DataColumn(
-                                            label: Text('NGO name',
-                                                style: TextStyle(
+                        child: LayoutBuilder(
+                          builder: (context, constraints) =>
+                              SingleChildScrollView(
+                            controller: ScrollController(),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('payroll')
+                                    .doc(_authService.returnCurrentUserid())
+                                    .collection('user_payrolls')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.data == null)
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  else if (snapshot.data!.docs.length > 0) {
+                                    return ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          minWidth: constraints.minWidth),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: DataTable(
+                                          columnSpacing: 400,
+                                          columns: const <DataColumn>[
+                                            DataColumn(
+                                              label: Text('NGO name',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color.fromARGB(
+                                                          255, 44, 82, 130))),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Period',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color.fromARGB(
+                                                          255, 44, 82, 130))),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Amount  (INR)',
+                                                  style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Color.fromARGB(
-                                                        255, 44, 82, 130))),
-                                          ),
-                                          DataColumn(
-                                            label: Text('Period',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Color.fromARGB(
-                                                        255, 44, 82, 130))),
-                                          ),
-                                          DataColumn(
-                                            label: Text('Amount',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
-                                                      255, 44, 82, 130),
-                                                )),
-                                          ),
-                                        ],
-                                        rows: List<DataRow>.generate(
-                                          snapshot.data!.docs.length,
-                                          (int index) => DataRow(
-                                            color: MaterialStateProperty
-                                                .resolveWith<Color?>(
-                                                    (Set<MaterialState>
-                                                        states) {
-                                              if (states.contains(
-                                                  MaterialState.selected)) {
-                                                return Color.fromARGB(
-                                                        255, 237, 242, 247)
-                                                    .withOpacity(0.08);
-                                              }
-                                              if (index.isEven) {
-                                                return Color.fromARGB(
-                                                    255, 237, 242, 247);
-                                              }
-                                              return null;
-                                            }),
-                                            cells: <DataCell>[
-                                              DataCell(Text(snapshot
-                                                  .data!.docs[index]['ngo'])),
-                                              DataCell(Text(snapshot.data!
-                                                  .docs[index]['period'])),
-                                              DataCell(Text(snapshot.data!
-                                                  .docs[index]['amount'])),
-                                            ],
+                                                        255, 44, 82, 130),
+                                                  )),
+                                            ),
+                                          ],
+                                          rows: List<DataRow>.generate(
+                                            snapshot.data!.docs.length,
+                                            (int index) => DataRow(
+                                              color: MaterialStateProperty
+                                                  .resolveWith<Color?>(
+                                                      (Set<MaterialState>
+                                                          states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return Color.fromARGB(
+                                                          255, 237, 242, 247)
+                                                      .withOpacity(0.08);
+                                                }
+                                                if (index.isEven) {
+                                                  return Color.fromARGB(
+                                                      255, 237, 242, 247);
+                                                }
+                                                return null;
+                                              }),
+                                              cells: <DataCell>[
+                                                DataCell(Text(snapshot
+                                                    .data!.docs[index]['ngo'])),
+                                                DataCell(Text(snapshot.data!
+                                                    .docs[index]['period'])),
+                                                DataCell(Text(snapshot.data!
+                                                    .docs[index]['amount'])),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  );
-                                } else {
-                                  return Center(
-                                    child: Text(
-                                        "No entries to show add some now",
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130))),
-                                  );
-                                }
-                              }),
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: Text(
+                                          "No entries to show add some now",
+                                          style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 44, 82, 130))),
+                                    );
+                                  }
+                                }),
+                          ),
                         ),
                       ),
                     ),

@@ -25,11 +25,11 @@ class _AssistanceNeedState extends State<AssistanceNeed> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete'),
+          title: Text('Complete'),
           content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Text('Do you want to delete this request?'),
+                Text('Do you want to mark this as complete?'),
               ],
             ),
           ),

@@ -130,18 +130,21 @@ class _HomeProfileState extends State<HomeProfile> {
                                   label: Text('Fields',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Entry',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Action',
                                       style: TextStyle(
                                         color: Color.fromARGB(255, 44, 82, 130),
+                                        fontWeight: FontWeight.bold,
                                       )),
                                 ),
                               ], rows: [

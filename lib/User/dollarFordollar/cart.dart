@@ -2,6 +2,7 @@
 
 // import 'productdetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/User/dollarFordollar/productdetails.dart';
 import 'package:flutter/material.dart';
 
 import 'package:csr_module/auth/services/firebase_auth_service.dart';
@@ -144,13 +145,28 @@ class _CartState extends State<Cart> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Product Details',
-                          style: TextStyle(
-                            fontSize: 36,
-                            color: Color.fromARGB(255, 42, 67, 101),
-                            decoration: TextDecoration.none,
-                          ),
+                        Wrap(
+                          spacing: 700,
+                          runSpacing: 20,
+                          children: [
+                            Text(
+                              'Product Details',
+                              style: TextStyle(
+                                fontSize: 36,
+                                color: Color.fromARGB(255, 42, 67, 101),
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                            ElevatedButton.icon(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Color.fromARGB(255, 42, 67, 101)),
+                                ),
+                                icon: Icon(Icons.keyboard_arrow_left_outlined),
+                                label: Text("Back")),
+                          ],
                         ),
                         Divider(
                           color: Color.fromARGB(255, 226, 232, 240),

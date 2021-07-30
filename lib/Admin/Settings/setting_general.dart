@@ -84,6 +84,7 @@ class _SettingState extends State<Setting> {
                                   DataColumn(
                                     label: Text('Fields',
                                         style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
                                         )),
@@ -91,6 +92,7 @@ class _SettingState extends State<Setting> {
                                   DataColumn(
                                     label: Text('Entry',
                                         style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
                                         )),
@@ -98,6 +100,7 @@ class _SettingState extends State<Setting> {
                                   DataColumn(
                                     label: Text('Action',
                                         style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
                                         )),

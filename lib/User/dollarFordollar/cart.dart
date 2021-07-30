@@ -142,7 +142,7 @@ class _CartState extends State<Cart> {
                   child: SingleChildScrollView(
                     controller: ScrollController(),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Product Details',
@@ -307,7 +307,7 @@ class ProductItemViews extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Container(
         height: 80,
-        width: 1400,
+        width: 900,
         margin: EdgeInsets.symmetric(vertical: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

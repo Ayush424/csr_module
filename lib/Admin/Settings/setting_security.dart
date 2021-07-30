@@ -186,6 +186,7 @@ class _SettingSecurityState extends State<SettingSecurity> {
                                     padding: EdgeInsets.all(20),
                                     child: Text('Emp Code',
                                         style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
                                         )),
@@ -194,24 +195,28 @@ class _SettingSecurityState extends State<SettingSecurity> {
                                 DataColumn(
                                   label: Text('Department',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Emp Id',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Admin',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Action',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
@@ -316,6 +321,7 @@ class _SettingSecurityState extends State<SettingSecurity> {
                                     padding: EdgeInsets.all(20),
                                     child: Text('Employee Name',
                                         style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           color:
                                               Color.fromARGB(255, 44, 82, 130),
                                         )),
@@ -324,24 +330,28 @@ class _SettingSecurityState extends State<SettingSecurity> {
                                 DataColumn(
                                   label: Text('Department',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Date of Joining',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Action',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),
                                 DataColumn(
                                   label: Text('Action',
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 44, 82, 130),
                                       )),
                                 ),

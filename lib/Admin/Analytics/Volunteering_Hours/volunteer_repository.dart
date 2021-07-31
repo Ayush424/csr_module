@@ -1,18 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VolunteerRepository {
-  Future getMembers(String? uid) async {
-    String name = '';
+  Future getMembers() async {
+    List name = [];
     try {
       await FirebaseFirestore.instance
-          .collection("Users")
-          .doc(uid)
+          .collection("core_team")
           //.where("Year", isEqualTo: "2021");
+          .doc(DateTime.now().year.toString())
+          .collection("members")
           .get()
           .then((value) {
-        Map<String, dynamic> data = value.data()!;
-        name = data["name"];
+        value.docs.forEach((element) {
+          name.add(element.get("name"));
+        });
       });
+
       return name;
     } catch (e) {
       return null;

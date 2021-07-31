@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Admin/Analytics/Volunteering_Hours/volunteer_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class Volunteer extends StatefulWidget {
   Volunteer({Key? key}) : super(key: key);
@@ -9,8 +11,23 @@ class Volunteer extends StatefulWidget {
   _VolunteerState createState() => _VolunteerState();
 }
 
+class Debouncer {
+  late final int milliseconds;
+  late VoidCallback action;
+  late Timer _timer;
+  Debouncer({required this.milliseconds});
+  run(VoidCallback action) {
+    if (null != _timer) {
+      _timer.cancel();
+    }
+    _timer = Timer(Duration(microseconds: milliseconds), action);
+  }
+}
+
 class _VolunteerState extends State<Volunteer> {
   static const int numItems = 20;
+  List _employee = [];
+  List _filterEmployees = [];
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
   List members = [];
   bool star = false;
@@ -66,12 +83,41 @@ class _VolunteerState extends State<Volunteer> {
   void initState() {
     super.initState();
     //fetchDataFromFirebase();
+    _filterEmployees = [];
+
+    // key to get the context to show a SnackBar
+
+    _getEmployees();
     date = DateTime.now();
     myController.addListener(() {
       setState(() {
         _searchText = myController.text;
       });
     });
+  }
+
+//  _getEmployees() {
+//     //  FirebaseFirestore.instance
+//     //                                   .collection('core_team')
+//     //                                   .doc(DateTime.now().year.toString())
+//     //                                   .collection("members")
+//     //                                   .snapshots().getEmployees().then((employees)
+//     // {
+//       setState(() {
+//         _employee = employees;
+//       });
+//        // Reset the title...
+//       print("Length ${employees.length}");
+//     });
+//   }
+  final _debouncer = Debouncer(milliseconds: 500);
+  Future _getEmployees() async {
+    dynamic result = await VolunteerRepository().getMembers();
+    if (result != null) {
+      setState(() {
+        _employee = result;
+      });
+    }
   }
 
   // fetchDataFromFirebase() async {
@@ -83,7 +129,45 @@ class _VolunteerState extends State<Volunteer> {
   //     });
   //   }
   // }
-  String key = '';
+  // searchField() {
+  //   return Padding(
+  //     padding: EdgeInsets.all(20),
+  //     child: TextField(
+  //       decoration: InputDecoration(
+  //           contentPadding: EdgeInsets.all(5), hintText: "Search"),
+  //       onChanged: (string) {},
+  //        //     focusedBorder: UnderlineInputBorder(
+  //                             //         borderSide: BorderSide(
+  //                             //             color: Color.fromARGB(
+  //                             //                 255, 113, 128, 150))),
+  //                             //     hintStyle: TextStyle(
+  //                             //       color: Color.fromARGB(255, 204, 204, 204),
+  //                             //     ),
+  //                             //     focusColor:
+  //                             //         Color.fromARGB(255, 204, 204, 204),
+  //                             //     fillColor: Color.fromARGB(255, 204, 204, 204),
+  //                             //     suffixIcon: _searchText.isNotEmpty
+  //                             //         ? IconButton(
+  //                             //             icon: Icon(
+  //                             //               Icons.clear,
+  //                             //               color: Color.fromARGB(
+  //                             //                   255, 113, 128, 150),
+  //                             //             ),
+  //                             //             onPressed: () {
+  //                             //               setState(() {
+  //                             //                 myController.clear();
+  //                             //               });
+  //                             //             },
+  //                             //           )
+  //                             //         : IconButton(
+  //                             //             icon: Icon(
+  //                             //               Icons.search,
+  //                             //               color: Color.fromARGB(
+  //                             //                   255, 113, 128, 150),
+  //                             //             ),
+  //       )
+  //           );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +184,7 @@ class _VolunteerState extends State<Volunteer> {
                 children: [
                   Text(
                     'Volunteer',
+                    // _employee[0],
                     style: TextStyle(
                       fontSize: 36,
                       color: Color.fromARGB(255, 42, 67, 101),
@@ -137,9 +222,16 @@ class _VolunteerState extends State<Volunteer> {
                               ),
                               child: TextField(
                                 controller: myController,
-                                onChanged: (value) {
+                                onChanged: (string) {
                                   // Update the key when the value changes.
-                                  setState(() => key = value);
+                                  _debouncer.run(() {
+                                    setState(() {
+                                      _filterEmployees = _employee
+                                          .where((e) =>
+                                              e.get("name").contains(string))
+                                          .toList();
+                                    });
+                                  });
                                 },
                                 decoration: InputDecoration(
                                   // labelTj-ext: "Search",

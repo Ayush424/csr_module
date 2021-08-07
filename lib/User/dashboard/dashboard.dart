@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 // import 'package:marquee/marquee.dart';
 
@@ -23,6 +24,11 @@ class _HomeDashboardState extends State<HomeDashboard> {
   final AuthService _authService = AuthService();
   late final int counter;
   static const int numItems = 10;
+  static const int numitems = 10;
+  late ScrollController scrollController;
+  List<String> _marqueeList = List<String>.generate(numitems, (i) => '');
+
+  late Timer _timer;
   List<bool> selected = List<bool>.generate(numItems, (int index) => false);
 
   late List<Days> _chartData;
@@ -38,6 +44,8 @@ class _HomeDashboardState extends State<HomeDashboard> {
     _tooltipBehavior = TooltipBehavior(enable: true);
 
     date = DateTime.now();
+    scrollController = new ScrollController();
+    animate();
     super.initState();
   }
 
@@ -185,19 +193,16 @@ class _HomeDashboardState extends State<HomeDashboard> {
                       height: 20,
                     ),
                     Container(
-                      height: 200,
+                      height: 250,
                       margin: EdgeInsets.only(left: 56, right: 18),
                       decoration: BoxDecoration(
                           color: Color.fromRGBO(237, 242, 247, 1),
                           border: Border.all(
                               color: Color.fromRGBO(204, 204, 204, 1))),
-                      padding: const EdgeInsets.all(10.0),
-                      child: ListView(
-                        physics: ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        controller: ScrollController(),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                      child: Column(
                         children: [
-                          Center(
+                          Flexible(
                             child: Text(
                               'News and Events',
                               style: TextStyle(
@@ -210,43 +215,47 @@ class _HomeDashboardState extends State<HomeDashboard> {
                           SizedBox(
                             height: 20,
                           ),
-                          ListTile(
-                              leading: Icon(
-                                Icons.arrow_right,
-                                size: 30,
-                              ),
-                              title:
-                                  Text('Plantation Drive on 21st july,2021')),
-                          ListTile(
-                              leading: Icon(
-                                Icons.arrow_right,
-                                size: 30,
-                              ),
-                              title: Text('consectetur adipiscing elit')),
-                          ListTile(
-                              leading: Icon(
-                                Icons.arrow_right,
-                                size: 30,
-                              ),
-                              title: Text(' Facilisis nam arcu tristique')),
-                          ListTile(
-                              leading: Icon(
-                                Icons.arrow_right,
-                                size: 30,
-                              ),
-                              title: Text(' Volutpat at sit laoreet ornare')),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection("news")
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return CircularProgressIndicator();
+                                }
 
-                          // Marquee(
-                          //   text: 'Plantation Drive on 21st july,2021'
-                          //       'consectetur adipiscing elit'
-                          //       ' Facilisis nam arcu tristique'
-                          //       ' Volutpat at sit laoreet ornare'
-                          //       ' Suspendisse dictum nibh vitae fusce'
-                          //       ' netus Ut ut sit at in lobortis leo.',
-                          //   scrollAxis: Axis.vertical,
-                          //   blankSpace: 20,
-                          //   velocity: 20,
-                          // ),
+                                return Flexible(
+                                  child: ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: ClampingScrollPhysics(),
+                                      controller: scrollController,
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          subtitle: Text(snapshot
+                                                  .data!.docs[index]["date"]
+                                                  .toDate()
+                                                  .day
+                                                  .toString() +
+                                              "/" +
+                                              snapshot.data!.docs[index]["date"]
+                                                  .toDate()
+                                                  .month
+                                                  .toString() +
+                                              "/" +
+                                              snapshot.data!.docs[index]["date"]
+                                                  .toDate()
+                                                  .year
+                                                  .toString()),
+                                          leading: Icon(Icons.arrow_right),
+                                          title: Text(
+                                            snapshot.data!.docs[index]["News"],
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        );
+                                      }),
+                                );
+                              }),
                         ],
                       ),
                     ),
@@ -519,6 +528,23 @@ class _HomeDashboardState extends State<HomeDashboard> {
         ],
       ),
     );
+  }
+
+  void animate() async {
+    if (scrollController.positions.isNotEmpty) {
+      while (true) {
+        await scrollController.animateTo(0.0,
+            duration: new Duration(milliseconds: 400), curve: Curves.ease);
+        await scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: new Duration(seconds: 8),
+            curve: Curves.linear);
+      }
+    } else {
+      _timer = new Timer(const Duration(milliseconds: 400), () {
+        animate();
+      });
+    }
   }
 }
 

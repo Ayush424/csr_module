@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csr_module/Admin/Analytics/Events/event_global_value.dart';
 import 'package:flutter/material.dart';
 import 'events_and_calender.dart';
 import 'package:intl/intl.dart';
@@ -22,14 +24,13 @@ class _EventsAdminState extends State<EventsAdmin> {
     '5',
   ];
   String value = items.first;
-  static final List<String> items1 = <String>[
-    'Dropdown',
-    '2',
-    '3',
-    '4',
-    '5',
+  static final List<String> ngoitems = <String>[
+    'Select NGO',
+    'raasta',
+    'SD',
+    'sanskaar',
   ];
-  String value1 = items1.first;
+  String ngovalue = ngoitems.first;
   static final List<String> items2 = <String>[
     'Dropdown',
     '2',
@@ -38,14 +39,12 @@ class _EventsAdminState extends State<EventsAdmin> {
     '5',
   ];
   String value2 = items2.first;
-  static final List<String> items3 = <String>[
-    'Dropdown',
-    '2',
-    '3',
-    '4',
-    '5',
+  static final List<String> eventType = <String>[
+    'Select Event Type',
+    'Cultural',
+    'Social',
   ];
-  String value3 = items3.first;
+  String typeValue = eventType.first;
   Future<void> _Pending() async {
     return showDialog<void>(
       context: context,
@@ -209,7 +208,7 @@ class _EventsAdminState extends State<EventsAdmin> {
             height: 100,
             child: Center(
                 child: Text(
-              'Added Successfully',
+              'Event Added Successfully',
               style: TextStyle(fontSize: 20),
             )),
           ),
@@ -234,8 +233,10 @@ class _EventsAdminState extends State<EventsAdmin> {
   DateTime selectedDate = DateTime.now();
 
   TextEditingController _dateController = TextEditingController();
+  TextEditingController _dateController2 = TextEditingController();
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<Null> _selectDate(
+      BuildContext context, TextEditingController dateController) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -247,16 +248,21 @@ class _EventsAdminState extends State<EventsAdmin> {
         selectedDate = DateTime.now();
       } else
         selectedDate = picked;
-      _dateController.text = DateFormat.yMd().format(selectedDate);
+      dateController.text = DateFormat.yMd().format(selectedDate);
     });
   }
 
   @override
   void initState() {
     _dateController.text = DateFormat.yMd().format(DateTime.now());
+    _dateController2.text = DateFormat.yMd().format(DateTime.now());
     super.initState();
   }
 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _deptController = TextEditingController();
+  final TextEditingController _countController = TextEditingController();
+  final TextEditingController _budgetController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -317,7 +323,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Event Names",
+                                "Event Name",
                                 style: TextStyle(
                                   color: Color.fromRGBO(45, 55, 72, 1),
                                   decoration: TextDecoration.none,
@@ -325,39 +331,18 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: 250,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                    )),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    focusColor:
-                                        Color.fromARGB(255, 113, 128, 150),
-                                    value: value,
-                                    items: items
-                                        .map((item) => DropdownMenuItem<String>(
-                                              child: Text(
-                                                item,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  //fontSize: 10,
-                                                ),
-                                              ),
-                                              value: item,
-                                            ))
-                                        .toList(),
-                                    onChanged: (value) => setState(() {
-                                      this.value = value!;
-                                    }),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: "Enter Event Name",
+                                    border: OutlineInputBorder(),
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -381,7 +366,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  _selectDate(context);
+                                  _selectDate(context, _dateController);
                                 },
                                 child: Container(
                                   width: _width / 1.7,
@@ -441,22 +426,22 @@ class _EventsAdminState extends State<EventsAdmin> {
                                     )),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
-                                    value: value1,
-                                    items: items1
-                                        .map(
-                                            (item1) => DropdownMenuItem<String>(
-                                                  child: Text(
-                                                    item1,
-                                                    style: TextStyle(
+                                    value: ngovalue,
+                                    items: ngoitems
+                                        .map((ngoitem) =>
+                                            DropdownMenuItem<String>(
+                                              child: Text(
+                                                ngoitem,
+                                                style: TextStyle(
 
-                                                        // fontSize: 10,
-                                                        ),
-                                                  ),
-                                                  value: item1,
-                                                ))
+                                                    // fontSize: 10,
+                                                    ),
+                                              ),
+                                              value: ngoitem,
+                                            ))
                                         .toList(),
-                                    onChanged: (value1) => setState(() {
-                                      this.value1 = value1!;
+                                    onChanged: (ngovalue) => setState(() {
+                                      this.ngovalue = ngovalue!;
                                     }),
                                   ),
                                 ),
@@ -471,7 +456,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Duration",
+                                "Event Date",
                                 style: TextStyle(
                                   color: Color.fromRGBO(45, 55, 72, 1),
                                   decoration: TextDecoration.none,
@@ -479,17 +464,32 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Duration",
-                                    border: OutlineInputBorder(),
-                                    // contentPadding: EdgeInsets.all(10)
+                              InkWell(
+                                onTap: () {
+                                  _selectDate(context, _dateController2);
+                                },
+                                child: Container(
+                                  width: _width / 1.7,
+                                  height: _height / 13,
+                                  margin: EdgeInsets.only(top: 10),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      )),
+                                  child: TextFormField(
+                                    style: TextStyle(fontSize: 15),
+                                    textAlign: TextAlign.center,
+                                    enabled: false,
+                                    keyboardType: TextInputType.text,
+                                    controller: _dateController2,
+                                    decoration: InputDecoration(
+                                        disabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide.none),
+                                        // labelText: 'Time',
+                                        contentPadding:
+                                            EdgeInsets.only(top: 0.0)),
                                   ),
                                 ),
                               ),
@@ -503,7 +503,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Attendees Count",
+                                "Description",
                                 style: TextStyle(
                                   color: Color.fromRGBO(45, 55, 72, 1),
                                   decoration: TextDecoration.none,
@@ -515,11 +515,12 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 10),
                                 child: TextFormField(
+                                  controller: _countController,
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: "Enter Count",
+                                    hintText: "Enter Description",
                                     border: OutlineInputBorder(),
                                     // contentPadding: EdgeInsets.all(10)
                                   ),
@@ -547,6 +548,7 @@ class _EventsAdminState extends State<EventsAdmin> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 10),
                                 child: TextFormField(
+                                  controller: _budgetController,
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
@@ -575,38 +577,18 @@ class _EventsAdminState extends State<EventsAdmin> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: 250,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                    )),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    value: value2,
-                                    items: items2
-                                        .map(
-                                            (item2) => DropdownMenuItem<String>(
-                                                  child: Text(
-                                                    item2,
-                                                    style: TextStyle(
-                                                        // fontWeight: FontWeight.bold,
-                                                        // fontSize: 10,
-                                                        ),
-                                                  ),
-                                                  value: item2,
-                                                ))
-                                        .toList(),
-                                    onChanged: (value2) => setState(() {
-                                      this.value2 = value2!;
-                                    }),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                child: TextFormField(
+                                  controller: _deptController,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: "Enter Dept",
+                                    border: OutlineInputBorder(),
+                                    // contentPadding: EdgeInsets.all(10)
                                   ),
                                 ),
                               ),
@@ -645,8 +627,8 @@ class _EventsAdminState extends State<EventsAdmin> {
                                     )),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
-                                    value: value3,
-                                    items: items3
+                                    value: typeValue,
+                                    items: eventType
                                         .map(
                                             (item3) => DropdownMenuItem<String>(
                                                   child: Text(
@@ -659,8 +641,8 @@ class _EventsAdminState extends State<EventsAdmin> {
                                                   value: item3,
                                                 ))
                                         .toList(),
-                                    onChanged: (value3) => setState(() {
-                                      this.value3 = value3!;
+                                    onChanged: (typeValue) => setState(() {
+                                      this.typeValue = typeValue!;
                                     }),
                                   ),
                                 ),
@@ -683,7 +665,54 @@ class _EventsAdminState extends State<EventsAdmin> {
                               ),
                               label: Text('Add'),
                               onPressed: () {
-                                _showMyDialog();
+                                if (_nameController.text.isNotEmpty &&
+                                    ngovalue != "Select NGO" &&
+                                    _budgetController.text.isNotEmpty &&
+                                    _deptController.text.isNotEmpty &&
+                                    typeValue != "Select Event Type") {
+                                  var startDateFormat = DateFormat("dd/MM/yyyy")
+                                      .parse(_dateController.text);
+                                  var endDateFormat = DateFormat("dd/MM/yyyy")
+                                      .parse(_dateController.text);
+                                  Timestamp startDate =
+                                      Timestamp.fromDate(startDateFormat);
+                                  Timestamp endDate =
+                                      Timestamp.fromDate(endDateFormat);
+                                  Map<String, dynamic> entry = {
+                                    "desc": _countController.text,
+                                    "name": _nameController.text,
+                                    "startdate": startDate,
+                                    "ngoPartner": ngovalue,
+                                    "endDate": endDate,
+                                    "budget": int.parse(_budgetController.text),
+                                    "deptIncharge": _deptController.text,
+                                    "eventType": typeValue,
+                                    "team": [],
+                                    "actualSpent": 0,
+                                  };
+                                  FirebaseFirestore.instance
+                                      .collection("events")
+                                      .add(entry)
+                                      .then((value) => _showMyDialog());
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                            content: Text(
+                                              'Please fill all the fields',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.red),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ));
+                                }
                               },
                             ),
                           ),
@@ -723,126 +752,183 @@ class _EventsAdminState extends State<EventsAdmin> {
                         child: Container(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  minWidth: constraints.minWidth),
-                              child: DataTable(
-                                columnSpacing: 112,
-                                columns: const <DataColumn>[
-                                  DataColumn(
-                                    label: Padding(
-                                      padding: EdgeInsets.all(20),
-                                      child: Text(' Event Name',
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 44, 82, 130),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Duration',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Date Started',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('NGO Partner',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Attendees Count',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                  DataColumn(
-                                    label: Text('Action',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 44, 82, 130),
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ),
-                                ],
-                                rows: List<DataRow>.generate(
-                                  numItems,
-                                  (int index) => DataRow(
-                                    color: MaterialStateProperty.resolveWith<
-                                        Color?>((Set<MaterialState> states) {
-                                      if (states
-                                          .contains(MaterialState.selected)) {
-                                        return Color.fromARGB(
-                                                255, 237, 242, 247)
-                                            .withOpacity(0.08);
-                                      }
-                                      if (index.isEven) {
-                                        return Color.fromARGB(
-                                            255, 237, 242, 247);
-                                      }
-                                      return null;
-                                    }),
-                                    cells: <DataCell>[
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text('abc'),
-                                      )),
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text('abc'),
-                                      )),
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text('abc'),
-                                      )),
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text('abc'),
-                                      )),
-                                      DataCell(Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text('abc'),
-                                      )),
-                                      DataCell(
-                                        ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    const Color.fromRGBO(
-                                                        45, 55, 72, 1)),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection("events")
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.data == null) {
+                                    return CircularProgressIndicator();
+                                  } else if (snapshot.data!.docs.length == 0) {
+                                    return Text("no events to show");
+                                  } else {
+                                    return ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          minWidth: constraints.minWidth),
+                                      child: DataTable(
+                                        columnSpacing: 112,
+                                        columns: const <DataColumn>[
+                                          DataColumn(
+                                            label: Padding(
+                                              padding: EdgeInsets.all(20),
+                                              child: Text(' Event Name',
+                                                  style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 44, 82, 130),
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                            ),
                                           ),
-                                          child: Text('View more'),
-                                          onPressed: () {
-                                            widget.update!("eventsandcalendar");
-                                          },
+                                          DataColumn(
+                                            label: Text('Duration',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Date Started',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('NGO Partner',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Attendees Count',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                          DataColumn(
+                                            label: Text('Action',
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 44, 82, 130),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ),
+                                        ],
+                                        rows: List<DataRow>.generate(
+                                          snapshot.data!.docs.length,
+                                          (int index) => DataRow(
+                                            color: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return Color.fromARGB(
+                                                        255, 237, 242, 247)
+                                                    .withOpacity(0.08);
+                                              }
+                                              if (index.isEven) {
+                                                return Color.fromARGB(
+                                                    255, 237, 242, 247);
+                                              }
+                                              return null;
+                                            }),
+                                            cells: <DataCell>[
+                                              DataCell(Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 30),
+                                                child: Text(snapshot
+                                                    .data!.docs[index]["name"]),
+                                              )),
+                                              DataCell(Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 30),
+                                                child: Text(snapshot.data!
+                                                        .docs[index]["endDate"]
+                                                        .toDate()
+                                                        .difference(snapshot
+                                                            .data!
+                                                            .docs[index]
+                                                                ["startdate"]
+                                                            .toDate())
+                                                        .inDays
+                                                        .toString() +
+                                                    " days"),
+                                              )),
+                                              DataCell(Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 30),
+                                                child: Text(snapshot
+                                                        .data!
+                                                        .docs[index]
+                                                            ["startdate"]
+                                                        .toDate()
+                                                        .day
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .docs[index]
+                                                            ["startdate"]
+                                                        .toDate()
+                                                        .month
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .docs[index]
+                                                            ["startdate"]
+                                                        .toDate()
+                                                        .year
+                                                        .toString()),
+                                              )),
+                                              DataCell(Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 30),
+                                                child: Text(snapshot.data!
+                                                    .docs[index]["ngoPartner"]),
+                                              )),
+                                              DataCell(Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 30),
+                                                child: Text(snapshot.data!
+                                                    .docs[index]["team"].length
+                                                    .toString()),
+                                              )),
+                                              DataCell(
+                                                ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(const Color
+                                                                    .fromRGBO(
+                                                                45, 55, 72, 1)),
+                                                  ),
+                                                  child: Text('View more'),
+                                                  onPressed: () {
+                                                    EventGlobalValue
+                                                        .eventValue = index;
+                                                    EventGlobalValue.doc =
+                                                        snapshot.data!
+                                                            .docs[index].id;
+                                                    widget.update!(
+                                                        "eventsandcalendar");
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                                    );
+                                  }
+                                }),
                           ),
                         ),
                       ),
